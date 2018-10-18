@@ -10,3 +10,17 @@ body {
   p{
     text-align: center;
   }
+  input 
+  {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+  }
+  label{
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+  }
