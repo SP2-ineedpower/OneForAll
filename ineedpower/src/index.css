@@ -3,24 +3,6 @@ body {
     margin: 20px;
   }
   
-  h2 {
-    font-size: 4em;
-    text-align: center;
-  }
-  p{
-    text-align: center;
-  }
-  input 
-  {
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-  }
-  label{
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
-    text-align: center;
-  }
+h1{
+  text-align: center;
+}
