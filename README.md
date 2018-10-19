@@ -1,2 +1,2 @@
 # OneForAll
-making an awsome web application of our school project
+making an awsome web application for our school project
