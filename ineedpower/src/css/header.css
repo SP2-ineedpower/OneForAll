@@ -10,7 +10,7 @@ p{
 .back{
     font-size: 1.5em;
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
     font-weight: 700;
     
 }
@@ -66,4 +66,9 @@ form:hover{
 button{
     border: none;
     background-color: white;
+}
+
+a:-webkit-any-link{
+    color:black;
+    text-decoration: none; 
 }

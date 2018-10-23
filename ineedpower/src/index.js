@@ -8,6 +8,7 @@ import Home from './componants/Home';
 import Userpage from './componants/Userpage';
 import Projectpage from './componants/Projectpage';
 import Errorpage from './componants/Error';
+import Profile from './componants/Profile';
 
 
 class Application extends React.Component {
@@ -19,6 +20,7 @@ class Application extends React.Component {
             <Route path="/" component={Home} exact />
             <Route path="/Userpage" component={Userpage} />
             <Route path="/Projectpage" component={Projectpage} />
+            <Route path="/Profile" component={Profile} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>
