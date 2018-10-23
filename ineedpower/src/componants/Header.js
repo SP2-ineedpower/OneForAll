@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom'
 import '../css/header.css';
 
 //SEARCH BAR
@@ -35,20 +36,24 @@ class Search extends React.Component {
 
 //SELECTING THE ACTIVE HEADER
 function Headerversion(version) {
+
+    const back = <div className="back"><NavLink to="/">Back to projects</NavLink></div>
+    const profileImg = <NavLink to="/Profile" className="profileImg"><i className="fas fa-user fa-3x"></i></NavLink>
+
     if (version === "project") {
         return(
             <div className="grid header">
-                <p className="back">Back to projects</p>
+                {back}
                 <p className="title">Project</p>
-                <i className="fas fa-user profileImg fa-3x"></i>
+                {profileImg}
             </div>
         );
     } if (version === "user") {
         return(
             <div className="grid header">
-                <p className="back">Terug naar projecten</p>
+                {back}
                 <p className="title">Profile</p>
-                <i className="fas fa-user profileImg fa-3x"></i>
+                {profileImg}
             </div>
         );
     } if (version === "home") {
@@ -56,7 +61,7 @@ function Headerversion(version) {
             <div className="grid header">
                 <Search/>
                 <p className="title">Projects</p>
-                <i className="fas fa-user profileImg fa-3x"></i>
+                {profileImg}
             </div>
         );
     }
