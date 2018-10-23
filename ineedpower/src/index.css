@@ -1,8 +1,6 @@
-body {
+body,html {
     font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
+    margin: 0;
   }
-  
-h1{
-  text-align: center;
-}
+
+
