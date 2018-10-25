@@ -1,10 +1,10 @@
 .centerProjectdata{
     text-align: center;
 }
-h1{
+.centerProjectdata h1{
     text-align: center;
 }
-p{
+.centerProjectdata p{
     font-size: 1.5em;
     padding-top: 15px;
     margin-bottom: 20px;
@@ -12,7 +12,7 @@ p{
 textarea{
     border: 1px solid rgb(220,220,220);
 }
-.tags{
+.centerProjectdata .tags{
     text-align: center;
     margin-top: 20px;
     margin-bottom: 50px;
@@ -23,7 +23,7 @@ textarea{
 .checking{
     font-size: 1em;
 }
-.tags:hover{
+.centerProjectdata .tags:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
 .save{

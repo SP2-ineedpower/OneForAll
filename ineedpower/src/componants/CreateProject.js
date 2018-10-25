@@ -3,7 +3,7 @@ import Header from './Header';
 
 import '../css/createproject.css';
 
-//Dit pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
+//Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
 
 const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
     projectId: 1,
