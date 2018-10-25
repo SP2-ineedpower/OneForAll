@@ -64,8 +64,15 @@ function Headerversion(version) {
                 {profileImg}
             </div>
         );
+    } if (version === "newProject") {
+        return(
+            <div className="grid header">
+                <NavLink to="/profile"><p className="back">Back to profile</p></NavLink>
+                <p className="title">Edit project</p>
+                {profileImg}
+            </div>
+        );
     }
-
 }
 
 class Header extends React.Component {
