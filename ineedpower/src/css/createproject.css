@@ -29,7 +29,6 @@ textarea{
 .save{
     font-size: 3em;
     text-align: center;
-    margin-top: 20px;
     margin-top: 50px;
     margin-bottom: 50px;
     padding: 10px;
@@ -39,7 +38,8 @@ textarea{
     border-radius: 10px;
 }
 .save:hover{
-    background-color: #00CC00;
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
-    color:white;
+}
+.spatie{
+    margin-top: 65px;
 }
