@@ -9,7 +9,7 @@ const User = {
     name: "Nicolas",
     email: "nicolas.pecher@student.ehb.be",
     experience: 0,
-    bio: "oppai",
+    bio: "Ik hou van React",
     schoolYear: "2",
     subject: "dig-x swe",
     age: "19",
