@@ -1,0 +1,45 @@
+.centerProjectdata{
+    text-align: center;
+}
+h1{
+    text-align: center;
+}
+p{
+    font-size: 1.5em;
+    padding-top: 15px;
+    margin-bottom: 20px;
+}
+textarea{
+    border: 1px solid rgb(220,220,220);
+}
+.tags{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border: 1px solid  rgb(220,220,220);
+    border-radius: 10px;
+}
+.checking{
+    font-size: 1em;
+}
+.tags:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
+}
+.save{
+    font-size: 3em;
+    text-align: center;
+    margin-top: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border: 1px solid  rgb(220,220,220);
+    border-radius: 10px;
+}
+.save:hover{
+    background-color: #00CC00;
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
+    color:white;
+}
