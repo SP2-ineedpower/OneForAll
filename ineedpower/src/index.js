@@ -9,6 +9,7 @@ import Userpage from './componants/Userpage';
 import Projectpage from './componants/Projectpage';
 import Errorpage from './componants/Error';
 import Profile from './componants/Profile';
+import NewProject from './componants/CreateProject';
 
 
 class Application extends React.Component {
@@ -21,6 +22,7 @@ class Application extends React.Component {
             <Route path="/Userpage" component={Userpage} />
             <Route path="/Projectpage" component={Projectpage} />
             <Route path="/Profile" component={Profile} />
+            <Route path="/createproject" component={NewProject} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>
