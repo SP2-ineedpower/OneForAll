@@ -1,0 +1,72 @@
+.projectback{
+    width: 190px;
+    height: 140px;
+    display: inline-block;
+    float: left;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px rgb(87, 87, 87);
+    padding: 10px;
+}
+
+.projectback:hover{
+    box-shadow: 1px 1px 10px rgb(0, 0, 0);
+    
+}
+
+.projectback p{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 1px 1px 10px rgba(49, 49, 49, 0.671);
+}
+
+.projectback p:nth-child(1){
+    font-size: 1.5em;
+    
+}
+
+/*gradients for project backgrounds: gradients found on https://www.eggradients.com/ */
+
+.edisons{
+    background-color: #861657;
+    background-image: linear-gradient(326deg, #861657 0%, #ffa69e 74%);
+}
+
+.spotify{
+    background-color: #7ee8fa;
+    background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
+}
+
+.trump{
+    background-color: #f7b42c;
+    background-image: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+}
+
+.dejaVu{
+    background-color: #90d5ec;
+    background-image: linear-gradient(315deg, #90d5ec 0%, #fc575e 74%);
+}
+
+.caesar{
+    background-color: #abe9cd;
+    background-image: linear-gradient(315deg, #abe9cd 0%, #3eadcf 74%);
+}
+
+.instagram{
+    background-color: #6b0f1a;
+    background-image: linear-gradient(315deg, #6b0f1a 0%, #b91372 74%);
+}
+
+.freeFood{
+    background-color: #f5d020;
+    background-image: linear-gradient(315deg, #f5d020 0%, #f53803 74%);
+}
+
+.soda{
+    background-color: #fbb034;
+    background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}

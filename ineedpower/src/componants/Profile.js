@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Projects from './Projects';
 import { NavLink } from 'react-router-dom'
 import '../css/profile.css';
 
@@ -19,7 +20,7 @@ const projects = [
     {
         id: 1,
         title: "Ineedpower",
-        owner: "nicolas",
+        owner: "nicolas pecher",
         tags: "c++"
     }, {
         id: 2,
@@ -27,13 +28,26 @@ const projects = [
         owner: "piet piraat",
         tags: "js"
     }
+];
+
+const tags = [
+    {
+        tagId: 1,
+        competence: "test"
+    }, {
+        tagId: 2,
+        competence: "c++"
+    }, {
+        tagId: 3,
+        competence: "java"
+    }
 ]
+
 
 function Button(props) {
     return (
         <NavLink to="/createproject"> <button className="projbutton">Make new project</button></NavLink>
     );
-
 }
 
 
@@ -81,22 +95,29 @@ class Userdata extends React.Component {
 }
 
 
-
-class MyProjects extends React.Component {
-
-    getprojects(projects) {
-
-      projects.forEach(project => {
-           console.log(project.title);
-        });
-    }
-    render() {
-        return (
-            <div>
-                <p className="padding myprojects"><b>Projecten</b></p>
+function MyProjects() {
+    return (
+        <div>
+            <p className="profileTitle"><b>Projects</b></p>
+            <div className="profileContainer">
+                <Projects projs={projects}></Projects>
             </div>
-        );
-    }
+        </div>
+    );
+}
+
+function Competences() {
+    const competenceList = tags.map(tag => (
+        <p className="tags" key={tag.tagId}>{tag.competence}</p>
+    ))
+    return (
+        <div>
+            <p className="profileTitle"><b>Competences</b></p>
+            <div className="profileContainer">
+                {competenceList}
+            </div>
+        </div>
+    );
 }
 
 
@@ -107,7 +128,7 @@ class Profile extends React.Component {
                 <Header version="user" />
                 <Userdata></Userdata>
                 <MyProjects></MyProjects>
-                <h1>This is the active user page</h1>
+                <Competences></Competences>
             </div>
         );
     }
