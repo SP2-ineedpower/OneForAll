@@ -32,8 +32,29 @@
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
 
-.myprojects{
+.profileTitle{
     font-size: 2em;
-    border-bottom: solid 1px lightgray;
-    padding-bottom: 5px;
+    margin: 0px 100px 20px 100px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.profileContainer{
+    padding: 30px 100px;
+    overflow: auto;
+}
+
+
+
+.tags{
+    padding: 10px 30px;
+    border: 1px solid lightgray;
+    margin-right: 20px;
+    display:inline-block;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.tags:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
