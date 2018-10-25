@@ -1,12 +1,6 @@
-body {
+body,html {
     font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
+    margin: 0;
   }
-  
-  h2 {
-    font-size: 4em;
-    text-align: center;
-  }
-  p{
-    text-align: center;
-  }
+
+

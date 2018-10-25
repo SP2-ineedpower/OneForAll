@@ -1,23 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './index.css';
 
-  
-  class Game extends React.Component {
-    render() {
-      return (
-        <div>
-        <h2>iNeedPower</h2>
-        <p>project under construction ....</p>
-        </div>
-      );
-    }
+
+import Home from './componants/Home';
+import Userpage from './componants/Userpage';
+import Projectpage from './componants/Projectpage';
+import Errorpage from './componants/Error';
+import Profile from './componants/Profile';
+
+
+class Application extends React.Component {
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/Userpage" component={Userpage} />
+            <Route path="/Projectpage" component={Projectpage} />
+            <Route path="/Profile" component={Profile} />
+            <Route component={Errorpage} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
   }
-  
-  // ========================================
-  
-  ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-  );
-  
+}
+
+
+
+ReactDOM.render(
+  <Application />,
+  document.getElementById('root')
+);
