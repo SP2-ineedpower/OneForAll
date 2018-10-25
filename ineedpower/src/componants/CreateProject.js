@@ -32,16 +32,16 @@ class Projectdata extends React.Component {
                 <p className="">
                     <b>Creator: </b>
                 </p>
-                <textarea rows="1" cols="30">
+                <p>
                 {Project.creatorId}
-                </textarea> 
+                </p>
 
                 <p className="">
                     <b>Creation Date: </b>
                 </p>
-                <textarea rows="1" cols="30">
-                {Project.creationDate}
-                </textarea> 
+                <p>
+                 {Project.creationDate}                    
+                </p> 
 
                 <p className="">
                      <b>Description: </b>
@@ -65,7 +65,7 @@ class Projectdata extends React.Component {
                 </textarea>
 
                 <p className="">
-                    <b>Persoon 1 nodig voor de project: </b>
+                    <b>Person 1 needed for the project: </b>
                 </p>
                 <p>
                 <span className="checking tags">Consultant</span> <span className="checking tags">Extra member</span>
@@ -78,7 +78,7 @@ class Projectdata extends React.Component {
                 </p>
 
                  <p className="">
-                     <b>Persoon 2 nodig voor de project: </b>
+                     <b>Person 2 needed for the project: </b>
                 </p>
                 <p>
                 <span className="checking tags">Consultant</span> <span className="checking tags">Extra member</span>
@@ -89,7 +89,7 @@ class Projectdata extends React.Component {
                 <p>
                     <span className="tags">Laravel</span> <span className="tags">Java</span> <span className="tags">Python</span> <span className="tags">Ruby</span> <span className="tags">Express</span>
                 </p>
-                <p>
+                <p className="spatie">
                     <span className="save">SAVE</span>
                 </p>
             </div>
