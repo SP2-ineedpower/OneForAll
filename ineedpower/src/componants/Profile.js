@@ -42,6 +42,15 @@ const tags = [
         competence: "java"
     }
 ]
+const links = [
+    {
+        linkId: 1,
+        link: "https://nicolas-pecher.github.io/SidhartaProject/"
+    }, {
+        linkId: 2,
+        link: "https://cas.ehb.be/login"
+    }
+]
 
 
 function Button(props) {
@@ -51,49 +60,112 @@ function Button(props) {
 }
 
 
-class Userdata extends React.Component {
+function Userdata() {
+    return (
+        <div className="grid-userdata">
+            <div className="padding">
+                <p className="profile">
+                    <b>Name: </b>
+                    <span>{User.name}</span>
+                </p>
+
+                <p className="profile">
+                    <b>Age: </b>
+                    <span>{User.age}</span>
+                </p>
+
+                <p className="profile">
+                    <b>Email: </b>
+                    <span>{User.email}</span>
+                </p>
+
+                <p className="profile">
+                    <b>Schoolyear: </b>
+                    <span>{User.schoolYear}</span>
+                </p>
+
+                <p className="profile">
+                    <b>subject: </b>
+                    <span>{User.subject}</span>
+                </p>
+
+                <p className="profile">
+                    <b>Bio: </b>
+                    <span>{User.bio}</span>
+                </p>
+            </div>
+            <div id="wrapper">
+                <Button />
+            </div>
+        </div>
+    );
+}
+
+class UserLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let link = {
+            linkId: 4,
+            link: this.state.value
+        }
+        links.push(link);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
     render() {
+        const linksList = links.map(link => (
+            <p className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></p>
+        ))
         return (
-            <div className="grid-userdata">
-                <div className="padding">
-                    <p className="profile">
-                        <b>Name: </b>
-                        <span>{User.name}</span>
-                    </p>
-
-                    <p className="profile">
-                        <b>Age: </b>
-                        <span>{User.age}</span>
-                    </p>
-
-                    <p className="profile">
-                        <b>Email: </b>
-                        <span>{User.email}</span>
-                    </p>
-
-                    <p className="profile">
-                        <b>Schoolyear: </b>
-                        <span>{User.schoolYear}</span>
-                    </p>
-
-                    <p className="profile">
-                        <b>subject: </b>
-                        <span>{User.subject}</span>
-                    </p>
-
-                    <p className="profile">
-                        <b>Bio: </b>
-                        <span>{User.bio}</span>
-                    </p>
+            <div>
+                <div className="profileTitle">
+                    <b>Links</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
                 </div>
-                <div id="wrapper">
-                    <Button />
+                <div className="profileContainer">
+                    {linksList}
                 </div>
             </div>
         );
     }
 }
-
 
 function MyProjects() {
     return (
@@ -106,18 +178,70 @@ function MyProjects() {
     );
 }
 
-function Competences() {
-    const competenceList = tags.map(tag => (
-        <p className="tags" key={tag.tagId}>{tag.competence}</p>
-    ))
-    return (
-        <div>
-            <p className="profileTitle"><b>Competences</b></p>
-            <div className="profileContainer">
-                {competenceList}
+class Competences extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let tag = {
+            tagId: 4,
+            competence: this.state.value
+        }
+        tags.push(tag);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
+    render() {
+        const competenceList = tags.map(tag => (
+            <p className="tags" key={tag.tagId}>{tag.competence}</p>
+        ))
+        return (
+            <div>
+                <div className="profileTitle">
+                    <b>Competences</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
+                </div>
+                <div className="profileContainer">
+                    {competenceList}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 
@@ -127,6 +251,7 @@ class Profile extends React.Component {
             <div>
                 <Header version="user" />
                 <Userdata></Userdata>
+                <UserLinks></UserLinks>
                 <MyProjects></MyProjects>
                 <Competences></Competences>
             </div>
