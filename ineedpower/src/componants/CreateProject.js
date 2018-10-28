@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentEditable from "react-contenteditable"; //npm install react-contenteditable
+import {NavLink} from 'react-router-dom'
 import Header from './Header';
 import '../css/createproject.css';
 
@@ -124,18 +125,6 @@ class Competences extends React.Component {
             </div>
         );
     }
-}
-
-class SaveButton extends React.Component{
-    render() {
-        return (
-            <div className="centerSave">
-                <p className="spatie">
-                    <span className="save">SAVE</span>
-                </p>
-            </div>
-        )
-    };
 }
 
 class EditProjectName extends React.Component{
@@ -309,6 +298,18 @@ class EditProblem extends React.Component{
             </div>
         );
     }
+}
+
+class SaveButton extends React.Component{
+    render() {
+        return (
+            <div className="centerSave">
+                <p className="spatie">
+                    <NavLink to="/Projectpage"><p className="back"><span className="save">SAVE</span></p></NavLink>
+                </p>
+            </div>
+        )
+    };
 }
 
 class EditProject extends React.Component {

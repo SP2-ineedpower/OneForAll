@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 import '../css/header.css';
+import Projects from './Projects';
 
 //SEARCH BAR
 class Search extends React.Component {
@@ -44,7 +45,7 @@ function Headerversion(version) {
         return(
             <div className="grid header">
                 {back}
-                <p className="title">Project</p>
+                <p className="title">Project Title</p>
                 {profileImg}
             </div>
         );
