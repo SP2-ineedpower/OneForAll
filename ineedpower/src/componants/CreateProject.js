@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 import ContentEditable from "react-contenteditable"; //npm install react-contenteditable
-import sanitizeHtml from "sanitize-html"; //npm install react-sanitized-html sanitize-html --save
+import {NavLink} from 'react-router-dom'
 import Header from './Header';
 import '../css/createproject.css';
 
@@ -47,127 +46,6 @@ const tags = [ //dummy tags
     }
 ]
 
-class Projectdata extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-          html: `<p>Click to edit</p>`,
-          editable: true
-        };
-    }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
-    
-      /*sanitizeConf = {
-        allowedTags: ["b", "i", "em", "strong", "a", "p", "h1"],
-        allowedAttributes: { a: ["href"] }
-      };
-    
-      sanitize = () => {
-        this.setState({ html: sanitizeHtml(this.state.html, this.sanitizeConf) });
-      };*/
-
-    render() {
-        return (
-            <div className="centerProjectdata">
-
-                <div className="projectName">
-                    <p>
-                        <b>Name of project: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div>
-
-                <div className="creator">
-                    <p>
-                        <b>Creator/Owner: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div>
-
-                <div className="creationDate">
-                    <p>
-                        <b>Creation Date: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div>
-
-                <div className="description">
-                    <p>
-                        <b>Description: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div> 
-
-                <div className="groupSize">
-                    <p>
-                        <b>Groupsize: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div>
-
-                <div className="problem">
-                    <p>
-                        <b>Problem: </b>
-                    </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
-                </div>
-
-            </div>
-            
-        );
-    }
-}
-
 class Competences extends React.Component {
     constructor(props) {
         super(props)
@@ -180,6 +58,7 @@ class Competences extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
     }
 
     handleChange(event) {
@@ -213,9 +92,23 @@ class Competences extends React.Component {
         });
     }
 
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < tags.length; index++) {
+            if (tags[index].tagId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        tags.splice(pos,1);
+        this.setState({
+        });
+    }
+
     render() {
         const competenceList = tags.map(tag => (
-            <p className="tags" key={tag.tagId}>{tag.competence}</p>
+            <div className="tags" key={tag.tagId}><span>{tag.competence}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
         ))
         return (
             <div>
@@ -234,23 +127,11 @@ class Competences extends React.Component {
     }
 }
 
-class SaveButton extends React.Component{
-    render() {
-        return (
-            <div className="centerSave">
-                <p className="spatie">
-                    <span className="save">SAVE</span>
-                </p>
-            </div>
-        )
-    };
-}
-
 class EditProjectName extends React.Component{
     constructor() {
         super();
         this.state = {
-          html: `<p>Click to edit</p>`,
+          html: `<p>I Need Power !</p>`,
           editable: true
         };
     }
@@ -286,21 +167,6 @@ class EditProjectName extends React.Component{
 }
 
 class EditCreator extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-          html: `<p>Click to edit</p>`,
-          editable: true
-        };
-    }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
 
     render() {
         return (
@@ -310,35 +176,15 @@ class EditCreator extends React.Component{
                     <p>
                         <b>Creator/Owner: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <p>
+                        {Project.creatorId}
+                    </p>
                 </div>
             </div>
         );
     }
 }
 class EditCreationDate extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-          html: `<p>Click to edit</p>`,
-          editable: true
-        };
-    }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
 
     render() {
         return (
@@ -348,14 +194,9 @@ class EditCreationDate extends React.Component{
                     <p>
                         <b>Date of creation: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <p>
+                        {Project.creationDate}
+                    </p>
                 </div>
             </div>
         );
@@ -366,7 +207,7 @@ class EditDescription extends React.Component{
     constructor() {
         super();
         this.state = {
-          html: `<p>Click to edit</p>`,
+          html: `<p>An awesome webapp made by awesome people</p>`,
           editable: true
         };
     }
@@ -405,7 +246,7 @@ class EditGroupsize extends React.Component{
     constructor() {
         super();
         this.state = {
-          html: `<p>Click to edit</p>`,
+          html: `<p>6 members</p>`,
           editable: true
         };
     }
@@ -441,21 +282,6 @@ class EditGroupsize extends React.Component{
 }
 
 class EditProblem extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-          html: `<p>Click to edit</p>`,
-          editable: true
-        };
-    }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
 
     render() {
         return (
@@ -465,18 +291,25 @@ class EditProblem extends React.Component{
                     <p>
                         <b>Problem: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <p>
+                        {Project.issueId}
+                    </p>
                 </div>
             </div>
         );
     }
+}
+
+class SaveButton extends React.Component{
+    render() {
+        return (
+            <div className="centerSave">
+                <p className="spatie">
+                    <NavLink to="/Projectpage"><p className="back"><span className="save">SAVE</span></p></NavLink>
+                </p>
+            </div>
+        )
+    };
 }
 
 class EditProject extends React.Component {
