@@ -3,6 +3,7 @@ import Header from './Header';
 import Projects from './Projects';
 import { NavLink } from 'react-router-dom'
 import '../css/profile.css';
+import pencil from '../pictures/pencil.svg'
 
 const User = {
     userId: 1,
@@ -59,6 +60,65 @@ function Button(props) {
     );
 }
 
+class InputProfile extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            value: this.props.value
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let link = {
+            linkId: 4,
+            link: this.state.value
+        }
+        links.push(link);
+        this.setState({
+            value: ''
+        });
+    }
+
+
+    render() {
+        if (this.props.textarea === "true") {
+            return (
+                <form>
+                    <label>
+                        <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea"></textarea>
+                    </label>
+                </form>
+            );
+        }
+        if (this.props.type === "text") {
+            return (
+                <form className="profileInput">
+                    <label>
+                        <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
+                        <img src={pencil} alt="edit button" className="pencil" />
+                    </label>
+                </form>
+            );
+        }
+        return (
+            <form className="profileInput">
+                <label>
+                    <input value={this.state.value} onChange={this.handleChange} type={this.props.type}></input>
+                    <img src={pencil} alt="edit button" className="pencil" />
+                </label>
+            </form>
+        );
+    }
+}
+
 
 function Userdata() {
     return (
@@ -70,29 +130,30 @@ function Userdata() {
                 </p>
 
                 <p className="profile">
-                    <b>Age: </b>
-                    <span>{User.age}</span>
-                </p>
-
-                <p className="profile">
                     <b>Email: </b>
                     <span>{User.email}</span>
                 </p>
 
-                <p className="profile">
+                <div className="profile">
+                    <b>Age: </b>
+                    <InputProfile value={User.age} type="number"></InputProfile>
+
+                </div>
+
+                <div className="profile">
                     <b>Schoolyear: </b>
-                    <span>{User.schoolYear}</span>
-                </p>
+                    <InputProfile value={User.schoolYear} type="number"></InputProfile>
+                </div>
 
-                <p className="profile">
+                <div className="profile">
                     <b>subject: </b>
-                    <span>{User.subject}</span>
-                </p>
+                    <InputProfile value={User.subject} type="text"></InputProfile>
+                </div>
 
-                <p className="profile">
+                <div className="profile">
                     <b>Bio: </b>
-                    <span>{User.bio}</span>
-                </p>
+                    <InputProfile value={User.bio} textarea="true"></InputProfile>
+                </div>
             </div>
             <div id="wrapper">
                 <Button />
@@ -157,7 +218,7 @@ class UserLinks extends React.Component {
                 console.log(`pos: ${pos}`);
             }
         }
-        links.splice(pos,1);
+        links.splice(pos, 1);
         this.setState({
         });
     }
@@ -249,7 +310,7 @@ class Competences extends React.Component {
                 console.log(`pos: ${pos}`);
             }
         }
-        tags.splice(pos,1);
+        tags.splice(pos, 1);
         this.setState({
         });
     }

@@ -47,19 +47,7 @@ textarea{
 .spatie{
     margin-top: 65px;
 }
-.tags{
-    padding: 10px 30px;
-    border: 1px solid lightgray;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    display:inline-block;
-    border-radius: 20px;
-    font-weight: bold;
-}
 
-.tags:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
-}
 
 .importantCompetences{
     font-size: 1.5em;
@@ -94,7 +82,7 @@ textarea{
     color: rgb(55, 172, 55);
 }
 
-.importantCompetences input:hover, input:focus{
+.importantCompetences input:hover,.importantCompetences input:focus{
     border: 1px solid rgb(84, 196, 84);
     box-shadow: 1px 1px 10px rgba(117, 117, 117, 0.397);
 }
