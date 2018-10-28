@@ -113,6 +113,8 @@ class UserLinks extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+
     }
 
     handleChange(event) {
@@ -146,9 +148,23 @@ class UserLinks extends React.Component {
         });
     }
 
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < links.length; index++) {
+            if (links[index].linkId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        links.splice(pos,1);
+        this.setState({
+        });
+    }
+
     render() {
         const linksList = links.map(link => (
-            <p className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></p>
+            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
         ))
         return (
             <div>
@@ -190,6 +206,7 @@ class Competences extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
     }
 
     handleChange(event) {
@@ -223,9 +240,23 @@ class Competences extends React.Component {
         });
     }
 
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < tags.length; index++) {
+            if (tags[index].tagId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        tags.splice(pos,1);
+        this.setState({
+        });
+    }
+
     render() {
         const competenceList = tags.map(tag => (
-            <p className="tags" key={tag.tagId}>{tag.competence}</p>
+            <div className="tags" key={tag.tagId}><span>{tag.competence}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
         ))
         return (
             <div>

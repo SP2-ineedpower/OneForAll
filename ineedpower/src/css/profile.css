@@ -63,7 +63,7 @@
     color: rgb(55, 172, 55);
 }
 
-.profileTitle input:hover, input:focus{
+.profileTitle input:hover,.profileTitle input:focus{
     border: 1px solid rgb(84, 196, 84);
     box-shadow: 1px 1px 10px rgba(117, 117, 117, 0.397);
 }
@@ -75,7 +75,7 @@
 }
 
 .tags{
-    padding: 10px 30px;
+    padding: 5px 10px;
     border: 1px solid lightgray;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -88,6 +88,19 @@
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
 
+.tags button{
+    border: solid 1px lightgray;
+    border-radius: 10px;
+    padding: 0px 5px;
+    margin-left: 20px;
+    font-weight: bold;
+    outline: none;
+}
+
+.tags button:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
+}
+
 .profileLink, .profileLink a{
     margin: 15px 0px;
     font-size: 1.1em;
@@ -96,4 +109,13 @@
 
 .profileLink a:hover{
     color: #3eadcf;
+}
+
+.profileLink button{
+    border: solid 1px lightgray;
+    border-radius: 10px;
+    padding: 5px 15px;
+    margin-left: 20px;
+    font-weight: bold;
+    outline: none;
 }
