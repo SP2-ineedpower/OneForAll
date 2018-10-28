@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 import '../css/header.css';
-import Projects from './Projects';
 
 //SEARCH BAR
 class Search extends React.Component {
