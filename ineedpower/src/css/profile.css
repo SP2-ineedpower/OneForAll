@@ -91,7 +91,7 @@
 .tags button{
     border: solid 1px lightgray;
     border-radius: 10px;
-    padding: 0px 5px;
+    padding: 5px 8px;
     margin-left: 20px;
     font-weight: bold;
     outline: none;
@@ -99,6 +99,7 @@
 
 .tags button:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
+    color: rgb(209, 0, 0);
 }
 
 .profileLink, .profileLink a{
@@ -118,4 +119,43 @@
     margin-left: 20px;
     font-weight: bold;
     outline: none;
+}
+
+.profileLink button:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
+}
+
+.pencil{
+    width: 13px;
+}
+
+.profileInput{
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.profileInput input{
+    border: none;
+    width: 40px;
+    border-radius: 5px;
+    padding: 0px 5px;
+    font-size: 1em;
+}
+
+.profiletextarea{
+    display: inline-block;
+    width: 300px;
+    border-radius: 5px;
+    height: 50px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.profileInput .textinput{
+    width: 100px;
+}
+
+.profileInput:hover, .profileInput:focus{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
