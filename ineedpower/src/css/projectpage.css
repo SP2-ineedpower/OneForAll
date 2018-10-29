@@ -1,18 +1,20 @@
-.centerData{
-    text-align: left;
+.centerDataOfProject{
+    /*margin-left: 20px;*/
+    text-align: center;
     font-size: 1.5em;
 }
-.button{
+.buttonEditProj{
+    font-weight: 100;
     display:inline-block;
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid rgb(117, 117, 117);
     border-radius: 10px;
 }
-.button:hover{
+.buttonEditProj:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117)
 }
-.marginButton{
+.marginButtonEditProj{
     margin-top: 20px;
 }
 .centerData p{
@@ -20,4 +22,50 @@
 }
 .centerData span{
     margin-top:3px;
+}
+.buttonsInProj p{
+    display: inline-block;
+    font-size: 1em;
+    
+}
+.paragraafEditProj{
+    margin-top: 20px;
+}
+.titleComments{
+    text-align: center;
+}
+.hrComments{
+    color: rgb(117, 117, 117);
+    max-width: 84%;
+}
+.addCommentEditProj{
+    border: 1px solid gray;
+    padding:5px 20px;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-bottom: 60px;
+    margin-top: 20px;
+    
+}
+.addCommentEditProj:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117) 
+}
+.approachComment{
+    margin-left: 90px;
+    padding-left: 0px;
+}
+.commentBox{
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding:5px 20px;
+    margin-bottom: 100px;
+    margin-left:90px;
+    max-width: 84%;
+    
+}
+.styleLikeComment{
+    color: lightgray;
+}
+.styleLikeComment:hover{
+    color: lightskyblue;
 }

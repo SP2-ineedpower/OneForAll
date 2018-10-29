@@ -166,43 +166,6 @@ class EditProjectName extends React.Component{
     }
 }
 
-class EditCreator extends React.Component{
-
-    render() {
-        return (
-            <div className="centerProjectdata">
-
-                <div className="projectName">
-                    <p>
-                        <b>Creator/Owner: </b>
-                    </p>
-                    <p>
-                        {Project.creatorId}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-}
-class EditCreationDate extends React.Component{
-
-    render() {
-        return (
-            <div className="centerProjectdata">
-
-                <div className="projectName">
-                    <p>
-                        <b>Date of creation: </b>
-                    </p>
-                    <p>
-                        {Project.creationDate}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-}
-
 class EditDescription extends React.Component{
     constructor() {
         super();
@@ -281,25 +244,6 @@ class EditGroupsize extends React.Component{
     }
 }
 
-class EditProblem extends React.Component{
-
-    render() {
-        return (
-            <div className="centerProjectdata">
-
-                <div className="projectName">
-                    <p>
-                        <b>Problem: </b>
-                    </p>
-                    <p>
-                        {Project.issueId}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-}
-
 class SaveButton extends React.Component{
     render() {
         return (
@@ -318,11 +262,8 @@ class EditProject extends React.Component {
             <div>
                 <Header version="newProject" />
                 <EditProjectName />
-                <EditCreator />
-                <EditCreationDate />
                 <EditDescription />
                 <EditGroupsize />
-                <EditProblem />
                 <Competences />
                 <SaveButton />
             </div>
