@@ -48,35 +48,63 @@ const tags = [ //dummy tags
     }
 ]
 
-function MyProjects() {
-    return (
-        <div>
-            <p className="profileTitle"><b>Projects</b></p>
-            <div className="profileContainer">
-                <Projects projs={projects}></Projects>
-            </div>
-        </div>
-    );
+const User = {
+    userId: 1,
+    name: "Nicolas",
+    email: "nicolas.pecher@student.ehb.be",
+    experience: 0,
+    bio: "Ik hou van React",
+    schoolYear: "2",
+    subject: "dig-x swe",
+    age: "19",
+    type: "admin"
 }
+
+const comments = [
+    {
+        commentId: 1,
+        comment: "react is awesome nibba"
+    },
+    {
+        commentId: 2,
+        comment: "react comments zijn hard"
+    },
+    {
+        commentId: 3,
+        comment: "react is een pracht van een lelijke parel"
+    }
+]
 
 class ProjectData extends React.Component{
     render() {
         return(
-            <div className="centerData">
-                <p><b>Project name:</b></p>
+            <div className="centerDataOfProject">
+
+                <div className="buttonsInProj">
+                    <p><span className="buttonEditProj"><a href="mailto:test@test.com">JOIN</a></span></p>
+
+                    <p className="marginButtonEditProj">
+<                      NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
+                    </p>
+                </div>
+
+                <p className="paragraafEditProj"><b>Project name:</b></p>
                 <span>{projects[0].title}</span>
+
+                <p className="paragraafEditProj"><b>Owner:</b></p>
+                <span>{projects[0].owner}</span>
+
+                <p className="paragraafEditProj"><b>Creation Date:</b></p>
+                <span>25/10/1998</span>
             
-                <p><b>Description:</b></p>
+                <p className="paragraafEditProj"><b>Description:</b></p>
                 <span>{projects[0].description}</span>
+
+                <p className="paragraafEditProj"><b>Groupsize:</b></p>
+                <span>4 members</span>
             
-                <p><b>Problem:</b></p>
-                <span>There are some difficulties to understand german</span>
-
-                <p><span className="button"><a href="mailto:test@test.com">stuur mail naar project</a></span></p>
-
-                <p className="marginButton">
-                <NavLink to="/CreateProject"><p className="back"><span className="button">Edit Project</span></p></NavLink>
-                </p>
+                <p className="paragraafEditProj"><b>Problem:</b></p>
+                <span>There are some difficulties to understand react</span>
 
             </div>
         )
@@ -164,15 +192,33 @@ class Competences extends React.Component {
     }
 }
 
+class Comments extends React.Component{
+   
+    render() {
+        return(
+            <div>
+                <h2 className="titleComments">Comments</h2>
+                <hr className="hrComments" />
+                <p><i class="fas fa-user approachComment"></i><input className="addCommentEditProj" type="text" placeholder="Add comment"></input></p>
+                
+                <div className="commentBox">
+                    <h4><i class="fas fa-user"></i> {User.name}</h4>
+                    <p>{comments[0].comment} <i class="far fa-thumbs-up styleLikeComment"></i></p>
+                </div>
+    
+            </div>
+        )
+    };
+}
 
 class Projectpage extends React.Component {
     render() {
         return (
             <div>
                 <Header version="project" />
-                <MyProjects />
                 <ProjectData />
                 <Competences />
+                <Comments />
             </div>
         );
     }
