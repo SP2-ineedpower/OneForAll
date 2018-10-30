@@ -1,7 +1,6 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Header from './Header';
-import Projects from './Projects';
 import '../css/projectpage.css';
 
 const projects = [
@@ -9,7 +8,7 @@ const projects = [
         id: 1,
         title: "Ineedpower",
         owner: "nicolas pecher",
-        description:"an awesome project for the good of students",
+        description: "an awesome project for the good of students",
         tags: "c++"
     }, {
         id: 2,
@@ -60,6 +59,16 @@ const User = {
     type: "admin"
 }
 
+const links = [
+    {
+        linkId: 1,
+        link: "https://nicolas-pecher.github.io/SidhartaProject/"
+    }, {
+        linkId: 2,
+        link: "https://cas.ehb.be/login"
+    }
+]
+
 const comments = [
     {
         commentId: 1,
@@ -75,17 +84,33 @@ const comments = [
     }
 ]
 
-class ProjectData extends React.Component{
+const commentLikes = [
+    {
+        likeId:1,
+        commentId:1
+    },{
+        likeId:2,
+        commentId:1
+    },{
+        likeId:3,
+        commentId:1
+    },{
+        likeId:3,
+        commentId:3
+    }
+]
+
+class ProjectData extends React.Component {
     render() {
-        return(
+        return (
             <div className="centerDataOfProject">
 
                 <div className="buttonsInProj">
                     <p><span className="buttonEditProj"><a href="mailto:test@test.com">JOIN</a></span></p>
 
-                    <p className="marginButtonEditProj">
-<                      NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
-                    </p>
+                    <div className="marginButtonEditProj">
+                        <NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
+                    </div>
                 </div>
 
                 <p className="paragraafEditProj"><b>Project name:</b></p>
@@ -96,13 +121,13 @@ class ProjectData extends React.Component{
 
                 <p className="paragraafEditProj"><b>Creation Date:</b></p>
                 <span>25/10/1998</span>
-            
+
                 <p className="paragraafEditProj"><b>Description:</b></p>
                 <span>{projects[0].description}</span>
 
                 <p className="paragraafEditProj"><b>Groupsize:</b></p>
                 <span>4 members</span>
-            
+
                 <p className="paragraafEditProj"><b>Problem:</b></p>
                 <span>There are some difficulties to understand react</span>
 
@@ -111,7 +136,7 @@ class ProjectData extends React.Component{
     };
 }
 
-class Competences extends React.Component {
+class Tags extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -166,7 +191,7 @@ class Competences extends React.Component {
                 console.log(`pos: ${pos}`);
             }
         }
-        tags.splice(pos,1);
+        tags.splice(pos, 1);
         this.setState({
         });
     }
@@ -192,21 +217,188 @@ class Competences extends React.Component {
     }
 }
 
-class Comments extends React.Component{
-   
+class Like extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state= {
+            liked : false,
+            commentId: this.props.commentId
+        }
+        this.handleLikeClick = this.handleLikeClick.bind(this);
+    }
+
+    handleLikeClick(e){
+        if (!this.state.liked) {
+            e.target.className="far fa-thumbs-up styleLikeComment likeClicked";
+            const like = {
+                commentId:this.state.commentId
+            }
+            commentLikes.push(like);
+            this.setState({
+                liked:true
+            });
+        } else {
+            e.target.className="far fa-thumbs-up styleLikeComment";
+            this.setState({
+                liked:false
+            });
+            commentLikes.pop();
+        }
+    }
+
+    likes() {
+        let teller = 0;
+        for (let index = 0; index < commentLikes.length; index++) {
+            if(this.state.commentId === commentLikes[index].commentId)
+            {
+                teller ++;
+            }
+        }
+        return teller;
+    }
+
     render() {
         return(
             <div>
-                <h2 className="titleComments">Comments</h2>
-                <hr className="hrComments" />
-                <p><i class="fas fa-user approachComment"></i><input className="addCommentEditProj" type="text" placeholder="Add comment"></input></p>
-                
-                <div className="commentBox">
-                    <h4><i class="fas fa-user"></i> {User.name}</h4>
-                    <p>{comments[0].comment} <i class="far fa-thumbs-up styleLikeComment"></i></p>
-                </div>
-    
+                <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
+                {this.likes()}
             </div>
+        )
+    }
+}
+
+class UserLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let link = {
+            linkId: 4,
+            link: this.state.value
+        }
+        links.push(link);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < links.length; index++) {
+            if (links[index].linkId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        links.splice(pos, 1);
+        this.setState({
+        });
+    }
+
+    render() {
+        const linksList = links.map(link => (
+            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+        ))
+        return (
+            <div>
+                <div className="profileTitle">
+                    <b>Links</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
+                </div>
+                <div className="profileContainer">
+                    {linksList}
+                </div>
+            </div>
+        );
+    }
+}
+
+class Comments extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:"",
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
+    }
+
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const comment = {
+            commentId:4,
+            comment:this.state.value
+        }
+        comments.push(comment);
+        this.setState({
+            value:""
+        });
+    }
+
+    
+
+    
+
+    render() {
+        const commentsList = comments.map(comment => (
+            <div className="commentBox" key={comment.commentId}>
+                <h4><i className="fas fa-user"></i> {User.name}</h4>
+                <p>{comment.comment}</p>
+                <Like commentId={comment.commentId}></Like>
+            </div>
+        ))
+        return (
+            
+            <form onSubmit={this.handleSubmit}>
+                <h2 className="titleComments">Comments</h2>
+                <p><i className="fas fa-user approachComment"></i>
+                <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
+                </p>
+                {commentsList}
+            </form>
         )
     };
 }
@@ -217,7 +409,8 @@ class Projectpage extends React.Component {
             <div>
                 <Header version="project" />
                 <ProjectData />
-                <Competences />
+                <UserLinks />
+                <Tags />
                 <Comments />
             </div>
         );

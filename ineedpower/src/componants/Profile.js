@@ -307,7 +307,6 @@ class Competences extends React.Component {
         for (let index = 0; index < tags.length; index++) {
             if (tags[index].tagId === id) {
                 pos = index;
-                console.log(`pos: ${pos}`);
             }
         }
         tags.splice(pos, 1);
