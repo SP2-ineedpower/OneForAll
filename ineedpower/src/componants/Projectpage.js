@@ -49,7 +49,7 @@ const tags = [ //dummy tags
 
 const User = {
     userId: 1,
-    name: "Nicolas",
+    name: "Bobby",
     email: "nicolas.pecher@student.ehb.be",
     experience: 0,
     bio: "Ik hou van React",
@@ -103,33 +103,29 @@ const commentLikes = [
 class ProjectData extends React.Component {
     render() {
         return (
-            <div className="centerDataOfProject">
-
-                <div className="buttonsInProj">
-                    <p><span className="buttonEditProj"><a href="mailto:test@test.com">JOIN</a></span></p>
-
-                    <div className="marginButtonEditProj">
+            <div>
+                <div className="rightButton">
+                    <div>
                         <NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
                     </div>
                 </div>
-
-                <p className="paragraafEditProj"><b>Project name:</b></p>
+                <div className="paragraafEditProj">
+                <p><b>Project name:</b></p>
                 <span>{projects[0].title}</span>
 
-                <p className="paragraafEditProj"><b>Owner:</b></p>
+                <p><b>Owner:</b></p>
                 <span>{projects[0].owner}</span>
 
-                <p className="paragraafEditProj"><b>Creation Date:</b></p>
+                <p><b>Creation Date:</b></p>
                 <span>25/10/1998</span>
 
-                <p className="paragraafEditProj"><b>Description:</b></p>
+                <p><b>Description:</b></p>
                 <span>{projects[0].description}</span>
 
-                <p className="paragraafEditProj"><b>Groupsize:</b></p>
+                <p><b>Groupsize:</b></p>
                 <span>4 members</span>
+                </div>
 
-                <p className="paragraafEditProj"><b>Problem:</b></p>
-                <span>There are some difficulties to understand react</span>
 
             </div>
         )
