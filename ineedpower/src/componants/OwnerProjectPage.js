@@ -106,7 +106,7 @@ class ProjectData extends React.Component {
             <div>
                 <div className="rightButton">
                     <div>
-                        <p ><span className="buttonEditProj"><a href="mailto:test@test.com">JOIN</a></span></p>
+                        <NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
                     </div>
                 </div>
                 <div className="paragraafEditProj">
@@ -133,16 +133,77 @@ class ProjectData extends React.Component {
 }
 
 class Tags extends React.Component {
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let tag = {
+            tagId: 4,
+            competence: this.state.value
+        }
+        tags.push(tag);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < tags.length; index++) {
+            if (tags[index].tagId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        tags.splice(pos, 1);
+        this.setState({
+        });
+    }
 
     render() {
         const competenceList = tags.map(tag => (
-            <div className="tags" key={tag.tagId}><span>{tag.competence}</span></div>
+            <div className="tags" key={tag.tagId}><span>{tag.competence}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
         ))
         return (
             <div>
-                <div className="profileTitle">
-                    <b>Competences</b>
+                <div className="importantCompetences">
+                    <b>Tags:</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
                 </div>
                 <div className="profileContainer">
                     {competenceList}
@@ -203,15 +264,78 @@ class Like extends React.Component {
 }
 
 class UserLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let link = {
+            linkId: 4,
+            link: this.state.value
+        }
+        links.push(link);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < links.length; index++) {
+            if (links[index].linkId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        links.splice(pos, 1);
+        this.setState({
+        });
+    }
 
     render() {
         const linksList = links.map(link => (
-            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></div>
+            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
         ))
         return (
             <div>
                 <div className="profileTitle">
                     <b>Links</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
                 </div>
                 <div className="profileContainer">
                     {linksList}
@@ -220,7 +344,6 @@ class UserLinks extends React.Component {
         );
     }
 }
-
 
 class Comments extends React.Component {
     constructor(props) {
@@ -250,7 +373,11 @@ class Comments extends React.Component {
             value:""
         });
     }
+
     
+
+    
+
     render() {
         const commentsList = comments.map(comment => (
             <div className="commentBox" key={comment.commentId}>

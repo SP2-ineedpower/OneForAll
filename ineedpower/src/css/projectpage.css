@@ -5,7 +5,7 @@
     padding: 10px;
     border: 1px solid rgb(117, 117, 117);
     border-radius: 10px;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 .buttonEditProj:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
@@ -16,6 +16,7 @@
 }
 .centerData p{
     margin-top: 20px;
+    margin-left: 80px;
 }
 .centerData span{
     margin-top:3px;
