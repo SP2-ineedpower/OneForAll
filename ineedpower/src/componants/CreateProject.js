@@ -46,6 +46,16 @@ const tags = [ //dummy tags
     }
 ]
 
+const links = [
+    {
+        linkId: 1,
+        link: "https://nicolas-pecher.github.io/SidhartaProject/"
+    }, {
+        linkId: 2,
+        link: "https://cas.ehb.be/login"
+    }
+]
+
 class Competences extends React.Component {
     constructor(props) {
         super(props)
@@ -256,6 +266,89 @@ class SaveButton extends React.Component{
     };
 }
 
+class UserLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            class: '',
+            place: '+',
+            value: ''
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleClick() {
+        this.setState({
+            class: 'input',
+            place: ''
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let link = {
+            linkId: 4,
+            link: this.state.value
+        }
+        links.push(link);
+        this.setState({
+            value: ''
+        });
+    }
+
+    handleBlur() {
+        this.setState({
+            class: '',
+            place: '+',
+            value: ''
+        });
+    }
+
+    handleButtonClick(id, e) {
+        //console.log(id);
+        let pos = -1;
+        for (let index = 0; index < links.length; index++) {
+            if (links[index].linkId === id) {
+                pos = index;
+                console.log(`pos: ${pos}`);
+            }
+        }
+        links.splice(pos, 1);
+        this.setState({
+        });
+    }
+
+    render() {
+        const linksList = links.map(link => (
+            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+        ))
+        return (
+            <div>
+                <div className="profileTitle">
+                    <b>Links</b>
+                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
+                </div>
+                <div className="profileContainer">
+                    {linksList}
+                </div>
+            </div>
+        );
+    }
+}
+
+
 class EditProject extends React.Component {
     render() {
         return (
@@ -264,6 +357,7 @@ class EditProject extends React.Component {
                 <EditProjectName />
                 <EditDescription />
                 <EditGroupsize />
+                <UserLinks />
                 <Competences />
                 <SaveButton />
             </div>
