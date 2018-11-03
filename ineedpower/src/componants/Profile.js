@@ -3,19 +3,19 @@ import Header from './Header';
 import Projects from './Projects';
 import { NavLink } from 'react-router-dom'
 import '../css/profile.css';
-import pencil from '../pictures/pencil.svg'
+import pencil from '../pictures/pencil.svg';
 
-const User = {
-    userId: 1,
-    name: "Nicolas",
-    email: "nicolas.pecher@student.ehb.be",
-    experience: 0,
-    bio: "Ik hou van React",
-    schoolYear: "2",
-    subject: "dig-x swe",
-    age: "19",
-    type: "admin"
-}
+// const User = {
+//     userId: 1,
+//     name: "Nicolas",
+//     email: "nicolas.pecher@student.ehb.be",
+//     experience: 0,
+//     bio: "Ik hou van React",
+//     schoolYear: "2",
+//     subject: "dig-x swe",
+//     age: "19",
+//     type: "admin"
+// }
 
 const projects = [
     {
@@ -65,8 +65,10 @@ class InputProfile extends React.Component {
         super(props)
         this.state = {
             class: '',
-            value: this.props.value
+            value: this.props.value,
+            updated:false
         }
+        console.log("input constructor")
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -87,6 +89,9 @@ class InputProfile extends React.Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({ value: nextProps.value });  
+      }
 
     render() {
         if (this.props.textarea === "true") {
@@ -120,39 +125,60 @@ class InputProfile extends React.Component {
 }
 
 
-function Userdata() {
+class Userdata extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            User: {}
+        }
+        console.log("User constructor");
+    }
+
+
+    componentDidMount() {
+        console.log("MOUNT")
+        fetch('http://localhost:5000/users')
+            .then(res => res.json())
+            .then(res => this.setState({ User: res.data[0]}, () => console.log('user fetched', res)));
+    }
+
+
+    render() {
+        const usr = this.state.User;
+        console.log("renderUser");
     return (
         <div className="grid-userdata">
+        {console.log(this.state.User.name)}
             <div className="padding">
                 <p className="profile">
                     <b>Name: </b>
-                    <span>{User.name}</span>
+                    <span>{this.state.User.name}</span>
                 </p>
 
                 <p className="profile">
                     <b>Email: </b>
-                    <span>{User.email}</span>
+                    <span>{this.state.User.email}</span>
                 </p>
 
                 <div className="profile">
                     <b>Age: </b>
-                    <InputProfile value={User.age} type="number"></InputProfile>
+                    <InputProfile value={usr.age} type="number"></InputProfile>
 
                 </div>
 
                 <div className="profile">
                     <b>Schoolyear: </b>
-                    <InputProfile value={User.schoolYear} type="number"></InputProfile>
+                    <InputProfile value={usr.schoolYear} type="number"></InputProfile>
                 </div>
 
                 <div className="profile">
                     <b>subject: </b>
-                    <InputProfile value={User.subject} type="text"></InputProfile>
+                    <InputProfile value={usr.subject} type="text"></InputProfile>
                 </div>
 
                 <div className="profile">
                     <b>Bio: </b>
-                    <InputProfile value={User.bio} textarea="true"></InputProfile>
+                    <InputProfile value={usr.bio} textarea="true"></InputProfile>
                 </div>
             </div>
             <div id="wrapper">
@@ -160,6 +186,7 @@ function Userdata() {
             </div>
         </div>
     );
+    }
 }
 
 class UserLinks extends React.Component {
@@ -341,7 +368,7 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
-                <Header version="user" />
+                <Header version="user"></Header>
                 <Userdata></Userdata>
                 <UserLinks></UserLinks>
                 <MyProjects></MyProjects>

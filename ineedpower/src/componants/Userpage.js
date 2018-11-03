@@ -2,18 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Projects from './Projects';
 
-const User = {
-    userId: 1,
-    name: "Nicolas",
-    email: "nicolas.pecher@student.ehb.be",
-    experience: 0,
-    bio: "Ik hou van React",
-    schoolYear: "2",
-    subject: "dig-x swe",
-    age: "19",
-    type: "admin"
-}
-
 const projects = [
     {
         id: 1,
@@ -54,7 +42,24 @@ const links = [
 
 
 
-function Userdata() {
+class Userdata extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            User : {}
+        }
+    }
+
+    componentDidMount() {
+        console.log("MOUNT")
+        fetch('http://localhost:5000/users')
+            .then(res => res.json())
+            .then(res => this.setState({ User: res.data[0] }, () => console.log('user fetched', res)));
+    }
+
+    render() {
+        const User = this.state.User;
     return (
         <div className="grid-userdata">
             <div className="padding">
@@ -93,6 +98,7 @@ function Userdata() {
             </div>
         </div>
     );
+    }
 }
 
 class UserLinks extends React.Component {
