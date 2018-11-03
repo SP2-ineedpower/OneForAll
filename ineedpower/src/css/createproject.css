@@ -119,4 +119,8 @@ textarea.editable {
     text-align: center;
 }
 
-  
+input{
+    border: 1px solid lightgray;
+    width: 85px;
+    border-radius: 5px;
+}
