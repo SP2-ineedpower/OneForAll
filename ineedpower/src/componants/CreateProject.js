@@ -254,12 +254,51 @@ class EditGroupsize extends React.Component{
     }
 }
 
+class EditProblem extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            html:`<ul></ul>`,
+            problem:"",
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
+    }
+
+    handleChange(event) {
+        this.setState({problem: event.target.value})
+      }
+
+    handleSubmit(event){
+        event.preventDefault();
+        this.setState({html: event.target.value})
+        }; 
+
+    render() {
+        return (
+            <div className="centerProjectdata">
+
+                <div className="projectName">
+                    <p>
+                        <b>Add Problem: </b>
+                    </p>
+
+                    <form onSubmit={this.handleSubmit}>
+                     <p><input type="text" name="problem" value={this.state.problem} onChange={this.handleChange.bind(this)}></input></p>
+                    </form>
+            </div>
+            </div>
+        );
+    }
+}
+
 class SaveButton extends React.Component{
     render() {
         return (
             <div className="centerSave">
                 <p className="spatie">
-                    <NavLink to="/Projectpage"><p className="back"><span className="save">SAVE</span></p></NavLink>
+                    <NavLink to="/OwnerProjectPage"><p className="back"><span className="save">SAVE</span></p></NavLink>
                 </p>
             </div>
         )
@@ -357,6 +396,7 @@ class EditProject extends React.Component {
                 <EditProjectName />
                 <EditDescription />
                 <EditGroupsize />
+                <EditProblem />
                 <UserLinks />
                 <Competences />
                 <SaveButton />

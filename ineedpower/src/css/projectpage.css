@@ -25,6 +25,7 @@
 .paragraafEditProj{
     margin-top: -90px;
     margin-bottom: 20px;
+    margin-left:10px;
     text-align: left;
     font-size: 1.5em;
 }
@@ -83,4 +84,11 @@ div .paragraafEditProj p,span{
 
 .fa-thumbs-up:before {
     margin-right: 5px;
+}
+.fitIn{
+    display: block;
+    margin-left: 5px;
+}
+.centerUlProblem{
+    margin-left: 80px;
 }
