@@ -1,23 +1,86 @@
-.centerData{
-    text-align: left;
-    font-size: 1.5em;
-}
-.button{
+.buttonEditProj{
+    font-weight: 100;
     display:inline-block;
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid rgb(117, 117, 117);
     border-radius: 10px;
+    font-size: 1.5em;
 }
-.button:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117)
+.buttonEditProj:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
-.marginButton{
-    margin-top: 20px;
+.rightButton{
+    text-align: right;
+    margin-right: 20px;
 }
 .centerData p{
     margin-top: 20px;
+    margin-left: 80px;
 }
 .centerData span{
     margin-top:3px;
+}
+
+.paragraafEditProj{
+    margin-top: -90px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 1.5em;
+}
+div .paragraafEditProj p,span{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-left: 90px;
+}
+.titleComments{
+    margin: 0px 80px;
+    padding-bottom: 10px;
+    font-size: 2em;
+    border-bottom: 1px solid lightgray;
+}
+
+.addCommentEditProj{
+    border: 1px solid gray;
+    padding:5px 20px;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-bottom: 60px;
+    margin-top: 20px;
+    width: 400px;
+    
+}
+.addCommentEditProj:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117) 
+}
+.approachComment{
+    margin-left: 90px;
+    padding-left: 0px;
+}
+.commentBox{
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding:5px 20px;
+    margin-bottom: 20px;
+    margin-left:80px;
+    margin-right:80px;    
+}
+.styleLikeComment{
+    color: lightgray;
+}
+
+.commentBox p {
+    padding: 10px 0px;
+}
+
+.fa-user:before {
+    margin-right: 10px;
+}
+
+.likeClicked{
+    color: lightskyblue;
+}
+
+.fa-thumbs-up:before {
+    margin-right: 5px;
 }
