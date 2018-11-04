@@ -6,17 +6,17 @@ import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
 
-const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
-    projectId: 1,
-    name: "I Need Power",
-    creatorId: "Bob De Bouwer", //dit kan natuurlijk niet als ID, dient gewoon voor een visuele ondersteuning
-    description: "awesome project made by awesome people",
-    ended: "false",
-    issueId: "laravel werkt niet.", // moet nog besproken worden
-    creationDate: "25/10/2018",
-    groupsize: "6",
-    tags: "c++"
-}
+// const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
+//     projectId: 1,
+//     name: "I Need Power",
+//     creatorId: "Bob De Bouwer", //dit kan natuurlijk niet als ID, dient gewoon voor een visuele ondersteuning
+//     description: "awesome project made by awesome people",
+//     ended: "false",
+//     issueId: "laravel werkt niet.", // moet nog besproken worden
+//     creationDate: "25/10/2018",
+//     groupsize: "6",
+//     tags: "c++"
+// }
 const tags = [ //dummy tags
     {
         tagId: 1,
@@ -123,7 +123,7 @@ class Competences extends React.Component {
         return (
             <div>
                 <div className="importantCompetences">
-                    <b>Competences:</b>
+                    <b>Tags:</b>
                     <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                         <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
                         </input>

@@ -76,16 +76,10 @@ class Userdata extends React.Component {
                 <div className="profile">
                     <b>Age: </b>
                     <span>{User.age}</span>
-
                 </div>
 
                 <div className="profile">
-                    <b>Schoolyear: </b>
-                    <span>{User.schoolYear}</span>
-                </div>
-
-                <div className="profile">
-                    <b>subject: </b>
+                    <b>Field of study: </b>
                     <span>{User.subject}</span>
                 </div>
 

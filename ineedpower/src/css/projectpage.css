@@ -28,7 +28,7 @@
     text-align: left;
     font-size: 1.5em;
 }
-div .paragraafEditProj p,span{
+div .paragraafEditProj p, .paragraafEditProj span{
     margin-top: 20px;
     margin-bottom: 10px;
     padding-left: 90px;
