@@ -2,32 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Projects from './Projects';
 
-const tags = [
-    {
-        tagId: 1,
-        competence: "test"
-    }, {
-        tagId: 2,
-        competence: "c++"
-    }, {
-        tagId: 3,
-        competence: "java"
-    }
-]
-const links = [
-    {
-        linkId: 1,
-        link: "https://nicolas-pecher.github.io/SidhartaProject/"
-    }, {
-        linkId: 2,
-        link: "https://cas.ehb.be/login"
-    }
-]
-
-
-
-
-
 class Userdata extends React.Component {
 
     constructor(props) {
@@ -81,9 +55,21 @@ class Userdata extends React.Component {
 }
 
 class UserLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            links:{}
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/userLinks')
+            .then(res => res.json())
+            .then(res => this.setState({ links: res.data }, () => console.log('links fetched', res)));
+    }
 
     render() {
-        const linksList = links.map(link => (
+        const linksList = this.state.links.map(link => (
             <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></div>
         ))
         return (
@@ -131,11 +117,22 @@ class MyProjects extends React.Component {
 }
 
 class Competences extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            competences:{}
+        }
+    }
 
+    componentDidMount() {
+        fetch('http://localhost:5000/userCompetences')
+            .then(res => res.json())
+            .then(res => this.setState({ competences: res.data }, () => console.log('competences fetched', res)));
+    }
 
     render() {
-        const competenceList = tags.map(tag => (
-            <div className="tags" key={tag.tagId}><span>{tag.competence}</span></div>
+        const competenceList = this.state.competences.map(competence => (
+            <div className="tags" key={competence.competenceId}><span>{competence.competence}</span></div>
         ))
         return (
             <div>

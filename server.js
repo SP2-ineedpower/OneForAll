@@ -6,6 +6,8 @@ const app = express();
 
 const SELECTUSERS = 'SELECT * from user where userId = 1';
 const SELECTPROJECT = 'SELECT * FROM project where creatorId = 1';
+const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';
+const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1';
 
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',
@@ -26,6 +28,30 @@ app.use(cors());
 
 app.get('/users', (req,res) => {
     connection.query(SELECTUSERS,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/userLinks', (req,res) => {
+    connection.query(SELECTLINKS,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/userCompetences', (req,res) => {
+    connection.query(SELECTCOMPETENCES,(err, results) => {
         if(err) {
             return res.send(err)
         } else {
