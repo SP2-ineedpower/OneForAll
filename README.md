@@ -8,5 +8,7 @@ making an awsome web application for our school project
 *NIEWE TERMINAL AANMAKEN*
 
 -cd ineedpower
+
 -npm install  --save react-router
+
 -npm start
