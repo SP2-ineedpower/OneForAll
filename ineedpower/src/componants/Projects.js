@@ -37,10 +37,10 @@ class Projects extends React.Component {
     
     displayprojects() {
         const listProjects = this.props.projs.map(project => (
-            <div key={project.id}>
+            <div key={project.projectId}>
                 <div className={randomGradient()}>
-                <p>{project.title}</p>
-                <p>by {project.owner}</p>
+                <p>{project.name}</p>
+                <p>by {project.creatorId}</p>
                 {this.tagList(project)}
                 </div>
             </div>

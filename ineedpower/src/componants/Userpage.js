@@ -2,20 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Projects from './Projects';
 
-const projects = [
-    {
-        id: 1,
-        title: "Ineedpower",
-        owner: "nicolas pecher",
-        tags: "c++"
-    }, {
-        id: 2,
-        title: "PowerneedI",
-        owner: "piet piraat",
-        tags: "js"
-    }
-];
-
 const tags = [
     {
         tagId: 1,
@@ -47,12 +33,11 @@ class Userdata extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            User : {}
+            User: {}
         }
     }
 
     componentDidMount() {
-        console.log("MOUNT")
         fetch('http://localhost:5000/users')
             .then(res => res.json())
             .then(res => this.setState({ User: res.data[0] }, () => console.log('user fetched', res)));
@@ -60,38 +45,38 @@ class Userdata extends React.Component {
 
     render() {
         const User = this.state.User;
-    return (
-        <div className="grid-userdata">
-            <div className="padding">
-                <p className="profile">
-                    <b>Name: </b>
-                    <span>{User.name}</span>
-                </p>
+        return (
+            <div className="grid-userdata">
+                <div className="padding">
+                    <p className="profile">
+                        <b>Name: </b>
+                        <span>{User.name}</span>
+                    </p>
 
-                <p className="profile">
-                    <b>Email: </b>
-                    <span>{User.email}</span>
-                </p>
+                    <p className="profile">
+                        <b>Email: </b>
+                        <span>{User.email}</span>
+                    </p>
 
-                <div className="profile">
-                    <b>Age: </b>
-                    <span>{User.age}</span>
+                    <div className="profile">
+                        <b>Age: </b>
+                        <span>{User.age}</span>
+                    </div>
+
+                    <div className="profile">
+                        <b>Field of study: </b>
+                        <span>{User.subject}</span>
+                    </div>
+
+                    <div className="profile">
+                        <b>Bio: </b>
+                        <span>{User.bio}</span>
+                    </div>
                 </div>
-
-                <div className="profile">
-                    <b>Field of study: </b>
-                    <span>{User.subject}</span>
-                </div>
-
-                <div className="profile">
-                    <b>Bio: </b>
-                    <span>{User.bio}</span>
+                <div id="wrapper">
                 </div>
             </div>
-            <div id="wrapper">
-            </div>
-        </div>
-    );
+        );
     }
 }
 
@@ -114,19 +99,39 @@ class UserLinks extends React.Component {
     }
 }
 
-function MyProjects() {
-    return (
-        <div>
-            <p className="profileTitle"><b>Projects</b></p>
-            <div className="profileContainer">
-                <Projects projs={projects}></Projects>
-            </div>
-        </div>
-    );
+class MyProjects extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            projects: [],
+            fetched: false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projects')
+            .then(res => res.json())
+            .then(res => this.setState({ projects: res.data, fetched:true }, () => console.log('projects fetched', res)));
+    }
+
+    render() {
+        if (this.state.fetched) {
+            return (
+                <div>
+                    <p className="profileTitle"><b>Projects</b></p>
+                    <div className="profileContainer">
+                        <Projects projs={this.state.projects} ></Projects>
+                    </div>
+                </div>
+            );
+        } else {
+           return <p>projects can't be fetched</p>
+        }
+    }
 }
 
 class Competences extends React.Component {
-    
+
 
     render() {
         const competenceList = tags.map(tag => (

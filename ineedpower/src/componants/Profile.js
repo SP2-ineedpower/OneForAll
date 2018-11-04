@@ -17,20 +17,6 @@ import pencil from '../pictures/pencil.svg';
 //     type: "admin"
 // }
 
-const projects = [
-    {
-        id: 1,
-        title: "Ineedpower",
-        owner: "nicolas pecher",
-        tags: "c++"
-    }, {
-        id: 2,
-        title: "PowerneedI",
-        owner: "piet piraat",
-        tags: "js"
-    }
-];
-
 const tags = [
     {
         tagId: 1,
@@ -260,15 +246,36 @@ class UserLinks extends React.Component {
     }
 }
 
-function MyProjects() {
-    return (
-        <div>
-            <p className="profileTitle"><b>Projects</b></p>
-            <div className="profileContainer">
-                <Projects projs={projects}></Projects>
-            </div>
-        </div>
-    );
+class MyProjects extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            projects: [],
+            fetched: false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projects')
+            .then(res => res.json())
+            .then(res => this.setState({ projects: res.data, fetched:true }, () => console.log('projects fetched', res)));
+    }
+
+    render() {
+        if (this.state.fetched) {
+            return (
+                <div>
+                    <p className="profileTitle"><b>Projects</b></p>
+                    <div className="profileContainer">
+                        <Projects projs={this.state.projects} ></Projects>
+                    </div>
+                </div>
+            );
+        } else {
+           return <p>projects can't be fetched</p>
+        }
+    }
+    
 }
 
 class Competences extends React.Component {
