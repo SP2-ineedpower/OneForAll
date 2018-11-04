@@ -10,7 +10,6 @@ const projects = [
         owner: "nicolas pecher",
         description: "an awesome project for the good of students",
         likes: "56",
-        problem: "Trouble understanding Python",
         tags: "c++"
     }, {
         id: 2,
@@ -107,6 +106,19 @@ const commentLikes = [
     }
 ]
 
+const problems = [
+    {
+        problemId: 1,
+        problem:'page not loading',
+        solved : false
+    }, {
+        problemId: 2,
+        problem:'link with database not working',
+        solved : false
+    }
+]
+
+
 class ProjectData extends React.Component {
     render() {
         return (
@@ -137,10 +149,6 @@ class ProjectData extends React.Component {
                 <p><b>Groupsize:</b></p>
                 <span>4 members</span>
 
-                <p><b>Problem:</b></p>
-                <ul>
-                    <li className="centerUlProblem">{projects[0].problem}</li>
-                </ul>
                 </div>
 
             </div>
@@ -273,6 +281,24 @@ class UserLinks extends React.Component {
     }
 }
 
+class Problems extends React.Component {
+    render() {
+        const ProblemList = problems.map(problem => (
+            <div key={problem.poblemId}>{problem.problem}</div>
+        ))
+        return (
+            <div>
+                <div className="profileTitle">
+                    <b>Problems</b>
+                </div>
+                <div className="profileContainer">
+                    {ProblemList}
+                </div>
+            </div>
+        );
+    }
+}
+
 class Comments extends React.Component {
     constructor(props) {
         super(props);
@@ -330,6 +356,7 @@ class Projectpage extends React.Component {
                 <Header version="project" />
                 <ProjectData />
                 <UserLinks />
+                <Problems />
                 <Tags />
                 <Comments />
             </div>
