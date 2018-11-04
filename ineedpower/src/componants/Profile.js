@@ -68,7 +68,6 @@ class InputProfile extends React.Component {
             value: this.props.value,
             updated:false
         }
-        console.log("input constructor")
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -116,7 +115,7 @@ class InputProfile extends React.Component {
         return (
             <form className="profileInput">
                 <label>
-                    <input value={this.state.value} onChange={this.handleChange} type={this.props.type}></input>
+                    <input value={this.state.value} onChange={this.handleChange} type="text"></input>
                     <img src={pencil} alt="edit button" className="pencil" />
                 </label>
             </form>
@@ -131,12 +130,10 @@ class Userdata extends React.Component{
         this.state = {
             User: {}
         }
-        console.log("User constructor");
     }
 
 
     componentDidMount() {
-        console.log("MOUNT")
         fetch('http://localhost:5000/users')
             .then(res => res.json())
             .then(res => this.setState({ User: res.data[0]}, () => console.log('user fetched', res)));
@@ -145,10 +142,8 @@ class Userdata extends React.Component{
 
     render() {
         const usr = this.state.User;
-        console.log("renderUser");
     return (
         <div className="grid-userdata">
-        {console.log(this.state.User.name)}
             <div className="padding">
                 <p className="profile">
                     <b>Name: </b>
@@ -167,12 +162,7 @@ class Userdata extends React.Component{
                 </div>
 
                 <div className="profile">
-                    <b>Schoolyear: </b>
-                    <InputProfile value={usr.schoolYear} type="number"></InputProfile>
-                </div>
-
-                <div className="profile">
-                    <b>subject: </b>
+                    <b>Field of study: </b>
                     <InputProfile value={usr.subject} type="text"></InputProfile>
                 </div>
 
@@ -242,7 +232,6 @@ class UserLinks extends React.Component {
         for (let index = 0; index < links.length; index++) {
             if (links[index].linkId === id) {
                 pos = index;
-                console.log(`pos: ${pos}`);
             }
         }
         links.splice(pos, 1);
