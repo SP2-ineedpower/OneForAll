@@ -99,7 +99,13 @@ const commentLikes = [
     }
 ]
 
+const projectLike = 
+    {
+        projectLikeId:1
+    }
+
 class ProjectData extends React.Component {
+    
     render() {
         return (
             <div>
@@ -111,6 +117,11 @@ class ProjectData extends React.Component {
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
                 <span>{projects[0].title}</span>
+                
+                <div>
+                <p><b>Likes:</b></p>
+                <span className="fitIn"><Like projectLikeId={projectLike.projectLikeId}></Like></span>
+                </div>
 
                 <p><b>Owner:</b></p>
                 <span>{projects[0].owner}</span>

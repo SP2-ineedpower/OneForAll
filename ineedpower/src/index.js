@@ -7,6 +7,7 @@ import './index.css';
 import Home from './componants/Home';
 import Userpage from './componants/Userpage';
 import Projectpage from './componants/Projectpage';
+import OwnerProjectPage from './componants/OwnerProjectPage';
 import Errorpage from './componants/Error';
 import Profile from './componants/Profile';
 import NewProject from './componants/CreateProject';
@@ -21,6 +22,7 @@ class Application extends React.Component {
             <Route path="/" component={Home} exact />
             <Route path="/Userpage" component={Userpage} />
             <Route path="/Projectpage" component={Projectpage} />
+            <Route path="/OwnerProjectPage" component={OwnerProjectPage} />
             <Route path="/Profile" component={Profile} />
             <Route path="/createproject" component={NewProject} />
             <Route component={Errorpage} />
