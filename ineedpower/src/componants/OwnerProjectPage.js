@@ -116,6 +116,11 @@ const problems = [
         problem:'link with database not working',
         solved : false
     }
+    , {
+        problemId: 3,
+        problem:'difficulties with fetching data',
+        solved : true
+    }
 ]
 
 
@@ -281,22 +286,40 @@ class UserLinks extends React.Component {
     }
 }
 
-class Problems extends React.Component {
+class ProblemsOwner extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state= {
+            problems : problems
+        }
+        
+    }
+
+    isSolved(problem) {
+        if (problem.solved) {
+            return "problemBox solvedProblem";
+        } else {
+            return "problemBox";
+        }
+    }
+
     render() {
         const ProblemList = problems.map(problem => (
-            <div key={problem.poblemId}>{problem.problem}</div>
+
+            <div className={this.isSolved(problem)} key={problem.problemId} onChange={this.handleSolved} >
+                <p>{problem.problem}</p>
+            </div>
         ))
         return (
+            
             <div>
-                <div className="profileTitle">
-                    <b>Problems</b>
-                </div>
-                <div className="profileContainer">
-                    {ProblemList}
-                </div>
+                <h2 className="titleComments">Problems</h2>
+                {ProblemList}
             </div>
-        );
-    }
+        )
+    };
+
 }
 
 class Comments extends React.Component {
@@ -356,7 +379,7 @@ class Projectpage extends React.Component {
                 <Header version="project" />
                 <ProjectData />
                 <UserLinks />
-                <Problems />
+                <ProblemsOwner />
                 <Tags />
                 <Comments />
             </div>

@@ -92,3 +92,31 @@ div .paragraafEditProj p, .paragraafEditProj span{
 .centerUlProblem{
     margin-left: 80px;
 }
+.problemBox{
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding:5px 5px;
+    margin-bottom: 20px;
+    margin-left:80px;
+    margin-right:80px;  
+    margin-top:20px;
+}
+.problemBox p {
+    padding: 10px 0px;
+}
+.addProblemEditProj{
+    border: 1px solid gray;
+    padding:5px 20px;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-bottom: 60px;
+    margin-top: 20px;
+    width: 400px;
+    
+}
+.addProblemEditProj:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117) 
+}
+.solvedProblem{
+    border: 1px solid rgb(38, 148, 38);
+}

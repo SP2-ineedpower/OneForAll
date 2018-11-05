@@ -56,6 +56,23 @@ const links = [
     }
 ]
 
+const problems = [
+    {
+        problemId: 1,
+        problem:'page not loading',
+        solved : false
+    }, {
+        problemId: 2,
+        problem:'link with database not working',
+        solved : false
+    }
+    , {
+        problemId: 3,
+        problem:'difficulties with fetching data',
+        solved : false
+    }
+]
+
 class Competences extends React.Component {
     constructor(props) {
         super(props)
@@ -254,43 +271,53 @@ class EditGroupsize extends React.Component{
     }
 }
 
-class EditProblem extends React.Component{
+class Problems extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            html:`<ul></ul>`,
-            problem:"",
+            value:"",
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         
     }
 
-    handleChange(event) {
-        this.setState({problem: event.target.value})
-      }
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
 
     handleSubmit(event){
         event.preventDefault();
-        this.setState({html: event.target.value})
-        }; 
+        const problem = {
+            problemId:4,
+            problem:this.state.value
+        }
+        problems.push(problem);
+        this.setState({
+            value:""
+        });
+    }    
 
     render() {
+        const ProblemList = problems.map(problem => (
+            <div className="problemBox" key={problem.problemId}>
+                <p>{problem.problem}</p>
+            </div>
+        ))
         return (
-            <div className="centerProjectdata">
+            
+            <form onSubmit={this.handleSubmit}>
+                <h2 className="titleComments">Problems</h2>
+                <p><i className="fas fa-user approachComment"></i>
+                <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
+                </p>
+                {ProblemList}
+            </form>
+        )
+    };
 
-                <div className="projectName">
-                    <p>
-                        <b>Add Problem: </b>
-                    </p>
-
-                    <form onSubmit={this.handleSubmit}>
-                     <p><input type="text" name="problem" value={this.state.problem} onChange={this.handleChange.bind(this)}></input></p>
-                    </form>
-            </div>
-            </div>
-        );
-    }
 }
 
 class SaveButton extends React.Component{
@@ -396,7 +423,7 @@ class EditProject extends React.Component {
                 <EditProjectName />
                 <EditDescription />
                 <EditGroupsize />
-                <EditProblem />
+                <Problems />
                 <UserLinks />
                 <Competences />
                 <SaveButton />
