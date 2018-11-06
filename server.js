@@ -5,9 +5,11 @@ const app = express();
 
 
 const SELECTUSERS = 'SELECT * from user where userId = 1';
-const SELECTPROJECT = 'SELECT * FROM project where creatorId = 1';
+const SELECTUSERPROJECTS = 'SELECT * FROM project where creatorId = 1';
 const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';
 const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1';
+const SELECTDISPLAYPROJECT = 'SELECT * FROM project where projectId = ';
+const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1'
 
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',
@@ -62,8 +64,8 @@ app.get('/userCompetences', (req,res) => {
     });
 })
 
-app.get('/projects', (req,res) => {
-    connection.query(SELECTPROJECT,(err, results) => {
+app.get('/userprojects', (req,res) => {
+    connection.query(SELECTUSERPROJECTS,(err, results) => {
         if(err) {
             return res.send(err)
         } else {
@@ -73,6 +75,34 @@ app.get('/projects', (req,res) => {
         }
     });
 })
+
+app.get('/displayProject', (req,res) => {
+    const projId  = req.param("projId");
+
+    console.log(projId);
+    connection.query(SELECTDISPLAYPROJECT + 1  ,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/projectcomment', (req,res) => {
+    connection.query(SELECTPROJECTCOMMENT,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
 
 
 const port = 5000;

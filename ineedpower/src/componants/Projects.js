@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom'
 import '../css/project.css';
 
 
@@ -35,15 +36,21 @@ class Projects extends React.Component {
         return tag;
     }
     
+    getNav(id){
+        console.log(id);
+        return `/Projectpage/?projId=${id}`
+    }
+
     displayprojects() {
         const listProjects = this.props.projs.map(project => (
-            <div key={project.projectId}>
+            
+            <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
                 <p>{project.name}</p>
                 <p>by {project.creatorId}</p>
                 {this.tagList(project)}
                 </div>
-            </div>
+            </div></NavLink>
         ))
         return listProjects;
     }
