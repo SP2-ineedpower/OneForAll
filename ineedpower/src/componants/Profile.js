@@ -5,40 +5,6 @@ import { NavLink } from 'react-router-dom'
 import '../css/profile.css';
 import pencil from '../pictures/pencil.svg';
 
-// const User = {
-//     userId: 1,
-//     name: "Nicolas",
-//     email: "nicolas.pecher@student.ehb.be",
-//     experience: 0,
-//     bio: "Ik hou van React",
-//     schoolYear: "2",
-//     subject: "dig-x swe",
-//     age: "19",
-//     type: "admin"
-// }
-
-const tags = [
-    {
-        tagId: 1,
-        competence: "test"
-    }, {
-        tagId: 2,
-        competence: "c++"
-    }, {
-        tagId: 3,
-        competence: "java"
-    }
-]
-const links = [
-    {
-        linkId: 1,
-        link: "https://nicolas-pecher.github.io/SidhartaProject/"
-    }, {
-        linkId: 2,
-        link: "https://cas.ehb.be/login"
-    }
-]
-
 
 function Button(props) {
     return (
@@ -64,11 +30,11 @@ class InputProfile extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let link = {
-            linkId: 4,
-            link: this.state.value
-        }
-        links.push(link);
+        // let link = {
+        //     linkId: 4,
+        //     link: this.state.value
+        // }
+        // links.push(link);
         this.setState({
             value: ''
         });
@@ -108,7 +74,6 @@ class InputProfile extends React.Component {
         );
     }
 }
-
 
 class Userdata extends React.Component{
     constructor(props){
@@ -171,7 +136,9 @@ class UserLinks extends React.Component {
         this.state = {
             class: '',
             place: '+',
-            value: ''
+            value: '',
+            links:{},
+            fetched:false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -185,6 +152,12 @@ class UserLinks extends React.Component {
         this.setState({ value: event.target.value });
     }
 
+    componentDidMount() {
+        fetch('http://localhost:5000/userLinks')
+            .then(res => res.json())
+            .then(res => this.setState({ links: res.data, fetched:true }, () => console.log('links fetched', res)));
+    }
+
     handleClick() {
         this.setState({
             class: 'input',
@@ -194,11 +167,11 @@ class UserLinks extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let link = {
-            linkId: 4,
-            link: this.state.value
-        }
-        links.push(link);
+        // let link = {
+        //     linkId: 4,
+        //     link: this.state.value
+        // }
+        // links.push(link);
         this.setState({
             value: ''
         });
@@ -214,21 +187,29 @@ class UserLinks extends React.Component {
 
     handleButtonClick(id, e) {
         //console.log(id);
-        let pos = -1;
-        for (let index = 0; index < links.length; index++) {
-            if (links[index].linkId === id) {
-                pos = index;
-            }
+        // let pos = -1;
+        // for (let index = 0; index < links.length; index++) {
+        //     if (links[index].linkId === id) {
+        //         pos = index;
+        //     }
+        // }
+        // links.splice(pos, 1);
+        // this.setState({
+        // });
+    }
+
+    showLinks(){
+        if (this.state.fetched) {
+            const linksList = this.state.links.map(link => (
+                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+            ))
+            return linksList;
+        } else {
+            return <p>data can't be fetched</p>
         }
-        links.splice(pos, 1);
-        this.setState({
-        });
     }
 
     render() {
-        const linksList = links.map(link => (
-            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
-        ))
         return (
             <div>
                 <div className="profileTitle">
@@ -239,7 +220,7 @@ class UserLinks extends React.Component {
                     </form>
                 </div>
                 <div className="profileContainer">
-                    {linksList}
+                    {this.showLinks()}
                 </div>
             </div>
         );
@@ -284,13 +265,21 @@ class Competences extends React.Component {
         this.state = {
             class: '',
             place: '+',
-            value: ''
+            value: '',
+            competences:{},
+            fetched: false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this)
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/userCompetences')
+            .then(res => res.json())
+            .then(res => this.setState({ competences: res.data,fetched:true }, () => console.log('competences fetched', res)));
     }
 
     handleChange(event) {
@@ -306,12 +295,12 @@ class Competences extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let tag = {
-            tagId: 4,
-            competence: this.state.value
-        }
-        tags.push(tag);
-        this.setState({
+        // let tag = {
+        //     tagId: 4,
+        //     competence: this.state.value
+        // }
+        // tags.push(tag);
+         this.setState({
             value: ''
         });
     }
@@ -326,21 +315,24 @@ class Competences extends React.Component {
 
     handleButtonClick(id, e) {
         //console.log(id);
-        let pos = -1;
-        for (let index = 0; index < tags.length; index++) {
-            if (tags[index].tagId === id) {
-                pos = index;
-            }
-        }
-        tags.splice(pos, 1);
-        this.setState({
-        });
+        // let pos = -1;
+        // for (let index = 0; index < tags.length; index++) {
+        //     if (tags[index].tagId === id) {
+        //         pos = index;
+        //     }
+        // }
+        // tags.splice(pos, 1);
+        // this.setState({
+        // });
     }
 
     render() {
-        const competenceList = tags.map(tag => (
-            <div className="tags" key={tag.tagId}><span>{tag.competence}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
-        ))
+        let competenceList = ''
+        if (this.state.fetched) {
+            competenceList = this.state.competences.map(competence => (
+                <div className="tags" key={competence.competenceId}><span>{competence.competence}</span><button onClick={this.handleButtonClick.bind(this, competence.competenceId)}>x</button></div>
+            ))
+        }
         return (
             <div>
                 <div className="profileTitle">
