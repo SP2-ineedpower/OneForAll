@@ -2,21 +2,6 @@ import React from 'react';
 import Header from './Header';
 import '../css/projectpage.css';
 
-const projects = [
-    {
-        id: 1,
-        title: "Ineedpower",
-        owner: "nicolas pecher",
-        description: "an awesome project for the good of students",
-        tags: "c++"
-    }, {
-        id: 2,
-        title: "PowerneedI",
-        owner: "piet piraat",
-        tags: "js"
-    }
-];
-
 const tags = [ //dummy tags
     {
         tagId: 1,
@@ -107,6 +92,7 @@ const projectLike =
 class ProjectData extends React.Component {
     
     render() {
+        const project = this.props.project;
         return (
             <div>
                 <div className="rightButton">
@@ -116,7 +102,7 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
-                <span>{projects[0].title}</span>
+                <span>{project.name}</span>
                 
                 <div>
                 <p><b>Likes:</b></p>
@@ -124,16 +110,16 @@ class ProjectData extends React.Component {
                 </div>
 
                 <p><b>Owner:</b></p>
-                <span>{projects[0].owner}</span>
+                <span>{}</span>
 
                 <p><b>Creation Date:</b></p>
-                <span>25/10/1998</span>
+                <span>{project.creationDate}</span>
 
                 <p><b>Description:</b></p>
-                <span>{projects[0].description}</span>
+                <span>{project.description}</span>
 
                 <p><b>Groupsize:</b></p>
-                <span>4 members</span>
+                <span>{project.groupsize}</span>
                 </div>
 
 
@@ -212,7 +198,7 @@ class Like extends React.Component {
     }
 }
 
-class UserLinks extends React.Component {
+class ProjectLinks extends React.Component {
 
     render() {
         const linksList = links.map(link => (
@@ -262,6 +248,7 @@ class Comments extends React.Component {
     }
     
     render() {
+        const comment = this.props.comment;
         const commentsList = comments.map(comment => (
             <div className="commentBox" key={comment.commentId}>
                 <h4><i className="fas fa-user"></i> {User.name}</h4>
@@ -283,15 +270,42 @@ class Comments extends React.Component {
 }
 
 class Projectpage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            project:{},
+            comment:{},
+            fetched:false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/displayProject')
+            .then(res => res.json())
+            .then(res => this.setState({ project: res.data, fetched:true }, () => console.log('project fetched', res)));
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projectcomment')
+            .then(res => res.json())
+            .then(res => this.setState({ comment: res.data, fetched:true }, () => console.log('comment fetched', res)));
+    }
+
     render() {
+        console.log(this.state.project)
+        if (this.state.fetched) {
+            return (
+                <div>
+                    <Header version="project" />
+                    <ProjectData project={this.state.project[0]}/>
+                    <ProjectLinks />
+                    <Tags />
+                    <Comments comment={this.state.comment[0]}/>
+                </div>
+            );  
+        }
         return (
-            <div>
-                <Header version="project" />
-                <ProjectData />
-                <UserLinks />
-                <Tags />
-                <Comments />
-            </div>
+           <p>data can not be fetched</p>
         );
     }
 }

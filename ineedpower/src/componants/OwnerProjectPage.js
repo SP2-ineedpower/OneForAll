@@ -3,22 +3,6 @@ import { NavLink } from 'react-router-dom'
 import Header from './Header';
 import '../css/projectpage.css';
 
-const projects = [
-    {
-        id: 1,
-        title: "Ineedpower",
-        owner: "nicolas pecher",
-        description: "an awesome project for the good of students",
-        likes: "56",
-        tags: "c++"
-    }, {
-        id: 2,
-        title: "PowerneedI",
-        owner: "piet piraat",
-        tags: "js"
-    }
-];
-
 const projectLike = 
     {
         projectLikeId:1
@@ -53,17 +37,6 @@ const tags = [ //dummy tags
     }
 ]
 
-const User = {
-    userId: 1,
-    name: "Bobby",
-    email: "nicolas.pecher@student.ehb.be",
-    experience: 0,
-    bio: "Ik hou van React",
-    schoolYear: "2",
-    subject: "dig-x swe",
-    age: "19",
-    type: "admin"
-}
 
 const links = [
     {
@@ -135,7 +108,7 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
-                <span>{projects[0].title}</span>
+                <span>{}</span>
 
                 <div>
                 <p><b>Likes:</b></p>
@@ -143,16 +116,16 @@ class ProjectData extends React.Component {
                 </div>
 
                 <p><b>Owner:</b></p>
-                <span>{projects[0].owner}</span>
+                <span>{}</span>
 
                 <p><b>Creation Date:</b></p>
-                <span>25/10/1998</span>
+                <span></span>
 
                 <p><b>Description:</b></p>
-                <span>{projects[0].description}</span>
+                <span>{}</span>
 
                 <p><b>Groupsize:</b></p>
-                <span>4 members</span>
+                <span></span>
 
                 </div>
 
@@ -268,7 +241,7 @@ class Like extends React.Component {
     }
 }
 
-class UserLinks extends React.Component {
+class ProjectLinks extends React.Component {
     render() {
         const linksList = links.map(link => (
             <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></div>
@@ -354,7 +327,7 @@ class Comments extends React.Component {
     render() {
         const commentsList = comments.map(comment => (
             <div className="commentBox" key={comment.commentId}>
-                <h4><i className="fas fa-user"></i> {User.name}</h4>
+                <h4><i className="fas fa-user"></i> {}</h4>
                 <p>{comment.comment}</p>
                 <Like commentId={comment.commentId}></Like>
             </div>
@@ -378,7 +351,7 @@ class Projectpage extends React.Component {
             <div>
                 <Header version="project" />
                 <ProjectData />
-                <UserLinks />
+                <ProjectLinks />
                 <ProblemsOwner />
                 <Tags />
                 <Comments />
