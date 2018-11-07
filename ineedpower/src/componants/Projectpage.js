@@ -88,16 +88,34 @@ const projectLike =
     {
         projectLikeId:1
     }
-const userEmail = "maxime.de.grauwe@student.ehb.be"
 
 class ProjectData extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state= {
+            email: ""
+        }
+        this.handleEmailClick = this.handleEmailClick.bind(this);
+    }
+
+    handleEmailClick(e){
+        var address = "maxime.degrauwe@student.ehb.be";
+        var body = "Could I join your project?" //naam van project erbij zou fijn zijn
+        var subject = "Joining Project" //met de project name erbij
+        var href = "mailto:" + address + "?"
+         + "subject=" + subject + "&"
+         + "body=" + body;
+        var wndMail;
+        wndMail = window.open(href, "_blank", "scrollbars=yes,resizable=yes,width=100,height=150");
+       
+    }
     render() {
         const project = this.props.project;
         return (
             <div>
                 <div className="rightButton">
                     <div>
-                        <p ><span className="buttonEditProj"><a href="mailto:test@test.com?Subject=Exceeded 2 attempts?body=Hey Coach, I was unable to pass the practice test after 2 attempts. Below is my method of contact along with any details I'd like to discuss.%0dThank you.">JOIN</a></span></p>
+                        <p ><span className="buttonEditProj"><a value={this.state.testUser} onClick={this.handleEmailClick}>JOIN</a></span></p>
                     </div>
                 </div>
                 <div className="paragraafEditProj">
