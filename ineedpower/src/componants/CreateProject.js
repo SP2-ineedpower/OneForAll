@@ -1,22 +1,21 @@
 import React from 'react';
-import ContentEditable from "react-contenteditable"; //npm install react-contenteditable
 import {NavLink} from 'react-router-dom'
 import Header from './Header';
 import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
 
-// const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
-//     projectId: 1,
-//     name: "I Need Power",
-//     creatorId: "Bob De Bouwer", //dit kan natuurlijk niet als ID, dient gewoon voor een visuele ondersteuning
-//     description: "awesome project made by awesome people",
-//     ended: "false",
-//     issueId: "laravel werkt niet.", // moet nog besproken worden
-//     creationDate: "25/10/2018",
-//     groupsize: "6",
-//     tags: "c++"
-// }
+const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
+projectId: 1,
+name: "I Need Power",
+creatorId: "Bob De Bouwer", //dit kan natuurlijk niet als ID, dient gewoon voor een visuele ondersteuning
+description: "awesome project made by students",
+ended: "false",
+issueId: "laravel werkt niet.", // moet nog besproken worden
+creationDate: "25/10/2018",
+groupsize: "6",
+tags: "c++"
+ }
 const tags = [ //dummy tags
     {
         tagId: 1,
@@ -155,23 +154,29 @@ class Competences extends React.Component {
 }
 
 class EditProjectName extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-          html: `<p>I Need Power !</p>`,
-          editable: true
+            value:"",
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
     }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
-
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        this.setState({
+            value: event.target.value
+        });
+    }   
+    
     render() {
+    
         return (
             <div className="centerProjectdata">
 
@@ -179,14 +184,11 @@ class EditProjectName extends React.Component{
                     <p>
                         <b>Name of project: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <form onSubmit={this.handleSubmit}>
+                        <p>
+                        <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
+                        </p>
+                    </form>
                 </div>
             </div>
         );
@@ -194,21 +196,26 @@ class EditProjectName extends React.Component{
 }
 
 class EditDescription extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-          html: `<p>An awesome webapp made by awesome people</p>`,
-          editable: true
+            value:"",
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
     }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        this.setState({
+            value: event.target.value
+        });
+    }   
 
     render() {
         return (
@@ -218,14 +225,12 @@ class EditDescription extends React.Component{
                     <p>
                         <b>Description: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <form onSubmit={this.handleSubmit}>
+                        <p>
+                        <input type="text" placeholder="an awesome app" value={this.state.value} onChange={this.handleChange}></input>
+                        </p>
+                    </form>
+                    
                 </div>
             </div>
         );
@@ -233,22 +238,27 @@ class EditDescription extends React.Component{
 }
 
 class EditGroupsize extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-          html: `<p>6 members</p>`,
-          editable: true
+            value:"",
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
     }
-
-    handleChange = evt => {
-        this.setState({ html: evt.target.value });
-    };
-
-    toggleEditable = () => {
-        this.setState({ editable: !this.state.editable });
-    };
-
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        this.setState({
+            value: event.target.value
+        });
+    }   
+    
     render() {
         return (
             <div className="centerProjectdata">
@@ -257,14 +267,11 @@ class EditGroupsize extends React.Component{
                     <p>
                         <b>Groupsize: </b>
                     </p>
-                    <ContentEditable
-                        className="editable"
-                        tagName="pre"
-                        html={this.state.html} // innerHTML of the editable div
-                        disabled={!this.state.editable} // use true to disable edition
-                        onChange={this.handleChange} // handle innerHTML change
-                        onBlur={this.sanitize}
-                    />
+                    <form onSubmit={this.handleSubmit}>
+                        <p>
+                        <input type="text" placeholder="6" value={this.state.value} onChange={this.handleChange}></input>
+                        </p>
+                    </form>
                 </div>
             </div>
         );
