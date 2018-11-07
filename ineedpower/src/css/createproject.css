@@ -1,27 +1,7 @@
-.centerProjectdata{
-    text-align: center;
-}
-.centerProjectdata h1{
-    text-align: center;
-}
 .centerProjectdata p{
     font-size: 1.5em;
     padding-top: 15px;
     margin-bottom: 20px;
-}
-textarea{
-    border: 1px solid rgb(220,220,220);
-}
-.centerProjectdata .tags{
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    padding: 10px;
-    border: 1px solid  rgb(220,220,220);
-    border-radius: 10px;
-}
-.checking{
-    font-size: 1em;
 }
 .centerProjectdata .tags:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
@@ -92,35 +72,19 @@ textarea{
     padding: 5px 15px;
     width: 120px;
 }
-.test{
-    border: 2px solid black;
-}
-.editable {
-    font-family: sans-serif;
-    margin-left: 10%;
-    text-align: center;
-    width: 75%;
-    min-height: 50px;
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    padding: 5px;
-    resize: none;
-  }
-textarea.editable {
-    font-family: monospace, monospace;
-  }
 
 .projectName p,
-.creator p,
-.creationDate p,
 .description p,
-.groupSize p,
-.problem p{
-    text-align: center;
+.groupSize p
+{
+    text-align: left;
+    margin-left: 80px;
 }
 
-input{
+.projectName input{
     border: 1px solid lightgray;
-    width: 85px;
+    padding: 10px 50px 10px 50px;
+    margin-bottom: 10px;
     border-radius: 5px;
+    text-align: center;
 }

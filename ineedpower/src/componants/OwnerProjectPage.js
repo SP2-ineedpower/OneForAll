@@ -51,17 +51,18 @@ const links = [
 const comments = [
     {
         commentId: 1,
-        comment: "react is awesome nibba"
+        comment: "react is awesome"
     },
     {
         commentId: 2,
-        comment: "react comments zijn hard"
+        comment: "react componenten zijn gemakkelijk te maken"
     },
     {
         commentId: 3,
-        comment: "react is een pracht van een lelijke parel"
+        comment: "react is fantastisch"
     }
 ]
+
 
 const commentLikes = [
     {
@@ -96,8 +97,28 @@ const problems = [
     }
 ]
 
-
 class ProjectData extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state= {
+            email: ""
+        }
+        this.handleEmailClick = this.handleEmailClick.bind(this);
+    }
+
+    handleEmailClick(e){
+        var address = "maxime.degrauwe@student.ehb.be";
+        var body = "Could I join your project?" //naam van project erbij zou fijn zijn
+        var subject = "Joining Project" //met de project name erbij
+        var href = "mailto:" + address + "?"
+         + "subject=" + subject + "&"
+         + "body=" + body;
+        var wndMail;
+        wndMail = window.open(href, "_blank", "scrollbars=yes,resizable=yes,width=100,height=150");
+       
+    }
+    
+    
     render() {
         return (
             <div>
@@ -108,6 +129,7 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
+                <a value={this.state.testUser} onClick={this.handleEmailClick}>test JOIN</a>
                 <span>{}</span>
 
                 <div>
@@ -138,8 +160,7 @@ class LikeOwner extends React.Component {
     constructor(props) {
         super(props);
         this.state= {
-            liked : true,
-            commentId: this.props.commentId
+            email : ""
         }
         this.handleLikeClick = this.handleLikeClick.bind(this);
     }
@@ -157,16 +178,28 @@ class LikeOwner extends React.Component {
         } else {
             e.target.className="far fa-thumbs-up styleLikeComment";
             this.setState({
-                liked:true
+                liked:false
             });
             commentLikes.pop();
         }
+    }
+
+    likes() {
+        let teller = 0;
+        for (let index = 0; index < commentLikes.length; index++) {
+            if(this.state.commentId === commentLikes[index].commentId)
+            {
+                teller ++;
+            }
+        }
+        return teller;
     }
 
     render() {
         return(
             <div>
                 <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
+                {this.likes()}
             </div>
         )
     }
