@@ -88,16 +88,16 @@ const projectLike =
     {
         projectLikeId:1
     }
+const userEmail = "maxime.de.grauwe@student.ehb.be"
 
 class ProjectData extends React.Component {
-    
     render() {
         const project = this.props.project;
         return (
             <div>
                 <div className="rightButton">
                     <div>
-                        <p ><span className="buttonEditProj"><a href="mailto:test@test.com">JOIN</a></span></p>
+                        <p ><span className="buttonEditProj"><a href="mailto:test@test.com?Subject=Exceeded 2 attempts?body=Hey Coach, I was unable to pass the practice test after 2 attempts. Below is my method of contact along with any details I'd like to discuss.%0dThank you.">JOIN</a></span></p>
                     </div>
                 </div>
                 <div className="paragraafEditProj">
@@ -275,7 +275,7 @@ class Projectpage extends React.Component {
         this.state = {
             project:{},
             comment:{},
-            fetched:false
+            fetched:false  
         }
     }
 
