@@ -3,13 +3,18 @@ const express = require('express');
 const cors = require('cors')
 const app = express();
 
-
+//user selects
 const SELECTUSERS = 'SELECT * from user where userId = 1';
 const SELECTUSERPROJECTS = 'SELECT * FROM project where creatorId = 1';
 const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';
 const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1';
+
+//project selects
 const SELECTDISPLAYPROJECT = 'SELECT * FROM project where projectId = ';
-const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1'
+const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1';
+const SELECTPROJECTPROLEM = 'SELECT * from problem where projectId= 1';
+const SELECTPROJECTTAG = 'SELECT * from projecttag where projectId= 1';
+const SELECTPROJECTLINK = 'SELECT * from projectlink where projectId= 1';
 
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',
@@ -28,6 +33,8 @@ connection.connect(function(error) {
 
 app.use(cors());
 
+
+//USERQUERRIES
 app.get('/users', (req,res) => {
     connection.query(SELECTUSERS,(err, results) => {
         if(err) {
@@ -76,6 +83,8 @@ app.get('/userProjects', (req,res) => {
     });
 })
 
+//PROJECTQUERRIES
+
 app.get('/displayProject', (req,res) => {
     const projId  = req.param("projId");
 
@@ -93,6 +102,42 @@ app.get('/displayProject', (req,res) => {
 
 app.get('/projectcomment', (req,res) => {
     connection.query(SELECTPROJECTCOMMENT,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/projecttag', (req,res) => {
+    connection.query(SELECTPROJECTTAG,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/projectlink', (req,res) => {
+    connection.query(SELECTPROJECTLINK,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/projectproblem', (req,res) => {
+    connection.query(SELECTPROJECTPROLEM,(err, results) => {
         if(err) {
             return res.send(err)
         } else {

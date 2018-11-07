@@ -2,34 +2,34 @@ import React from 'react';
 import Header from './Header';
 import '../css/projectpage.css';
 
-const tags = [ //dummy tags
-    {
-        tagId: 1,
-        competence: "test"
-    }, {
-        tagId: 2,
-        competence: "c++"
-    }, {
-        tagId: 3,
-        competence: "java"
-    },
-    {
-        tagId: 4,
-        competence: "docker"
-    },
-    {
-        tagId: 5,
-        competence: "python"
-    },
-    {
-        tagId: 6,
-        competence: "ruby"
-    },
-    {
-        tagId: 7,
-        competence: "react"
-    }
-]
+// const tags = [ //dummy tags
+//     {
+//         tagId: 1,
+//         competence: "test"
+//     }, {
+//         tagId: 2,
+//         competence: "c++"
+//     }, {
+//         tagId: 3,
+//         competence: "java"
+//     },
+//     {
+//         tagId: 4,
+//         competence: "docker"
+//     },
+//     {
+//         tagId: 5,
+//         competence: "python"
+//     },
+//     {
+//         tagId: 6,
+//         competence: "ruby"
+//     },
+//     {
+//         tagId: 7,
+//         competence: "react"
+//     }
+// ]
 
 const User = {
     userId: 1,
@@ -43,15 +43,15 @@ const User = {
     type: "admin"
 }
 
-const links = [
-    {
-        linkId: 1,
-        link: "https://nicolas-pecher.github.io/SidhartaProject/"
-    }, {
-        linkId: 2,
-        link: "https://cas.ehb.be/login"
-    }
-]
+// const links = [
+//     {
+//         linkId: 1,
+//         link: "https://nicolas-pecher.github.io/SidhartaProject/"
+//     }, {
+//         linkId: 2,
+//         link: "https://cas.ehb.be/login"
+//     }
+// ]
 
 const comments = [
     {
@@ -129,12 +129,28 @@ class ProjectData extends React.Component {
 }
 
 class Tags extends React.Component {
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+            tags: {},
+            fetched:false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projecttag')
+            .then(res => res.json())
+            .then(res => this.setState({ tags: res.data, fetched:true }, () => console.log('tags fetched', res)));
+    }
 
     render() {
-        const competenceList = tags.map(tag => (
-            <div className="tags" key={tag.tagId}><span>{tag.competence}</span></div>
-        ))
+        let competenceList = "";
+        if (this.state.fetched) {
+            competenceList = this.state.tags.map(tag => (
+                <div className="tags" key={tag.tagId}><span>{tag.tag}</span></div>
+            ))
+        }
+        
         return (
             <div>
                 <div className="profileTitle">
@@ -199,11 +215,27 @@ class Like extends React.Component {
 }
 
 class ProjectLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            links: {},
+            fetched: false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projectlink')
+            .then(res => res.json())
+            .then(res => this.setState({ links: res.data, fetched:true }, () => console.log('tags fetched', res)));
+    }
 
     render() {
-        const linksList = links.map(link => (
-            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a></div>
-        ))
+        let linksList = "";
+        if (this.state.fetched) {
+            linksList = this.state.links.map(link => (
+                <div className="profileLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a></div>
+            ))
+        }
         return (
             <div>
                 <div className="profileTitle">
@@ -223,10 +255,18 @@ class Comments extends React.Component {
         super(props);
         this.state = {
             value:"",
+            comments:{},
+            fetched:false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/projectcomment')
+            .then(res => res.json())
+            .then(res => this.setState({ comments: res.data, fetched:true }, () => console.log('comments fetched', res)));
     }
 
     handleChange(event){
@@ -248,14 +288,17 @@ class Comments extends React.Component {
     }
     
     render() {
-        const comment = this.props.comment;
-        const commentsList = comments.map(comment => (
-            <div className="commentBox" key={comment.commentId}>
-                <h4><i className="fas fa-user"></i> {User.name}</h4>
-                <p>{comment.comment}</p>
-                <Like commentId={comment.commentId}></Like>
-            </div>
-        ))
+        let commentsList = "";
+        if (this.state.fetched) {
+            commentsList = comments.map(comment => (
+                <div className="commentBox" key={comment.commentId}>
+                    <h4><i className="fas fa-user"></i> {User.name}</h4>
+                    <p>{comment.comment}</p>
+                    <Like commentId={comment.commentId}></Like>
+                </div>
+            ))
+        }
+        
         return (
             
             <form onSubmit={this.handleSubmit}>
@@ -274,7 +317,6 @@ class Projectpage extends React.Component {
         super(props)
         this.state = {
             project:{},
-            comment:{},
             fetched:false  
         }
     }
@@ -285,11 +327,7 @@ class Projectpage extends React.Component {
             .then(res => this.setState({ project: res.data, fetched:true }, () => console.log('project fetched', res)));
     }
 
-    componentDidMount() {
-        fetch('http://localhost:5000/projectcomment')
-            .then(res => res.json())
-            .then(res => this.setState({ comment: res.data, fetched:true }, () => console.log('comment fetched', res)));
-    }
+    
 
     render() {
         console.log(this.state.project)
@@ -300,7 +338,7 @@ class Projectpage extends React.Component {
                     <ProjectData project={this.state.project[0]}/>
                     <ProjectLinks />
                     <Tags />
-                    <Comments comment={this.state.comment[0]}/>
+                    <Comments/>
                 </div>
             );  
         }
