@@ -64,7 +64,7 @@ app.get('/userCompetences', (req,res) => {
     });
 })
 
-app.get('/userprojects', (req,res) => {
+app.get('/userProjects', (req,res) => {
     connection.query(SELECTUSERPROJECTS,(err, results) => {
         if(err) {
             return res.send(err)
