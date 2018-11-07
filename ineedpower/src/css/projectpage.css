@@ -13,6 +13,7 @@
 .rightButton{
     text-align: right;
     margin-right: 20px;
+    margin-top: 20px;
 }
 .centerData p{
     margin-top: 20px;
@@ -23,7 +24,7 @@
 }
 
 .paragraafEditProj{
-    margin-top: -90px;
+    margin-top: -70px;
     margin-bottom: 20px;
     margin-left:10px;
     text-align: left;

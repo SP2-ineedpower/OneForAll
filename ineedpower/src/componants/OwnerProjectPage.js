@@ -98,26 +98,6 @@ const problems = [
 ]
 
 class ProjectData extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            email: ""
-        }
-        this.handleEmailClick = this.handleEmailClick.bind(this);
-    }
-
-    handleEmailClick(e){
-        var address = "maxime.degrauwe@student.ehb.be";
-        var body = "Could I join your project?" //naam van project erbij zou fijn zijn
-        var subject = "Joining Project" //met de project name erbij
-        var href = "mailto:" + address + "?"
-         + "subject=" + subject + "&"
-         + "body=" + body;
-        var wndMail;
-        wndMail = window.open(href, "_blank", "scrollbars=yes,resizable=yes,width=100,height=150");
-       
-    }
-    
     
     render() {
         return (
@@ -129,7 +109,6 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
-                <a value={this.state.testUser} onClick={this.handleEmailClick}>test JOIN</a>
                 <span>{}</span>
 
                 <div>
