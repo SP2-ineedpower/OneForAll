@@ -89,9 +89,6 @@ app.get('/userProjects', (req,res) => {
 //PROJECTQUERRIES
 
 app.get('/displayProject', (req,res) => {
-    const projId  = req.param("projId");
-
-    console.log(projId);
     connection.query(SELECTDISPLAYPROJECT + 1  ,(err, results) => {
         if(err) {
             return res.send(err)
