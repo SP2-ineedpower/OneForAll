@@ -6,7 +6,7 @@ making an awsome web application for our school project
 
 -nodemon start server.js
 
-*NIEWE TERMINAL AANMAKEN*
+*NIEUWE TERMINAL AANMAKEN*
 
 -cd ineedpower
 
