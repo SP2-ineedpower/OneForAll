@@ -1,11 +1,48 @@
 import React from 'react';
 import Header from './Header';
+import Projects from './Projects';
+
+
+class MyProjects extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            projects: [],
+            fetched: false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/userProjects')
+            .then(res => res.json())
+            .then(res => this.setState({ projects: res.data, fetched:true }, () => console.log('projects fetched', res)));
+    }
+
+    render() {
+        if (this.state.fetched) {
+            return (
+                <div>
+                    <p className="profileTitle"><b>Projects</b></p>
+                    <div className="profileContainer">
+                        <Projects projs={this.state.projects} ></Projects>
+                    </div>
+                </div>
+            );
+        } else {
+           return <p>projects can't be fetched</p>
+        }
+    }
+}
+
+
+
+
 class Home extends React.Component {
     render() {
         return (
             <div>
                 <Header version="home" />
-                <h1>This is the Home page</h1>
+                <MyProjects />
             </div>
         );
     }
