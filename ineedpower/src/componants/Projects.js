@@ -38,7 +38,7 @@ class Projects extends React.Component {
     
     getNav(id){
         console.log(id);
-        return `/Projectpage/?projId=${id}`
+        //return `/Projectpage/${id}`
     }
 
     displayprojects() {

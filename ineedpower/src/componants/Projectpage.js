@@ -299,7 +299,7 @@ class Comments extends React.Component {
             commentId:4,
             comment:this.state.value
         }
-        comments.push(comment);
+        this.state.comments.push(comment);
         this.setState({
             value:""
         });
@@ -308,7 +308,7 @@ class Comments extends React.Component {
     render() {
         let commentsList = "";
         if (this.state.fetched) {
-            commentsList = comments.map(comment => (
+            commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>
                     <h4><i className="fas fa-user"></i> {User.name}</h4>
                     <p>{comment.comment}</p>

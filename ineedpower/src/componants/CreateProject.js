@@ -16,44 +16,6 @@ creationDate: "25/10/2018",
 groupsize: "6",
 tags: "c++"
  }
-const tags = [ //dummy tags
-    {
-        tagId: 1,
-        competence: "test"
-    }, {
-        tagId: 2,
-        competence: "c++"
-    }, {
-        tagId: 3,
-        competence: "java"
-    },
-    {
-        tagId: 4,
-        competence: "docker"
-    },
-    {
-        tagId: 5,
-        competence: "python"
-    },
-    {
-        tagId: 6,
-        competence: "ruby"
-    },
-    {
-        tagId: 7,
-        competence: "react"
-    }
-]
-
-const links = [
-    {
-        linkId: 1,
-        link: "https://nicolas-pecher.github.io/SidhartaProject/"
-    }, {
-        linkId: 2,
-        link: "https://cas.ehb.be/login"
-    }
-]
 
 const problems = [
     {
@@ -78,7 +40,9 @@ class Competences extends React.Component {
         this.state = {
             class: '',
             place: '+',
-            value: ''
+            value: '',
+            tags: {},
+            fetched:false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -104,7 +68,7 @@ class Competences extends React.Component {
             tagId: 4,
             competence: this.state.value
         }
-        tags.push(tag);
+        this.state.tags.push(tag);
         this.setState({
             value: ''
         });
@@ -119,37 +83,46 @@ class Competences extends React.Component {
     }
 
     handleButtonClick(id, e) {
-        //console.log(id);
         let pos = -1;
-        for (let index = 0; index < tags.length; index++) {
-            if (tags[index].tagId === id) {
+        for (let index = 0; index < this.state.tags.length; index++) {
+            if (this.state.tags[index].tagId === id) {
                 pos = index;
-                console.log(`pos: ${pos}`);
             }
         }
-        tags.splice(pos,1);
+        this.state.tags.splice(pos,1);
         this.setState({
         });
     }
 
+    componentDidMount() {
+        fetch('http://localhost:5000/projecttag')
+            .then(res => res.json())
+            .then(res => this.setState({ tags: res.data, fetched:true }, () => console.log('tags fetched', res)));
+    }
+
     render() {
-        const competenceList = tags.map(tag => (
-            <div className="tags" key={tag.tagId}><span>{tag.competence}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
-        ))
-        return (
-            <div>
-                <div className="importantCompetences">
-                    <b>Tags:</b>
-                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
-                        </input>
-                    </form>
+        if (this.state.fetched) {
+            const competenceList = this.state.tags.map(tag => (
+                <div className="tags" key={tag.tagId}><span>{tag.tag}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
+            ))
+            return (
+                <div>
+                    <div className="importantCompetences">
+                        <b>Tags:</b>
+                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                            </input>
+                        </form>
+                    </div>
+                    <div className="profileContainer">
+                        {competenceList}
+                    </div>
                 </div>
-                <div className="profileContainer">
-                    {competenceList}
-                </div>
-            </div>
-        );
+            );
+        } else {
+            return <p>data can not be fetched</p>
+        }
+        
     }
 }
 
@@ -157,7 +130,7 @@ class EditProjectName extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:"",
+            value:this.props.name,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -199,7 +172,7 @@ class EditDescription extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:"",
+            value:this.props.description,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -241,7 +214,7 @@ class EditGroupsize extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:"",
+            value:this.props.groupsize,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -345,14 +318,21 @@ class UserLinks extends React.Component {
         this.state = {
             class: '',
             place: '+',
-            value: ''
+            value: '',
+            links: {},
+            fetched: false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this)
+    }
 
+    componentDidMount() {
+        fetch('http://localhost:5000/projectlink')
+            .then(res => res.json())
+            .then(res => this.setState({ links: res.data, fetched:true }, () => console.log('tags fetched', res)));
     }
 
     handleChange(event) {
@@ -372,7 +352,7 @@ class UserLinks extends React.Component {
             linkId: 4,
             link: this.state.value
         }
-        links.push(link);
+        this.state.links.push(link);
         this.setState({
             value: ''
         });
@@ -389,35 +369,41 @@ class UserLinks extends React.Component {
     handleButtonClick(id, e) {
         //console.log(id);
         let pos = -1;
-        for (let index = 0; index < links.length; index++) {
-            if (links[index].linkId === id) {
+        for (let index = 0; index < this.state.links.length; index++) {
+            if (this.state.links[index].linkId === id) {
                 pos = index;
                 console.log(`pos: ${pos}`);
             }
         }
-        links.splice(pos, 1);
+        this.state.links.splice(pos, 1);
         this.setState({
         });
     }
 
     render() {
-        const linksList = links.map(link => (
-            <div className="profileLink" key={link.linkId}><a href={link.link}>{link.link}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
-        ))
-        return (
-            <div>
-                <div className="profileTitle">
-                    <b>Links</b>
-                    <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
-                        </input>
-                    </form>
+        
+        if (this.state.fetched) {
+            const linksList = this.state.links.map(link => (
+                <div className="profileLink" key={link.ProjectLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+            ))
+            return (
+                <div>
+                    <div className="profileTitle">
+                        <b>Links</b>
+                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                            </input>
+                        </form>
+                    </div>
+                    <div className="profileContainer">
+                        {linksList}
+                    </div>
                 </div>
-                <div className="profileContainer">
-                    {linksList}
-                </div>
-            </div>
-        );
+            );
+        } else {
+            return <p>data can not be fetched</p>
+        }
+        
     }
 }
 
