@@ -423,18 +423,38 @@ class UserLinks extends React.Component {
 
 
 class EditProject extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            project:{},
+            fetched:false  
+        }
+    }
+
+
+    componentDidMount() {
+        fetch('http://localhost:5000/displayProject')
+            .then(res => res.json())
+            .then(res => this.setState({ project: res.data, fetched:true }, () => console.log('project fetched', res)));
+    }
+
     render() {
+        if (this.state.fetched) {
+            return (
+                <div>
+                    <Header version="newProject" />
+                    <EditProjectName name={this.state.project[0].name}/>
+                    <EditDescription description={this.state.project[0].description} />
+                    <EditGroupsize groupsize={this.state.project[0].groupsize} />
+                    <Problems />
+                    <UserLinks />
+                    <Competences />
+                    <SaveButton />
+                </div>
+            );
+        }
         return (
-            <div>
-                <Header version="newProject" />
-                <EditProjectName />
-                <EditDescription />
-                <EditGroupsize />
-                <Problems />
-                <UserLinks />
-                <Competences />
-                <SaveButton />
-            </div>
+            <p>data can not be fetched</p>
         );
 
     }

@@ -4,17 +4,20 @@ const cors = require('cors')
 const app = express();
 
 //user selects
-const SELECTUSERS = 'SELECT * from user where userId = 1';
-const SELECTUSERPROJECTS = 'SELECT * FROM project where creatorId = 1';
-const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';
-const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1';
+const SELECTUSERS = 'SELECT * from user where userId = 1';  //    /users
+const SELECTUSERPROJECTS = 'SELECT * FROM project where creatorId = 1'; //   /userProjects
+const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';//    /userLinks
+const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1'; //     /userCompetences
 
 //project selects
-const SELECTDISPLAYPROJECT = 'SELECT * FROM project where projectId = ';
-const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1';
-const SELECTPROJECTPROLEM = 'SELECT * from problem where projectId= 1';
-const SELECTPROJECTTAG = 'SELECT * from projecttag where projectId= 1';
-const SELECTPROJECTLINK = 'SELECT * from projectlink where projectId= 1';
+const SELECTDISPLAYPROJECT = 'SELECT * FROM project where projectId = '; //   /displayProject
+const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1'; //   /projectComment
+const SELECTPROJECTPROLEM = 'SELECT * from problem where projectId= 1';   //   /projectProblem
+const SELECTPROJECTTAG = 'SELECT * from projecttag where projectId= 1';    //    /projecttag
+const SELECTPROJECTLINK = 'SELECT * from projectlink where projectId= 1';   //   /projectLink
+// /participant
+
+
 
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',

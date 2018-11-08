@@ -348,7 +348,6 @@ class Projectpage extends React.Component {
     
 
     render() {
-        console.log(this.state.project)
         if (this.state.fetched) {
             return (
                 <div>
