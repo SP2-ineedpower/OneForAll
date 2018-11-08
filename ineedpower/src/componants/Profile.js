@@ -16,7 +16,7 @@ class MyProjects extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/userprojects')
+        fetch('http://localhost:5000/userprojects/')
             .then(res => res.json())
             .then(res => this.setState({ projects: res.data, fetched: true }, () => console.log('projects fetched', res)));
     }
