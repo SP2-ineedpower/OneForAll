@@ -2,34 +2,6 @@ import React from 'react';
 import Header from './Header';
 import '../css/projectpage.css';
 
-// const tags = [ //dummy tags
-//     {
-//         tagId: 1,
-//         competence: "test"
-//     }, {
-//         tagId: 2,
-//         competence: "c++"
-//     }, {
-//         tagId: 3,
-//         competence: "java"
-//     },
-//     {
-//         tagId: 4,
-//         competence: "docker"
-//     },
-//     {
-//         tagId: 5,
-//         competence: "python"
-//     },
-//     {
-//         tagId: 6,
-//         competence: "ruby"
-//     },
-//     {
-//         tagId: 7,
-//         competence: "react"
-//     }
-// ]
 
 const User = {
     userId: 1,
@@ -42,31 +14,6 @@ const User = {
     age: "19",
     type: "admin"
 }
-
-// const links = [
-//     {
-//         linkId: 1,
-//         link: "https://nicolas-pecher.github.io/SidhartaProject/"
-//     }, {
-//         linkId: 2,
-//         link: "https://cas.ehb.be/login"
-//     }
-// ]
-
-const comments = [
-    {
-        commentId: 1,
-        comment: "react is awesome nibba"
-    },
-    {
-        commentId: 2,
-        comment: "react comments zijn hard"
-    },
-    {
-        commentId: 3,
-        comment: "react is een pracht van een lelijke parel"
-    }
-]
 
 const commentLikes = [
     {
@@ -95,27 +42,26 @@ class ProjectData extends React.Component {
         this.state= {
             email: ""
         }
-        this.handleEmailClick = this.handleEmailClick.bind(this);
     }
 
-    handleEmailClick(e){
+    handleEmailClick(){
         var address = "maxime.degrauwe@student.ehb.be";
         var body = "Could I join your project?" //naam van project erbij zou fijn zijn
         var subject = "Joining Project" //met de project name erbij
         var href = "mailto:" + address + "?"
          + "subject=" + subject + "&"
          + "body=" + body;
-        var wndMail;
-        wndMail = window.open(href, "_blank", "scrollbars=yes,resizable=yes,width=100,height=150");
+        return href;
        
     }
     render() {
         const project = this.props.project;
+        project.creationDate = project.creationDate.slice(0,10);
         return (
             <div>
                 <div className="rightButton">
                     <div>
-                        <p ><span className="buttonEditProj"><a value={this.state.testUser} onClick={this.handleEmailClick}>JOIN</a></span></p>
+                        <p ><span className="buttonEditProj"><a value={this.state.testUser} href={this.handleEmailClick()}>JOIN</a></span></p>
                     </div>
                 </div>
                 <div className="paragraafEditProj">
@@ -158,7 +104,7 @@ class Tags extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/projecttag')
             .then(res => res.json())
-            .then(res => this.setState({ tags: res.data, fetched:true }, () => console.log('tags fetched', res)));
+            .then(res => this.setState({ tags: res.data, fetched:true }));
     }
 
     render() {
@@ -244,7 +190,7 @@ class ProjectLinks extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/projectlink')
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched:true }, () => console.log('tags fetched', res)));
+            .then(res => this.setState({ links: res.data, fetched:true }));
     }
 
     render() {
@@ -284,7 +230,7 @@ class Comments extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/projectcomment')
             .then(res => res.json())
-            .then(res => this.setState({ comments: res.data, fetched:true }, () => console.log('comments fetched', res)));
+            .then(res => this.setState({ comments: res.data, fetched:true }));
     }
 
     handleChange(event){
@@ -342,7 +288,7 @@ class Projectpage extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/displayProject')
             .then(res => res.json())
-            .then(res => this.setState({ project: res.data, fetched:true }, () => console.log('project fetched', res)));
+            .then(res => this.setState({ project: res.data, fetched:true }));
     }
 
     

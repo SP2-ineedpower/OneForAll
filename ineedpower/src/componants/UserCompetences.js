@@ -20,7 +20,7 @@ class Competences extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/userCompetences')
             .then(res => res.json())
-            .then(res => this.setState({ competences: res.data, fetched: true }, () => console.log('competences fetched', res)));
+            .then(res => this.setState({ competences: res.data, fetched: true }));
     }
 
     handleChange(event) {
@@ -36,11 +36,11 @@ class Competences extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // let tag = {
-        //     tagId: 4,
-        //     competence: this.state.value
-        // }
-        // tags.push(tag);
+        let tag = {
+            tagId: 4,
+            competence: this.state.value
+        }
+        this.state.competences.push(tag);
         this.setState({
             value: ''
         });
@@ -55,23 +55,27 @@ class Competences extends React.Component {
     }
 
     handleButtonClick(id, e) {
-        //console.log(id);
-        // let pos = -1;
-        // for (let index = 0; index < tags.length; index++) {
-        //     if (tags[index].tagId === id) {
-        //         pos = index;
-        //     }
-        // }
-        // tags.splice(pos, 1);
-        // this.setState({
-        // });
+        let pos = -1;
+        for (let index = 0; index < this.state.competences.length; index++) {
+            if (this.state.competences[index].competenceId === id) {
+                pos = index;
+            }
+        }
+        this.state.competences.splice(pos, 1);
+        this.setState({
+        });
     }
 
     render() {
         let competenceList = ''
-        if (this.state.fetched) {
+        if (this.props.owner && this.state.fetched) {
             competenceList = this.state.competences.map(competence => (
                 <div className="tags" key={competence.competenceId}><span>{competence.competence}</span><button onClick={this.handleButtonClick.bind(this, competence.competenceId)}>x</button></div>
+            ))
+        }
+        else if(this.state.fetched){
+            competenceList = this.state.competences.map(competence => (
+                <div className="tags" key={competence.competenceId}><span>{competence.competence}</span></div>
             ))
         }
         if (this.props.owner) {

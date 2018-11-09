@@ -17,7 +17,6 @@ class Search extends React.Component {
     }
   
     handleSubmit(event) {
-        console.log(this.state.value);
         event.preventDefault();
     }
   

@@ -18,7 +18,7 @@ class MyProjects extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/userprojects/')
             .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched: true }, () => console.log('projects fetched', res)));
+            .then(res => this.setState({ projects: res.data, fetched: true }));
     }
 
     render() {
@@ -51,7 +51,7 @@ class Profile extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/users')
             .then(res => res.json())
-            .then(res => this.setState({ user: res.data, fetched: true }, () => console.log('user fetched', res)));
+            .then(res => this.setState({ user: res.data, fetched: true }));
     }
 
     render() {

@@ -8,6 +8,7 @@ function Button(props) {
             <NavLink to="/createproject"> <button className="projbutton">Make new project</button></NavLink>
         );
     }
+    return <p></p>;
 }
 
 
@@ -29,11 +30,6 @@ class InputProfile extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // let link = {
-        //     linkId: 4,
-        //     link: this.state.value
-        // }
-        // links.push(link);
         this.setState({
             value: ''
         });
@@ -86,7 +82,6 @@ class Userdata extends React.Component {
 
     render() {
         const usr = this.state.User;
-        console.log(this.props.owner);
         if (this.props.owner) {
             return (
                 <div className="grid-userdata">
@@ -122,37 +117,39 @@ class Userdata extends React.Component {
                 </div>
             );
         } else {
-            // return (
-            //     <div className="grid-userdata">
-            //         <div className="padding">
+            return(
+            <div className="grid-userdata">
+                    <div className="padding">
+                            <p className="profile">
+                                <b>Name: </b>
+                                <span>{this.state.User.name}</span>
+                            </p>
 
-            //             <p className="profile">
-            //                 <b>Name: </b>
-            //                 <span>{this.state.User.name}</span>
-            //             </p>
+                            <p className="profile">
+                                <b>Email: </b>
+                                <span>{this.state.User.email}</span>
+                            </p>
+                        <div className="profile">
+                            <b>Age: </b>
+                            <span>{usr.age}</span>
 
-            //             <p className="profile">
-            //                 <b>Email: </b>
-            //                 <span>{this.state.User.email}</span>
-            //             </p>
+                        </div>
 
-            //             <div className="profile">
-            //                 <b>Age: </b>
-            //                 <span>{usr.age}</span>
-            //             </div>
+                        <div className="profile">
+                            <b>Field of study: </b>
+                            <span>{usr.subject}</span>
+                        </div>
 
-            //             <div className="profile">
-            //                 <b>Field of study: </b>
-            //                 <span>{usr.subject}</span>
-            //             </div>
-
-            //             <div className="profile">
-            //                 <b>Bio: </b>
-            //                 <span>{usr.bio}</span>
-            //             </div>
-            //         </div>
-            //     </div>
-            // );
+                        <div className="profile">
+                            <b>Bio: </b>
+                            <span>{usr.bio}</span>
+                        </div>
+                    </div>
+                    <div id="wrapper">
+                        <Button active={false} />
+                    </div>
+                </div>
+            );
         }
 
     }

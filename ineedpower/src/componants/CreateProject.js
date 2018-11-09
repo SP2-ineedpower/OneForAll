@@ -5,18 +5,6 @@ import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
 
-const Project =   {   //een dummy project maken om te testen, later wordt dit vervangen met project uit database aleja hopelijk
-projectId: 1,
-name: "I Need Power",
-creatorId: "Bob De Bouwer", //dit kan natuurlijk niet als ID, dient gewoon voor een visuele ondersteuning
-description: "awesome project made by students",
-ended: "false",
-issueId: "laravel werkt niet.", // moet nog besproken worden
-creationDate: "25/10/2018",
-groupsize: "6",
-tags: "c++"
- }
-
 const problems = [
     {
         problemId: 1,
@@ -97,7 +85,7 @@ class Competences extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/projecttag')
             .then(res => res.json())
-            .then(res => this.setState({ tags: res.data, fetched:true }, () => console.log('tags fetched', res)));
+            .then(res => this.setState({ tags: res.data, fetched:true }));
     }
 
     render() {
@@ -332,7 +320,7 @@ class UserLinks extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/projectlink')
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched:true }, () => console.log('tags fetched', res)));
+            .then(res => this.setState({ links: res.data, fetched:true }));
     }
 
     handleChange(event) {
@@ -367,12 +355,10 @@ class UserLinks extends React.Component {
     }
 
     handleButtonClick(id, e) {
-        //console.log(id);
         let pos = -1;
         for (let index = 0; index < this.state.links.length; index++) {
             if (this.state.links[index].linkId === id) {
                 pos = index;
-                console.log(`pos: ${pos}`);
             }
         }
         this.state.links.splice(pos, 1);
@@ -421,7 +407,7 @@ class EditProject extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/displayProject')
             .then(res => res.json())
-            .then(res => this.setState({ project: res.data, fetched:true }, () => console.log('project fetched', res)));
+            .then(res => this.setState({ project: res.data, fetched:true }));
     }
 
     render() {

@@ -1,40 +1,55 @@
 import React from 'react';
 import Header from './Header';
-import Projects from './Projects';
+import ProjectDisplay from './projectsDisplay';
 
 
-class MyProjects extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            fetched: false
-        }
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:5000/userProjects')
-            .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched:true }, () => console.log('projects fetched', res)));
-    }
-
+class PopularProjects extends React.Component {
     render() {
-        if (this.state.fetched) {
-            return (
-                <div>
-                    <p className="profileTitle"><b>Projects</b></p>
-                    <div className="profileContainer">
-                        <Projects projs={this.state.projects} ></Projects>
-                    </div>
-                </div>
-            );
-        } else {
-           return <p>projects can't be fetched</p>
-        }
+        return (
+            <ProjectDisplay title="Popular projects" fetch="http://localhost:5000/userprojects/" />
+        );
     }
 }
 
+class CppProjects extends React.Component {
+    render() {
+        return (
+            <ProjectDisplay title="C++" fetch="http://localhost:5000/userprojects/" />
+        );
+    }
+}
 
+class JavaProjects extends React.Component {
+    render() {
+        return (
+            <ProjectDisplay title="Java" fetch="http://localhost:5000/userprojects/" />
+        );
+    }
+}
+
+class WebProjects extends React.Component {
+    render() {
+        return (
+            <ProjectDisplay title="Websites" fetch="http://localhost:5000/userprojects/" />
+        );
+    }
+}
+
+class AngularProjects extends React.Component {
+    render() {
+        return (
+            <ProjectDisplay title="Angular" fetch="http://localhost:5000/userprojects/" />
+        );
+    }
+}
+
+class ReactProjects extends React.Component {
+    render() {
+        return (
+            <ProjectDisplay title="React" fetch="http://localhost:5000/userprojects/" />
+        );
+    }
+}
 
 
 class Home extends React.Component {
@@ -42,7 +57,15 @@ class Home extends React.Component {
         return (
             <div>
                 <Header version="home" />
-                <MyProjects />
+                <div className="projectContainer">
+                    <PopularProjects />
+                    <CppProjects />
+                    <JavaProjects />
+                    <WebProjects />
+                    <AngularProjects />
+                    <ReactProjects />
+                </div>
+
             </div>
         );
     }

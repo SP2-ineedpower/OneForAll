@@ -25,7 +25,7 @@ class UserLinks extends React.Component {
     componentDidMount() {
         fetch('http://localhost:5000/userLinks')
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched: true }, () => console.log('links fetched', res)));
+            .then(res => this.setState({ links: res.data, fetched: true }));
     }
 
     handleClick() {
@@ -57,7 +57,6 @@ class UserLinks extends React.Component {
     }
 
     handleButtonClick(id, e) {
-        //console.log(id);
         let pos = -1;
         for (let index = 0; index < this.state.links.length; index++) {
             if (this.state.links[index].userLinkId === id) {
@@ -97,16 +96,25 @@ class UserLinks extends React.Component {
                 </div>
             );
         } else {
-            return (
-                <div>
-                    <div className="profileTitle">
-                        <b>Links</b>
+            let linksList = {};
+            if (this.state.fetched) {
+                linksList = this.state.links.map(link => (
+                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a></div>
+                ))
+                return (
+                    <div>
+                        <div className="profileTitle">
+                            <b>Links</b>
+                        </div>
+                        <div className="profileContainer">
+                            {linksList}
+                        </div>
                     </div>
-                    <div className="profileContainer">
-                        {this.showLinks()}
-                    </div>
-                </div>
-            );
+                );
+            } else {
+                return <p>data can't be fetched</p>
+            }
+            
         }
         
     }
