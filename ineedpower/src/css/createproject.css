@@ -88,3 +88,30 @@
     border-radius: 5px;
     text-align: center;
 }
+.marginInputParticipant{
+    margin-top: 20px;
+    margin-left: 10px;
+    padding:5px 10px 5px 50px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.participantBox{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 160px;
+    height:30px;
+    text-align: center;
+    margin-left: 125px;
+    margin-top:15px;
+    margin-bottom: 10px;
+}
+.participantBox i{
+    float:left;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+}
+.centerNameParticipant{
+    margin-right: 25px;
+    margin-top: 5px;
+}

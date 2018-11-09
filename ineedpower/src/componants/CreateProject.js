@@ -22,6 +22,27 @@ const problems = [
     }
 ]
 
+const participants = [
+    {
+        participantId: 1,
+        name: "test",
+        userId: 2,
+        projectId: 1
+    },
+    {
+        participantId: 2,
+        name: "test2",
+        userId: 3,
+        projectId: 1
+    },
+    {
+        participantId: 3,
+        name: "test3",
+        userId: 4,
+        projectId: 1
+    }
+]
+
 class Competences extends React.Component {
     constructor(props) {
         super(props)
@@ -288,6 +309,53 @@ class Problems extends React.Component{
 
 }
 
+class EditParticipants extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:""
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
+    }
+
+    handleChange(event){
+        this.setState({
+            value: event.target.value
+        });
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const participant = {
+            participantId:4,
+            name:this.state.value
+        }
+        participants.push(participant);
+        this.setState({
+            value:""
+        });
+    }
+
+    render() {
+
+        const participantList = participants.map(participant => (
+                    <div className="participantBox" key={participant.participantId}>
+                        <i className="fas fa-user"></i><p className="centerNameParticipant">{participant.name}</p>
+                    </div>
+        ))
+        
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <h2 className="titleComments">Participants</h2>
+                <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
+                {participantList}
+            </form>
+        )
+    };
+}
+
 class SaveButton extends React.Component{
     render() {
         return (
@@ -418,6 +486,7 @@ class EditProject extends React.Component {
                     <EditProjectName name={this.state.project[0].name}/>
                     <EditDescription description={this.state.project[0].description} />
                     <EditGroupsize groupsize={this.state.project[0].groupsize} />
+                    <EditParticipants />
                     <Problems />
                     <UserLinks />
                     <Competences />
