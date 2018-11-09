@@ -80,23 +80,6 @@ const commentLikes = [
     }
 ]
 
-const problems = [
-    {
-        problemId: 1,
-        problem:'page not loading',
-        solved : false
-    }, {
-        problemId: 2,
-        problem:'link with database not working',
-        solved : false
-    }
-    , {
-        problemId: 3,
-        problem:'difficulties with fetching data',
-        solved : true
-    }
-]
-
 class ProjectData extends React.Component {
     
     render() {
@@ -276,7 +259,8 @@ class ProblemsOwner extends React.Component{
     constructor(props) {
         super(props);
         this.state= {
-            problems : problems
+            problems : {},
+            fetched: false
         }
         
     }
@@ -289,13 +273,22 @@ class ProblemsOwner extends React.Component{
         }
     }
 
-    render() {
-        const ProblemList = problems.map(problem => (
+    componentDidMount() {
+        fetch('http://localhost:5000/projectproblem')
+            .then(res => res.json())
+            .then(res => this.setState({ problems: res.data, fetched: true }));
+    }
 
-            <div className={this.isSolved(problem)} key={problem.problemId} onChange={this.handleSolved} >
-                <p>{problem.problem}</p>
-            </div>
-        ))
+    render() {
+        let ProblemList = "";
+        if (this.state.fetched) {
+            ProblemList = this.state.problems.map(problem => (
+                <div className={this.isSolved(problem)} key={problem.problemId} onChange={this.handleSolved} >
+                    <p>{problem.problem}</p>
+                </div>
+            ))
+        }
+
         return (
             
             <div>
