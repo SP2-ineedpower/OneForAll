@@ -25,19 +25,19 @@ const problems = [
 const participants = [
     {
         participantId: 1,
-        name: "test",
+        name: "Marie",
         userId: 2,
         projectId: 1
     },
     {
         participantId: 2,
-        name: "test2",
+        name: "Jan",
         userId: 3,
         projectId: 1
     },
     {
         participantId: 3,
-        name: "test3",
+        name: "Jon",
         userId: 4,
         projectId: 1
     }
@@ -313,11 +313,12 @@ class EditParticipants extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:""
+            value:"",
+            participant:{}
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event){
@@ -337,12 +338,24 @@ class EditParticipants extends React.Component{
             value:""
         });
     }
+    handleClick(id,event){
+        let pos = -1;
+        for (let index = 0; index < this.state.participantList.length; index++) {
+            if (this.state.participantList[index].participantId == id) {
+                pos = index;
+            }
+        }
+        this.state.participantList.splice(pos, 1);
+        this.setState({
+
+        });
+    }
 
     render() {
 
         const participantList = participants.map(participant => (
                     <div className="participantBox" key={participant.participantId}>
-                        <i className="fas fa-user"></i><p className="centerNameParticipant">{participant.name}</p>
+                        <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i class="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
                     </div>
         ))
         
