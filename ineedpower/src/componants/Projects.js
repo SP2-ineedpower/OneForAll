@@ -49,12 +49,39 @@ const randomGradient = function() {
     return gradient + " projectback";
 }
 
+class ProjectTags extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            tags: {},
+            fetched:false
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/projecttags/${this.props.id}`)
+            .then(res => res.json())
+            .then(res => this.setState({ tags: res, fetched: true }));
+    }
+
+    render() {
+        if (this.state.fetched) {
+            const tagList = this.state.tags.map(tag => (
+                <span key={tag.tagId}>{tag.tag} </span>))
+            return (
+                <p>tags: {tagList}</p>
+            )
+        } else {
+            return(
+                <p>tags: </p>
+            );
+        }
+    }
+}
+
+
 class Projects extends React.Component {
     
-    tagList(project) {
-        const tag = <p>Tags: {project.tags}</p>;
-        return tag;
-    }
     
     getNav(id){
         return `/Projectpage/${id}`
@@ -62,12 +89,11 @@ class Projects extends React.Component {
 
     displayprojects() {
         const listProjects = this.props.projs.map(project => (
-            
             <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
                 <p>{project.projectname}</p>
                 <p>by {project.name}</p>
-                {this.tagList(project)}
+                <ProjectTags id={project.projectId}/>
                 </div>
             </div></NavLink>
         ))

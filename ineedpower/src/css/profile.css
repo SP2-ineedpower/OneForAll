@@ -1,3 +1,23 @@
+.backgroundprofile
+{
+    background-image: url(../pictures/userbackground.svg);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 65%;
+    position: relative;
+    z-index: 0;
+}
+
+.backgrounduser
+{
+    background-image: url(../pictures/userbackground.svg);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    position: relative;
+    z-index: 0;
+}
+
 .grid-userdata {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -25,6 +45,7 @@
     padding: 20px 40px;
     border-radius: 10px;
     border: solid 1px rgb(185, 185, 185);
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.61);
     margin-top: -50px;
 }
 

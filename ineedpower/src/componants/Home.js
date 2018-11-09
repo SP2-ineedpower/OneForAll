@@ -5,8 +5,9 @@ import ProjectDisplay from './projectsDisplay';
 
 class PopularProjects extends React.Component {
     render() {
+        //this querry will change
         return (
-            <ProjectDisplay title="Popular projects" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Popular projects" fetch="http://localhost:5000/displayProjects" />
         );
     }
 }
@@ -14,7 +15,7 @@ class PopularProjects extends React.Component {
 class CppProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="C++" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="C++" fetch="http://localhost:5000/displayProjects/tag/Cpp" />
         );
     }
 }
@@ -22,7 +23,7 @@ class CppProjects extends React.Component {
 class JavaProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Java" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Java" fetch="http://localhost:5000/displayProjects/tag/Java" />
         );
     }
 }
@@ -30,7 +31,7 @@ class JavaProjects extends React.Component {
 class WebProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Websites" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Websites" fetch="http://localhost:5000/displayProjects/tag/Website" />
         );
     }
 }
@@ -38,7 +39,7 @@ class WebProjects extends React.Component {
 class AngularProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Angular" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Angular" fetch="http://localhost:5000/displayProjects/tag/Angular" />
         );
     }
 }
@@ -46,11 +47,10 @@ class AngularProjects extends React.Component {
 class ReactProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="React" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="React" fetch="http://localhost:5000/displayProjects/tag/React" />
         );
     }
 }
-
 
 class Home extends React.Component {
     render() {

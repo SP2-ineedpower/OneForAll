@@ -1,26 +1,9 @@
 const mysql = require('mysql');
 const express = require('express');
-const cors = require('cors')
 const app = express();
+const cors = require('cors')
 
-//user selects
-const SELECTUSERS = 'SELECT * from user where userId = 1';  //    /users
-const SELECTUSERPROJECTS = 'SELECT * FROM project where creatorId = 1'; //   /userProjects
-const SELECTLINKS = 'SELECT * FROM userlink where userId = 1';//    /userLinks
-const SELECTCOMPETENCES = 'SELECT * FROM competence where userId = 1'; //     /userCompetences
-
-//project selects
-const SELECTDISPLAYPROJECT = 'SELECT * FROM project where projectId = '; //   /displayProject
-const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1'; //   /projectComment
-const SELECTPROJECTPROLEM = 'SELECT * from problem where projectId= 1';   //   /projectProblem
-const SELECTPROJECTTAG = 'SELECT * from projecttag where projectId= 1';    //    /projecttag
-const SELECTPROJECTLINK = 'SELECT * from projectlink where projectId= 1';   //   /projectLink
-const SELECTALLPROJECTS = 'SELECT * FROM project';
-const SELECTPROJECTLIST = 'SELECT p.name as \'projectname\',u.name,projectId FROM project p,user u where u.userId = p.creatorid;'
-// /participant
-
-
-
+app.use(cors());
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',
     user     : '1819SP2_oneforall',
@@ -28,142 +11,137 @@ const connection = mysql.createConnection({
     database : '1819SP2_oneforall'
 });
 
-connection.connect(function(error) {
+let newUser = {
+    'bio' : 'test',
+    'subject' : 'testjes',
+    'age' : 23
+}
+
+connection.connect((error) => {
     if (error) {
         console.log('Error');
     }else {
-        console.log('Connected');
+        console.log('MySQL Database Connected');
     }
 });
 
-app.use(cors());
 
+//USERS
 
-//USERQUERRIES
-app.get('/users', (req,res) => {
-    connection.query(SELECTUSERS,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Select all users from the database
+    app.get('/users', (req, res)=>{
+    let sqlCommand = 'SELECT * FROM user';
+    let query = connection.query(sqlCommand, (err, results)=>{
+        if(err) console.log("Error");
+        console.log(results);
+        res.send(results);
     });
-})
-
-app.get('/userLinks', (req,res) => {
-    connection.query(SELECTLINKS,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
     });
-})
 
-app.get('/userCompetences', (req,res) => {
-    connection.query(SELECTCOMPETENCES,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Select a specific user from the database, based on the ID
+    app.get('/users/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM user WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
     });
-})
 
-app.get('/userProjects', (req,res) => {
-    connection.query(SELECTUSERPROJECTS,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Delete a specific user from the database, based on the ID
+    app.delete('/users/:id', (req, res)=>{
+        let query = connection.query("DELETE FROM user WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is deleted`);
+        });
     });
-})
 
-//PROJECTQUERRIES
+    //Updated the user
+    app.put('/users/:id', (req, res)=>{
 
-app.get('/displayProject', (req,res) => {
-    connection.query(SELECTDISPLAYPROJECT + 1  ,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+        var data = {
+            bio:req.body.bio,
+            subject:req.body.subject,
+            age:req.body.age
+        };
+
+        let query = connection.query("UPDATE user SET ? WHERE userId = ?", [data, req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is updated`);
+        });
     });
-})
 
-app.get('/allProjects', (req,res) => {
-    connection.query(SELECTPROJECTLIST ,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+
+//PROJECTS
+
+
+    //Select all projects from the database
+    app.get('/displayProjects', (req, res)=>{
+        let sqlCommand = "SELECT DISTINCT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId";
+        let query = connection.query(sqlCommand, (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
     });
-})
 
-app.get('/projectcomment', (req,res) => {
-    connection.query(SELECTPROJECTCOMMENT,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Select a project from the database, based on its ID
+    app.get('/displayProjects/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM project WHERE projectId = ?", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
     });
-})
 
-app.get('/projecttag', (req,res) => {
-    connection.query(SELECTPROJECTTAG,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Select a group of projects by one of their tags
+    app.get('/displayProjects/tag/:tag', (req, res)=>{
+        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId and tag = ?", [req.params.tag], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
     });
-})
 
-app.get('/projectlink', (req,res) => {
-    connection.query(SELECTPROJECTLINK,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+    //Select a group of projects by the owner or participant id
+    app.get('/displayProjects/user/:user', (req, res)=>{
+        let query = connection.query("SELECT DISTINCT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u, participant pa WHERE p.projectId = t.projectId and p.creatorId = u.userId and pa.projectId = p.projectId and creatorId = ?", [req.params.user], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
     });
-})
 
-app.get('/projectproblem', (req,res) => {
-    connection.query(SELECTPROJECTPROLEM,(err, results) => {
-        if(err) {
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
+
+//LINKS
+
+    //Select a specific UserLink from the database, based on the userID
+    app.get('/userLinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
     });
-})
+
+
+//TAGS
+
+app.get('/userCompetences/:id', (req, res)=>{
+    let query = connection.query("SELECT * FROM competence WHERE userId = ?", [req.params.id], (err, result)=>{
+        if(err) console.log("Error");
+        console.log(result);
+        res.send(result);
+    });
+});
+
+app.get('/projecttags/:id', (req, res)=>{
+    let query = connection.query("SELECT * FROM projecttag WHERE projectId = ?", [req.params.id], (err, result)=>{
+        if(err) console.log("Error");
+        console.log(result);
+        res.send(result);
+    });
+});
 
 
 
-const port = 5000;
-
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen('5000', () => console.log("Server started on port 5000"));

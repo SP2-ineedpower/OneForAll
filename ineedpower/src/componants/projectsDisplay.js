@@ -14,10 +14,12 @@ class ProjectDisplay extends React.Component {
     componentDidMount() {
         fetch(this.props.fetch)  // must change later
             .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched: true }));
+            .then(res => this.setState({ projects: res, fetched: true }));
+        console.log(this.props.projects)
     }
     render() {
         if (this.state.fetched) {
+            console.log(this.state.projects);
             return (
                 <div>
                     <p className="profileTitle"><b>{this.props.title}</b></p>
