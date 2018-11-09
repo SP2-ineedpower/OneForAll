@@ -6,7 +6,7 @@ import '../css/project.css';
 //generates a random class to generate a random background gradient
 const randomGradient = function() {
     let gradient = '';
-    const number = Math.floor((Math.random() * 8) + 1);
+    const number = Math.floor((Math.random() * 18) + 1);
     switch(number) {
         case 1:gradient = 'spotify';
         break;
@@ -23,6 +23,26 @@ const randomGradient = function() {
         case 7:gradient = 'freeFood';
         break;
         case 8:gradient = 'soda';
+        break;
+        case 9:gradient = 'homeless';
+        break;
+        case 10:gradient = 'battery';
+        break;
+        case 11:gradient = 'login';
+        break;
+        case 12:gradient = 'kennedy';
+        break;
+        case 13:gradient = 'chance';
+        break;
+        case 14:gradient = 'duck';
+        break;
+        case 15:gradient = 'organic';
+        break;
+        case 16:gradient = 'dragon';
+        break;
+        case 17:gradient = 'warm';
+        break;
+        case 18:gradient = 'red';
         break;
         default:gradient = '';
     }
@@ -45,8 +65,8 @@ class Projects extends React.Component {
             
             <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
-                <p>{project.name}</p>
-                <p>by {project.creatorId}</p>
+                <p>{project.projectname}</p>
+                <p>by {project.name}</p>
                 {this.tagList(project)}
                 </div>
             </div></NavLink>

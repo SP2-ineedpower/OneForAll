@@ -15,6 +15,8 @@ const SELECTPROJECTCOMMENT = 'SELECT * FROM projectcomment where projectId = 1';
 const SELECTPROJECTPROLEM = 'SELECT * from problem where projectId= 1';   //   /projectProblem
 const SELECTPROJECTTAG = 'SELECT * from projecttag where projectId= 1';    //    /projecttag
 const SELECTPROJECTLINK = 'SELECT * from projectlink where projectId= 1';   //   /projectLink
+const SELECTALLPROJECTS = 'SELECT * FROM project';
+const SELECTPROJECTLIST = 'SELECT p.name as \'projectname\',u.name,projectId FROM project p,user u where u.userId = p.creatorid;'
 // /participant
 
 
@@ -90,6 +92,18 @@ app.get('/userProjects', (req,res) => {
 
 app.get('/displayProject', (req,res) => {
     connection.query(SELECTDISPLAYPROJECT + 1  ,(err, results) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+})
+
+app.get('/allProjects', (req,res) => {
+    connection.query(SELECTPROJECTLIST ,(err, results) => {
         if(err) {
             return res.send(err)
         } else {

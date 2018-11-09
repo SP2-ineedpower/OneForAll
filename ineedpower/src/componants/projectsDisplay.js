@@ -27,7 +27,13 @@ class ProjectDisplay extends React.Component {
                 </div>
             );
         } else {
-            return <p>projects can't be fetched</p>
+            return (
+                <div>
+                <p className="profileTitle"><b>{this.props.title}</b></p>
+                <div className="profileContainer">
+                </div>
+            </div>
+            );
         }
         
     }
