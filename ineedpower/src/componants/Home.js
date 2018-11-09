@@ -6,7 +6,7 @@ import ProjectDisplay from './projectsDisplay';
 class PopularProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Popular projects" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="Popular projects" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
@@ -14,7 +14,7 @@ class PopularProjects extends React.Component {
 class CppProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="C++" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="C++" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
@@ -22,7 +22,7 @@ class CppProjects extends React.Component {
 class JavaProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Java" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="Java" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
@@ -30,7 +30,7 @@ class JavaProjects extends React.Component {
 class WebProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Websites" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="Websites" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
@@ -38,7 +38,7 @@ class WebProjects extends React.Component {
 class AngularProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Angular" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="Angular" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
@@ -46,7 +46,7 @@ class AngularProjects extends React.Component {
 class ReactProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="React" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="React" fetch="http://localhost:5000/allProjects" />
         );
     }
 }

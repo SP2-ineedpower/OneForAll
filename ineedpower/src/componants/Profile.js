@@ -9,7 +9,7 @@ import '../css/profile.css';
 class MyProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="React" fetch="http://localhost:5000/userprojects/" />
+            <ProjectDisplay title="React" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
