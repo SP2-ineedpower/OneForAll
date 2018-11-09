@@ -8,37 +8,13 @@ import Competences from './UserCompetences';
 
 
 class MyProjects extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            fetched: false
-        }
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:5000/userProjects')
-            .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched: true }, () => console.log('projects fetched', res)));
-    }
-
     render() {
-        if (this.state.fetched) {
-            return (
-               <ProjectDisplay projects={this.state.projects} title="Projects"/>
-            );
-        } else {
-            return <p>projects can't be fetched</p>
-        }
+        return (
+            <ProjectDisplay title="React" fetch="http://localhost:5000/userprojects/" />
+        );
     }
 }
 
-// <div>
-//     <p className="profileTitle"><b>Projects</b></p>
-//     <div className="profileContainer">
-//         <Projects projs={this.state.projects} ></Projects>
-//     </div>
-// </div>
 
 
 

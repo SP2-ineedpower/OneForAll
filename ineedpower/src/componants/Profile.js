@@ -1,41 +1,17 @@
 import React from 'react';
 import Header from './Header';
-import Projects from './Projects';
+import ProjectDisplay from './projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
 import '../css/profile.css';
 
 class MyProjects extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            fetched: false
-        }
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:5000/userprojects/')
-            .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched: true }));
-    }
-
     render() {
-        if (this.state.fetched) {
-            return (
-                <div>
-                    <p className="profileTitle"><b>Projects</b></p>
-                    <div className="profileContainer">
-                        <Projects projs={this.state.projects} ></Projects>
-                    </div>
-                </div>
-            );
-        } else {
-            return <p>projects can't be fetched</p>
-        }
+        return (
+            <ProjectDisplay title="React" fetch="http://localhost:5000/userprojects/" />
+        );
     }
-
 }
 
 
