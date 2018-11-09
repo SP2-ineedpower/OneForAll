@@ -10,7 +10,7 @@ import Competences from './UserCompetences';
 class MyProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="React" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Projects" fetch="http://localhost:5000/allProjects" />
         );
     }
 }
