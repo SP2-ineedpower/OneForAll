@@ -36,14 +36,20 @@ class Profile extends React.Component {
             return (
                 <div>
                     <Header version="user"></Header>
+                    <div className="backgroundprofile">
                     <Userdata user={this.state.user[0]} owner={true}></Userdata>
                     <UserLinks userId={id} owner={true}></UserLinks>
                     <MyProjects userId={id}></MyProjects>
                     <Competences userId={id} owner={true}></Competences>
+                    </div>
                 </div>
             );
         } else {
-            return <p></p>;
+            return (
+                <div className="background">
+                <p></p>
+                </div>
+            );
         }
 
     }

@@ -39,10 +39,12 @@ class Userpage extends React.Component {
             return (
                 <div>
                     <Header version="user" />
+                    <div className="backgrounduser">
                     <Userdata user={this.state.user[0]} owner={false}></Userdata>
                     <UserLinks userId={id} owner={false}></UserLinks>
                     <MyProjects userId={id}></MyProjects>
                     <Competences userId={id} owner={false}></Competences>
+                    </div>
                 </div>
             );
         } else {
