@@ -265,6 +265,7 @@ class Problems extends React.Component{
         super(props);
         this.state = {
             value:"",
+            problems:{}
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -314,7 +315,7 @@ class EditParticipants extends React.Component{
         super(props);
         this.state = {
             value:"",
-            participant:{}
+            participant:participants
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -333,29 +334,28 @@ class EditParticipants extends React.Component{
             participantId:4,
             name:this.state.value
         }
-        participants.push(participant);
+        this.state.participant.push(participant);
         this.setState({
             value:""
         });
     }
     handleClick(id,event){
         let pos = -1;
-        for (let index = 0; index < this.state.participantList.length; index++) {
-            if (this.state.participantList[index].participantId == id) {
+        for (let index = 0; index < this.state.participant.length; index++) {
+            if (this.state.participant[index].participantId === id) {
                 pos = index;
             }
         }
-        this.state.participantList.splice(pos, 1);
+        this.state.participant.splice(pos, 1);
         this.setState({
-
         });
     }
 
     render() {
 
-        const participantList = participants.map(participant => (
+        const participantList = this.state.participant.map(participant => (
                     <div className="participantBox" key={participant.participantId}>
-                        <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i class="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
+                        <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
                     </div>
         ))
         
@@ -373,15 +373,15 @@ class SaveButton extends React.Component{
     render() {
         return (
             <div className="centerSave">
-                <p className="spatie">
-                    <NavLink to="/OwnerProjectPage"><p className="back"><span className="save">SAVE</span></p></NavLink>
-                </p>
+                <div className="spatie">
+                    <NavLink to="/OwnerProjectPage"><div className="back"><span className="save">SAVE</span></div></NavLink>
+                </div>
             </div>
         )
     };
 }
 
-class UserLinks extends React.Component {
+class ProjectLinks extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -451,7 +451,7 @@ class UserLinks extends React.Component {
         
         if (this.state.fetched) {
             const linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.ProjectLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+                <div className="profileLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
             ))
             return (
                 <div>
@@ -501,7 +501,7 @@ class EditProject extends React.Component {
                     <EditGroupsize groupsize={this.state.project[0].groupsize} />
                     <EditParticipants />
                     <Problems />
-                    <UserLinks />
+                    <ProjectLinks />
                     <Competences />
                     <SaveButton />
                 </div>

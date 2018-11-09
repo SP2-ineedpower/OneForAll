@@ -18,9 +18,9 @@ class Competences extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/userCompetences')
+        fetch(`http://localhost:5000/userCompetences/${this.props.userId}`)
             .then(res => res.json())
-            .then(res => this.setState({ competences: res.data, fetched: true }));
+            .then(res => this.setState({ competences: res, fetched: true }));
     }
 
     handleChange(event) {

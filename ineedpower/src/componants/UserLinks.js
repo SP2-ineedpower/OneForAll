@@ -23,9 +23,9 @@ class UserLinks extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/userLinks')
+        fetch(`http://localhost:5000/userLinks/${this.props.userId}`)
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched: true }));
+            .then(res => this.setState({ links: res, fetched: true }));
     }
 
     handleClick() {

@@ -8,8 +8,9 @@ import '../css/profile.css';
 
 class MyProjects extends React.Component {
     render() {
+        const fetch = `http://localhost:5000/displayProjects/user/${this.props.userId}`
         return (
-            <ProjectDisplay title="Projects" fetch="http://localhost:5000/allProjects" />
+            <ProjectDisplay title="Projects" fetch={fetch}/>
         );
     }
 }
@@ -25,9 +26,9 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/users')
+        fetch('http://localhost:5000/users/2')
             .then(res => res.json())
-            .then(res => this.setState({ user: res.data, fetched: true }));
+            .then(res => this.setState({ user: res, fetched: true }));
     }
 
     render() {
