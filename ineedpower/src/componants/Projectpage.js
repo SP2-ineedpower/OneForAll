@@ -2,19 +2,6 @@ import React from 'react';
 import Header from './Header';
 import '../css/projectpage.css';
 
-
-const User = {
-    userId: 1,
-    name: "Bobby",
-    email: "nicolas.pecher@student.ehb.be",
-    experience: 0,
-    bio: "Ik hou van React",
-    schoolYear: "2",
-    subject: "dig-x swe",
-    age: "19",
-    type: "admin"
-}
-
 const commentLikes = [
     {
         likeId:1,
@@ -102,14 +89,15 @@ class Tags extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projecttag')
+        fetch(`http://localhost:5000/projecttags/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ tags: res.data, fetched:true }));
+            .then(res => this.setState({ tags: res, fetched:true }));
     }
 
     render() {
         let competenceList = "";
         if (this.state.fetched) {
+            console.log(this.state.tags);
             competenceList = this.state.tags.map(tag => (
                 <div className="tags" key={tag.tagId}><span>{tag.tag}</span></div>
             ))
@@ -188,9 +176,9 @@ class ProjectLinks extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projectlink')
+        fetch(`http://localhost:5000/projectlinks/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched:true }));
+            .then(res => this.setState({ links: res, fetched:true }));
     }
 
     render() {
@@ -213,7 +201,6 @@ class ProjectLinks extends React.Component {
     }
 }
 
-
 class Comments extends React.Component {
     constructor(props) {
         super(props);
@@ -228,9 +215,10 @@ class Comments extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projectcomment')
+        console.log(this.props.id)
+        fetch(`http://localhost:5000/comments/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ comments: res.data, fetched:true }));
+            .then(res => this.setState({ comments: res, fetched:true }));
     }
 
     handleChange(event){
@@ -252,27 +240,34 @@ class Comments extends React.Component {
     }
     
     render() {
-        let commentsList = "";
         if (this.state.fetched) {
-            commentsList = this.state.comments.map(comment => (
+            console.log(this.state.comments)
+            const commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>
-                    <h4><i className="fas fa-user"></i> {User.name}</h4>
+                    <h4><i className="fas fa-user"></i> {comment.name}</h4>
                     <p>{comment.comment}</p>
                     <Like commentId={comment.commentId}></Like>
                 </div>
             ))
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <h2 className="titleComments">Comments</h2>
+                    <p><i className="fas fa-user approachComment"></i>
+                    <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
+                    </p>
+                    {commentsList}
+                </form>);
+        }else {
+            return(
+                <form onSubmit={this.handleSubmit}>
+                    <h2 className="titleComments">Comments</h2>
+                    <p><i className="fas fa-user approachComment"></i>
+                    <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
+                    </p>
+                </form>
+            );
         }
         
-        return (
-            
-            <form onSubmit={this.handleSubmit}>
-                <h2 className="titleComments">Comments</h2>
-                <p><i className="fas fa-user approachComment"></i>
-                <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
-                </p>
-                {commentsList}
-            </form>
-        )
     };
 }
 
@@ -286,22 +281,25 @@ class Projectpage extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/displayProject')
+        console.log()
+        fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
-            .then(res => this.setState({ project: res.data, fetched:true }));
+            .then(res => this.setState({ project: res[0], fetched:true }));
     }
 
     
 
     render() {
         if (this.state.fetched) {
+            const id = this.state.project.projectId;
+            console.log(this.state.project);
             return (
                 <div>
                     <Header version="project" />
-                    <ProjectData project={this.state.project[0]}/>
-                    <ProjectLinks />
-                    <Tags />
-                    <Comments/>
+                    <ProjectData project={this.state.project}/>
+                    <ProjectLinks id={id} />
+                    <Tags id={id} />
+                    <Comments id={id}/>
                 </div>
             );  
         }
