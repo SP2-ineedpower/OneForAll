@@ -133,6 +133,21 @@ connection.connect((error) => {
         });
     });
 
+    app.get('/userLinks/delete/:id', (req, res)=>{
+        let query = connection.query("delete * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    app.get('/userLinks/add/:id/:url', (req, res)=>{
+        let query = connection.query("insert into userlink values(null,?,?)", [req.params.id,req.params.url], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
 //TAGS
 
