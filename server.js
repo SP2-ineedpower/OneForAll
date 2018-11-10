@@ -133,14 +133,16 @@ connection.connect((error) => {
         });
     });
 
+    //Delete one of the links of a user
     app.get('/userLinks/delete/:id', (req, res)=>{
-        let query = connection.query("delete * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+        let query = connection.query("delete FROM userlink WHERE userLinkId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
         });
     });
 
+    //Add link in the user profile
     app.get('/userLinks/add/:id/:url', (req, res)=>{
         let query = connection.query("insert into userlink values(null,?,?)", [req.params.id,req.params.url], (err, result)=>{
             if(err) console.log("Error");
@@ -151,21 +153,41 @@ connection.connect((error) => {
 
 //TAGS
 
-app.get('/userCompetences/:id', (req, res)=>{
-    let query = connection.query("SELECT * FROM competence WHERE userId = ?", [req.params.id], (err, result)=>{
-        if(err) console.log("Error");
-        console.log(result);
-        res.send(result);
+    //Select all tags of a user based on his id
+    app.get('/userCompetences/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM competence WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
     });
-});
 
-app.get('/projecttags/:id', (req, res)=>{
-    let query = connection.query("SELECT * FROM projecttag WHERE projectId = ?", [req.params.id], (err, result)=>{
-        if(err) console.log("Error");
-        console.log(result);
-        res.send(result);
+    //Add a tag to the competences of a user
+    app.get('/userCompetences/add/:id/:tag', (req, res)=>{
+        let query = connection.query("insert into competence values(null,?,?)", [req.params.id,req.params.tag], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
     });
-});
+
+    //delete a competence of a user
+    app.get('/userCompetences/delete/:id', (req, res)=>{
+        let query = connection.query("DELETE from competence where competenceId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //Select tags of a project
+    app.get('/projecttags/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM projecttag WHERE projectId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
 
 

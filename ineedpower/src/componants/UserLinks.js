@@ -37,8 +37,9 @@ class UserLinks extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const tempNum =this.state.links[this.state.links.length-1].userLinkId + 1; //temporary id of the link
         let link = {
-            userLinkId: 4,        // needs to be changed in the future
+            userLinkId:tempNum,      
             userId: this.props.userId,
             url: this.state.value
         }
@@ -64,6 +65,7 @@ class UserLinks extends React.Component {
                 pos = index;
             }
         }
+        fetch(`http://localhost:5000/userLinks/delete/${id}`)
         this.state.links.splice(pos, 1);
         this.setState({
         });
@@ -72,7 +74,7 @@ class UserLinks extends React.Component {
     showLinks() {
         if (this.state.fetched) {
             const linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.linkId)}>delete</button></div>
+                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.userLinkId)}>delete</button></div>
             ))
             return linksList;
         } else {

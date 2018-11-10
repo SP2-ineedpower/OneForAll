@@ -36,10 +36,12 @@ class Competences extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const tempNum =this.state.competences[this.state.competences.length-1].competenceId + 1; //temporary id of the link
         let tag = {
-            tagId: 4,
+            tagId: tempNum,
             competence: this.state.value
         }
+        fetch(`http://localhost:5000/userCompetences/add/${this.props.userId}/${tag.competence}`)
         this.state.competences.push(tag);
         this.setState({
             value: ''
@@ -61,6 +63,7 @@ class Competences extends React.Component {
                 pos = index;
             }
         }
+        fetch(`http://localhost:5000/userCompetences/delete/${id}`)
         this.state.competences.splice(pos, 1);
         this.setState({
         });
