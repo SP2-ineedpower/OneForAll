@@ -85,7 +85,7 @@ connection.connect((error) => {
     });
 
     //Select a project from the database, based on its ID
-    app.get('/displayProjects/:id', (req, res)=>{
+    app.get('/displayProject/:id', (req, res)=>{
         let query = connection.query("SELECT * FROM project WHERE projectId = ?", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
@@ -124,9 +124,18 @@ connection.connect((error) => {
 
 //LINKS
 
-    //Select a specific UserLink from the database, based on the userID
+    //Select all UserLinks from the database, based on the userID
     app.get('/userLinks/:id', (req, res)=>{
         let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //Select all projectlinks from the database, based on the projectId
+    app.get('/projectlinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM projectlink WHERE projectId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
@@ -189,6 +198,15 @@ connection.connect((error) => {
         });
     });
 
+//COMMENTS
 
+    //Select all comments of a project based on his id
+    app.get('/comments/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM projectcomment,user WHERE user.userId = projectcomment.userId AND projectId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
 app.listen('5000', () => console.log("Server started on port 5000"));

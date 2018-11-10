@@ -111,7 +111,7 @@ class Projects extends React.Component {
     
     
     getNav(id){
-        return `/Projectpage/${id}`
+        return `/Projectpage/#${id}`
     }
 
     displayprojects() {
