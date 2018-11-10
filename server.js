@@ -113,7 +113,7 @@ connection.connect((error) => {
 
     //Display the name of the owner of a project
     app.get('/projectowner/:id', (req, res)=>{
-        let query = connection.query("SELECT u.name from user u, project p where u.userId = p.creatorId and u.userId = ?", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT u.name from user u, project p where u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
