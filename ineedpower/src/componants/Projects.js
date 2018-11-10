@@ -79,6 +79,32 @@ class ProjectTags extends React.Component {
     }
 }
 
+class ProjectOwner extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            owner: '',
+            fetched:false
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/projectowner/${this.props.id}`)
+            .then(res => res.json())
+            .then(res => this.setState({ owner: res[0], fetched: true }));
+    }
+
+
+    render() {
+        if (this.state.fetched) {
+            return <p>by {this.state.owner.name}</p>;
+        } else {
+            return <p></p>;
+        }
+        
+    };
+}
+
 
 class Projects extends React.Component {
     
@@ -92,7 +118,7 @@ class Projects extends React.Component {
             <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
                 <p>{project.projectname}</p>
-                <p>by {project.name}</p>
+                <ProjectOwner id={project.projectId}/>
                 <ProjectTags id={project.projectId}/>
                 </div>
             </div></NavLink>

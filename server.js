@@ -104,12 +104,22 @@ connection.connect((error) => {
 
     //Select a group of projects by the owner or participant id
     app.get('/displayProjects/user/:user', (req, res)=>{
-        let query = connection.query("SELECT DISTINCT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u, participant pa WHERE p.projectId = t.projectId and p.creatorId = u.userId and pa.projectId = p.projectId and creatorId = ?", [req.params.user], (err, results)=>{
+        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ${req.params.user} OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ${req.params.user}`, [req.params.user], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
         });
     });
+
+    //Display the name of the owner of a project
+    app.get('/projectowner/:id', (req, res)=>{
+        let query = connection.query("SELECT u.name from user u, project p where u.userId = p.creatorId and u.userId = ?", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+    
 
 
 //LINKS
