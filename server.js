@@ -95,7 +95,7 @@ connection.connect((error) => {
 
     //Select a group of projects by one of their tags
     app.get('/displayProjects/tag/:tag', (req, res)=>{
-        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId and tag = ?", [req.params.tag], (err, results)=>{
+        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId and LOWER(tag) = ?", [req.params.tag], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
