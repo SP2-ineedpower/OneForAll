@@ -15,7 +15,7 @@ class PopularProjects extends React.Component {
 class CppProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="C++" fetch="http://localhost:5000/displayProjects/tag/Cpp" />
+            <ProjectDisplay title="C++" fetch="http://localhost:5000/displayProjects/tag/cpp" />
         );
     }
 }
@@ -23,7 +23,7 @@ class CppProjects extends React.Component {
 class JavaProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Java" fetch="http://localhost:5000/displayProjects/tag/Java" />
+            <ProjectDisplay title="Java" fetch="http://localhost:5000/displayProjects/tag/java" />
         );
     }
 }
@@ -31,7 +31,7 @@ class JavaProjects extends React.Component {
 class WebProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Websites" fetch="http://localhost:5000/displayProjects/tag/Website" />
+            <ProjectDisplay title="Websites" fetch="http://localhost:5000/displayProjects/tag/website" />
         );
     }
 }
@@ -39,7 +39,7 @@ class WebProjects extends React.Component {
 class AngularProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="Angular" fetch="http://localhost:5000/displayProjects/tag/Angular" />
+            <ProjectDisplay title="Angular" fetch="http://localhost:5000/displayProjects/tag/angular" />
         );
     }
 }
@@ -47,7 +47,7 @@ class AngularProjects extends React.Component {
 class ReactProjects extends React.Component {
     render() {
         return (
-            <ProjectDisplay title="React" fetch="http://localhost:5000/displayProjects/tag/React" />
+            <ProjectDisplay title="React" fetch="http://localhost:5000/displayProjects/tag/react" />
         );
     }
 }
