@@ -119,8 +119,6 @@ connection.connect((error) => {
             res.send(results);
         });
     });
-    
-
 
 //LINKS
 

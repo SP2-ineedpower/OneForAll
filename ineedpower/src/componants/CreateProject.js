@@ -43,7 +43,7 @@ const participants = [
     }
 ]
 
-class Competences extends React.Component {
+class Tags extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -104,9 +104,9 @@ class Competences extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projecttag')
+        fetch(`http://localhost:5000/projecttags/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ tags: res.data, fetched:true }));
+            .then(res => this.setState({ tags: res, fetched:true }));
     }
 
     render() {
@@ -139,7 +139,8 @@ class EditProjectName extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:this.props.name,
+            projName: this.props.name,
+            value:this.props.name
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -156,7 +157,7 @@ class EditProjectName extends React.Component{
             value: event.target.value
         });
     }   
-    
+
     render() {
     
         return (
@@ -181,6 +182,7 @@ class EditDescription extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            projDesc: this.props.description,
             value:this.props.description,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -399,9 +401,9 @@ class ProjectLinks extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projectlink')
+        fetch(`http://localhost:5000/projectlinks/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ links: res.data, fetched:true }));
+            .then(res => this.setState({ links: res, fetched:true }));
     }
 
     handleChange(event) {
@@ -484,25 +486,27 @@ class EditProject extends React.Component {
         }
     }
 
-
     componentDidMount() {
-        fetch('http://localhost:5000/displayProject')
+        fetch(`http://localhost:5000/displayProject/1`)
             .then(res => res.json())
-            .then(res => this.setState({ project: res.data, fetched:true }));
+            .then(res => this.setState({ project: res[0], fetched:true }));
     }
 
     render() {
         if (this.state.fetched) {
+            const projId = this.state.project.projectId;
+            const projName = this.state.project.name;
+            const projDesc = this.state.project.description;
             return (
                 <div>
                     <Header version="newProject" />
-                    <EditProjectName name={this.state.project[0].name}/>
-                    <EditDescription description={this.state.project[0].description} />
-                    <EditGroupsize groupsize={this.state.project[0].groupsize} />
-                    <EditParticipants />
-                    <Problems />
-                    <ProjectLinks />
-                    <Competences />
+                    <EditProjectName name={projName}/>
+                    <EditDescription description={projDesc} />
+                    <EditGroupsize id={projId} />
+                    <EditParticipants id={projId}  />
+                    <Problems id={this.state.project.projectId}/>
+                    <ProjectLinks id={this.state.project.projectId}/>
+                    <Tags id={projId}/>
                     <SaveButton />
                 </div>
             );
