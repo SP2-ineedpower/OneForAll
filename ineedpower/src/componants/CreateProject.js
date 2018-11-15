@@ -5,23 +5,6 @@ import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
 
-const problems = [
-    {
-        problemId: 1,
-        problem:'page not loading',
-        solved : false
-    }, {
-        problemId: 2,
-        problem:'link with database not working',
-        solved : false
-    }
-    , {
-        problemId: 3,
-        problem:'difficulties with fetching data',
-        solved : false
-    }
-]
-
 class Tags extends React.Component {
     constructor(props) {
         super(props)
@@ -266,14 +249,14 @@ class Problems extends React.Component{
             problemId:4,
             problem:this.state.value
         }
-        problems.push(problem);
+        this.state.problems.push(problem);
         this.setState({
             value:""
         });
     }    
 
     render() {
-        const ProblemList = problems.map(problem => (
+        const ProblemList = this.state.problems.map(problem => (
             <div className="problemBox" key={problem.problemId}>
                 <p>{problem.problem}</p>
             </div>
