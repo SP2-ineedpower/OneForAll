@@ -113,14 +113,21 @@ connection.connect((error) => {
 
     //Display the name of the owner of a project
     app.get('/projectowner/:id', (req, res)=>{
-        let query = connection.query("SELECT u.name from user u, project p where u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT u.name FROM user u, project p WHERE u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
         });
     });
-    
 
+    //Select participants of a project based on the id of the project
+    app.get('/project/participants/:id', (req, res)=>{
+        let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
 
 //LINKS
 
@@ -208,5 +215,19 @@ connection.connect((error) => {
             res.send(result);
         });
     });
+
+
+
+//PROBLEMS
+
+    //Select all problems from a project with the project id
+    app.get('/project/projectproblem/:id', (req, res)=>{
+        let query = connection.query("SELECT proj.projectId, prob.problemId, prob.problem FROM problem prob, project proj WHERE proj.projectId = ? AND prob.projectId = proj.projectId", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
 
 app.listen('5000', () => console.log("Server started on port 5000"));

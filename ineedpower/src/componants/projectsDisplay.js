@@ -17,6 +17,7 @@ class ProjectDisplay extends React.Component {
             .then(res => this.setState({ projects: res, fetched: true }));
         console.log(this.props.projects)
     }
+    
     render() {
         if (this.state.fetched) {
             console.log(this.state.projects);
