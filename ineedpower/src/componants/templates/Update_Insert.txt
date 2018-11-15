@@ -1,0 +1,12 @@
+handleSubmit(event) {
+    event.preventDefault();
+    fetch(`http://localhost:5000/`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "key": value   // the "" around the key are important
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+}

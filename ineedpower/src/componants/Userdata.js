@@ -11,12 +11,10 @@ function Button(props) {
     return <p></p>;
 }
 
-
-class InputProfile extends React.Component {
+class AgeInput extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
             value: this.props.value,
             updated: false
         }
@@ -30,8 +28,16 @@ class InputProfile extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({
-            value: ''
+        const age = this.state.value;
+        fetch(`http://localhost:5000/user/age`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "age": age,
+                "id": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
         });
     }
 
@@ -40,36 +46,111 @@ class InputProfile extends React.Component {
     }
 
     render() {
-        if (this.props.textarea === "true") {
-            return (
-                <form>
-                    <label>
-                        <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea"></textarea>
-                    </label>
-                </form>
-            );
-        }
-        if (this.props.type === "text") {
-            return (
-                <form className="profileInput">
-                    <label>
-                        <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
-                        <img src={pencil} alt="edit button" className="pencil" />
-                    </label>
-                </form>
-            );
-        }
         return (
-            <form className="profileInput">
+            <form className="profileInput" onSubmit={this.handleSubmit}>
                 <label>
-                    <input value={this.state.value} onChange={this.handleChange} type="text"></input>
+                    <input value={this.state.value} onChange={this.handleChange} type="text" name="age"></input>
                     <img src={pencil} alt="edit button" className="pencil" />
                 </label>
             </form>
         );
     }
+
 }
 
+class StudyField extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: this.props.value,
+            updated: false
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const subject = this.state.value;
+        fetch(`http://localhost:5000/user/studies`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "studies": subject,
+                "id": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ value: nextProps.value });
+    }
+
+    render() {
+        return (
+            <form className="profileInput" onSubmit={this.handleSubmit}>
+                <label>
+                    <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
+                    <img src={pencil} alt="edit button" className="pencil" />
+                </label>
+            </form>
+        );
+    }
+
+}
+
+class Bio extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: this.props.value,
+            updated: false
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        fetch(`http://localhost:5000/user/bio`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "bio": this.state.value,
+                "id": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ value: nextProps.value });
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} className="bio">
+                <label>
+                    <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea" name="bio"></textarea>
+                    <button type="submit">submit</button>
+                </label>
+            </form>
+        );
+    }
+}
 
 class Userdata extends React.Component {
     constructor(props) {
@@ -79,13 +160,13 @@ class Userdata extends React.Component {
         }
     }
 
-
     render() {
         const usr = this.state.User;
         if (this.props.owner) {
             return (
                 <div className="grid-userdata">
                     <div className="padding">
+                        <div>
                             <p className="profile">
                                 <b>Name: </b>
                                 <span>{this.state.User.name}</span>
@@ -95,20 +176,21 @@ class Userdata extends React.Component {
                                 <b>Email: </b>
                                 <span>{this.state.User.email}</span>
                             </p>
-                        <div className="profile">
-                            <b>Age: </b>
-                            <InputProfile value={usr.age} type="number"></InputProfile>
+                            <div className="profile">
+                                <b>Age: </b>
+                                <AgeInput value={usr.age} id={usr.userId} type="number"></AgeInput>
 
-                        </div>
+                            </div>
 
-                        <div className="profile">
-                            <b>Field of study: </b>
-                            <InputProfile value={usr.subject} type="text"></InputProfile>
-                        </div>
+                            <div className="profile">
+                                <b>Field of study: </b>
+                                <StudyField value={usr.subject} id={usr.userId} type="text"></StudyField>
+                            </div>
 
-                        <div className="profile">
-                            <b>Bio: </b>
-                            <InputProfile value={usr.bio} textarea="true"></InputProfile>
+                            <div className="profile">
+                                <b>Bio: </b>
+                                <Bio value={usr.bio} textarea="true" id={usr.userId}></Bio>
+                            </div>
                         </div>
                     </div>
                     <div id="wrapper">
@@ -117,18 +199,18 @@ class Userdata extends React.Component {
                 </div>
             );
         } else {
-            return(
-            <div className="grid-userdata">
+            return (
+                <div className="grid-userdata">
                     <div className="padding">
-                            <p className="profile">
-                                <b>Name: </b>
-                                <span>{this.state.User.name}</span>
-                            </p>
+                        <p className="profile">
+                            <b>Name: </b>
+                            <span>{this.state.User.name}</span>
+                        </p>
 
-                            <p className="profile">
-                                <b>Email: </b>
-                                <span>{this.state.User.email}</span>
-                            </p>
+                        <p className="profile">
+                            <b>Email: </b>
+                            <span>{this.state.User.email}</span>
+                        </p>
                         <div className="profile">
                             <b>Age: </b>
                             <span>{usr.age}</span>
