@@ -37,6 +37,7 @@ const tags = [ //dummy tags
     }
 ]
 
+// <ProblemsOwner id = {projId}/>
 
 const links = [
     {
@@ -81,8 +82,16 @@ const commentLikes = [
 ]
 
 class ProjectData extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            project: this.props.project
+        }
+    }
     
     render() {
+        console.log(this.state);
         return (
             <div>
                 <div className="rightButton">
@@ -92,7 +101,7 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
-                <span>{}</span>
+                <span>{this.state.name}</span>
 
                 <div>
                 <p><b>Likes:</b></p>
@@ -100,7 +109,7 @@ class ProjectData extends React.Component {
                 </div>
 
                 <p><b>Owner:</b></p>
-                <span>{}</span>
+                <span>{this.state.creatorId}</span>
 
                 <p><b>Creation Date:</b></p>
                 <span></span>
@@ -255,12 +264,11 @@ class ProjectLinks extends React.Component {
 }
 
 class ProblemsOwner extends React.Component{
-
     constructor(props) {
         super(props);
         this.state= {
-            problems : {},
-            fetched: false
+            problems : [],
+            fetched: false 
         }
         
     }
@@ -274,28 +282,26 @@ class ProblemsOwner extends React.Component{
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/projectproblem')
+        fetch(`http://localhost:5000/project/projectproblem/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ problems: res.data, fetched: true }));
+            .then(res => this.setState({ problems: res, fetched: true }));
     }
 
     render() {
-        let ProblemList = "";
+        console.log(this.state.problems);
         if (this.state.fetched) {
-            ProblemList = this.state.problems.map(problem => (
+            const ProblemList = this.state.problems.map(problem => (
                 <div className={this.isSolved(problem)} key={problem.problemId} onChange={this.handleSolved} >
                     <p>{problem.problem}</p>
                 </div>
             ))
+            return (
+                <div>
+                    <h2 className="titleComments">Problems</h2>
+                    {ProblemList}
+                </div>
+            )
         }
-
-        return (
-            
-            <div>
-                <h2 className="titleComments">Problems</h2>
-                {ProblemList}
-            </div>
-        )
     };
 
 }
@@ -351,16 +357,37 @@ class Comments extends React.Component {
 }
 
 class Projectpage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            project:{},
+            fetched:false  
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/displayProject/1`)
+            .then(res => res.json())
+            .then(res => this.setState({ project: res[0], fetched:true }));
+    }
     render() {
+        if(this.state.fetched){
+            const projId = this.state.project.projectId;
+            const project = this.state.project;
+            console.log(this.state.project);
+            return (
+                <div>
+                    <Header version="project" />
+                    <ProjectData project = {project} /> 
+                    <ProjectLinks />
+                    <ProblemsOwner id = {projId}/>
+                    <Tags />
+                    <Comments />
+                </div>
+            );
+        }
         return (
-            <div>
-                <Header version="project" />
-                <ProjectData />
-                <ProjectLinks />
-                <ProblemsOwner />
-                <Tags />
-                <Comments />
-            </div>
+            <p>project can not be fetched</p>
         );
     }
 }

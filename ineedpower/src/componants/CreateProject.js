@@ -22,27 +22,6 @@ const problems = [
     }
 ]
 
-const participants = [
-    {
-        participantId: 1,
-        name: "Marie",
-        userId: 2,
-        projectId: 1
-    },
-    {
-        participantId: 2,
-        name: "Jan",
-        userId: 3,
-        projectId: 1
-    },
-    {
-        participantId: 3,
-        name: "Jon",
-        userId: 4,
-        projectId: 1
-    }
-]
-
 class Tags extends React.Component {
     constructor(props) {
         super(props)
@@ -211,7 +190,7 @@ class EditDescription extends React.Component{
                     </p>
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" placeholder="an awesome app" value={this.state.value} onChange={this.handleChange}></input>
+                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                     
@@ -225,6 +204,7 @@ class EditGroupsize extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            projSize: this.props.groupsize,
             value:this.props.groupsize,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -253,7 +233,7 @@ class EditGroupsize extends React.Component{
                     </p>
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" placeholder="6" value={this.state.value} onChange={this.handleChange}></input>
+                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -317,7 +297,8 @@ class EditParticipants extends React.Component{
         super(props);
         this.state = {
             value:"",
-            participant:participants
+            participants: [],
+            fetched: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -341,6 +322,7 @@ class EditParticipants extends React.Component{
             value:""
         });
     }
+
     handleClick(id,event){
         let pos = -1;
         for (let index = 0; index < this.state.participant.length; index++) {
@@ -353,21 +335,34 @@ class EditParticipants extends React.Component{
         });
     }
 
+    componentDidMount() {
+        fetch(`http://localhost:5000/project/participants/${this.props.id}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participants: res, fetched:true }));
+    }
     render() {
 
-        const participantList = this.state.participant.map(participant => (
-                    <div className="participantBox" key={participant.participantId}>
-                        <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
-                    </div>
-        ))
-        
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <h2 className="titleComments">Participants</h2>
-                <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
-                {participantList}
-            </form>
-        )
+        console.log(this.state.participants);
+
+        if(this.state.fetched){
+            const participantList = this.state.participants.map(participant => (
+                <div className="participantBox" key={participant.participantId}>
+                    <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
+                </div>
+            ))
+    
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <h2 className="titleComments">Participants</h2>
+                        <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
+                        {participantList}
+                    </form>
+                )
+        } else{
+            return(
+                <p>participants could not be fetched</p>
+            )
+        }
     };
 }
 
@@ -497,12 +492,13 @@ class EditProject extends React.Component {
             const projId = this.state.project.projectId;
             const projName = this.state.project.name;
             const projDesc = this.state.project.description;
+            const projSize = this.state.project.groupsize;
             return (
                 <div>
                     <Header version="newProject" />
                     <EditProjectName name={projName}/>
                     <EditDescription description={projDesc} />
-                    <EditGroupsize id={projId} />
+                    <EditGroupsize groupsize={projSize} />
                     <EditParticipants id={projId}  />
                     <Problems id={this.state.project.projectId}/>
                     <ProjectLinks id={this.state.project.projectId}/>
