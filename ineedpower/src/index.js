@@ -11,6 +11,7 @@ import OwnerProjectPage from './componants/OwnerProjectPage';
 import Errorpage from './componants/Error';
 import Profile from './componants/Profile';
 import NewProject from './componants/CreateProject';
+import SearchPage from './componants/SearchPage';
 
 
 class Application extends React.Component {
@@ -25,6 +26,7 @@ class Application extends React.Component {
             <Route path="/OwnerProjectPage" component={OwnerProjectPage} />
             <Route path="/Profile" component={Profile} />
             <Route path="/createproject" component={NewProject} />
+            <Route path="/Search" component={SearchPage} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>

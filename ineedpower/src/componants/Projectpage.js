@@ -281,13 +281,13 @@ class Projectpage extends React.Component {
     }
 
     componentDidMount() {
+        
         console.log()
         fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
             .then(res => this.setState({ project: res[0], fetched:true }));
     }
 
-    
 
     render() {
         if (this.state.fetched) {

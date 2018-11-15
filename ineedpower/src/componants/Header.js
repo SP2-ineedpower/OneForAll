@@ -18,6 +18,7 @@ class Search extends React.Component {
   
     handleSubmit(event) {
         event.preventDefault();
+        console.log(this.state.value);
     }
   
     render() {
@@ -25,7 +26,7 @@ class Search extends React.Component {
         <form onSubmit={this.handleSubmit} className="searchform">
           <label>
             <input type="text" placeholder="Search" className="search"  value={this.state.value} onChange={this.handleChange} />
-            <button><i className="fas fa-search"></i></button>
+            <NavLink to={`/Search/#${this.state.value}`}><button><i className="fas fa-search"></i></button></NavLink>
             </label>
         </form>
       );
