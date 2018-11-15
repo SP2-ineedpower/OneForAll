@@ -43,7 +43,16 @@ class UserLinks extends React.Component {
             userId: this.props.userId,
             url: this.state.value
         }
-        fetch(`http://localhost:5000/userLinks/add/${link.userId}/${link.url}`)
+        fetch(`http://localhost:5000/userLinks/add`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "id": this.props.userId,   // the "" around the key are important
+            "url": this.state.value
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
         this.state.links.push(link);
         this.setState({
             value: ''

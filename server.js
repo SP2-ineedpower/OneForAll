@@ -2,20 +2,21 @@ const mysql = require('mysql');
 const express = require('express');
 const app = express();
 const cors = require('cors')
-
 app.use(cors());
+
+//code from https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+
+
 const connection = mysql.createConnection({
     host     : 'dt5.ehb.be',
     user     : '1819SP2_oneforall',
     password : 'NjGkqLQ',
     database : '1819SP2_oneforall'
 });
-
-let newUser = {
-    'bio' : 'test',
-    'subject' : 'testjes',
-    'age' : 23
-}
 
 connection.connect((error) => {
     if (error) {
@@ -70,6 +71,34 @@ connection.connect((error) => {
         });
     });
 
+    //Update the user age
+    app.post('/user/age', (req, res)=>{
+        //console.log("dit is een test" + req);
+        var data = req.body.age;
+        //console.log(data);
+        let query = connection.query("UPDATE user SET age= ? WHERE userId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is updated`);
+        });
+    });
+
+    app.post('/user/studies', (req, res)=>{
+        //console.log("dit is een test" + req);
+        var data = req.body.studies;
+        //console.log(data);
+        let query = connection.query("UPDATE user SET subject= ? WHERE userId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is updated`);
+        });
+    });
+
+    app.post('/user/bio', (req, res)=>{
+        var data = req.body.bio;
+        let query = connection.query("UPDATE user SET bio= ? WHERE userId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is updated`);
+        });
+    });
 
 //PROJECTS
 
@@ -159,11 +188,12 @@ connection.connect((error) => {
     });
 
     //Add link in the user profile
-    app.get('/userLinks/add/:id/:url', (req, res)=>{
-        let query = connection.query("insert into userlink values(null,?,?)", [req.params.id,req.params.url], (err, result)=>{
+    app.post('/userLinks/add/', (req, res)=>{
+
+        let query = connection.query("insert into userlink values(null,?,?)", [req.body.id,req.body.url], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
-            res.send(result);
+            res.send("link added");
         });
     });
 
