@@ -56,7 +56,7 @@ connection.connect((error) => {
         });
     });
 
-    //Updated the user
+//UPDATE USERS
     app.put('/users/:id', (req, res)=>{
 
         var data = {
@@ -170,7 +170,7 @@ connection.connect((error) => {
 
 //UPDATE PROJECTS
 
-    //Updated the project
+    //Update the project
     app.put('/projects/:id', (req, res)=>{
 
         var data = {
