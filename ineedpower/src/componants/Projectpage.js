@@ -27,21 +27,37 @@ class ProjectData extends React.Component {
     constructor(props) {
         super(props);
         this.state= {
-            email: ""
+            project: this.props.project,
+            Owner:[],
+            fetched: false
         }
+        this.handleEmailClick = this.handleEmailClick.bind(this);
     }
 
     handleEmailClick(){
-        var address = "maxime.degrauwe@student.ehb.be";
-        var body = "Could I join your project?" //naam van project erbij zou fijn zijn
-        var subject = "Joining Project" //met de project name erbij
-        var href = "mailto:" + address + "?"
+        var body=`Dear ${this.state.Owner.name},`+ "%0D%0A" + "%0D%0A" 
+         body += `Could I join ${this.state.project.name}?` + "%0D%0A" 
+         body += `I would like to help you on your project.` + "%0D%0A" + "%0D%0A" 
+         body += `Yours sincerely`
+        var address = this.state.Owner.email;
+        var subject = `Joining ${this.state.project.name}`
+        var mail = "mailto:" + address + "?"
          + "subject=" + subject + "&"
          + "body=" + body;
-        return href;
+        return mail;
        
     }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/project/owner/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ Owner: res[0], fetched: true }));
+    }
+
+
     render() {
+        if(this.state.fetched) {
+            console.log(this.state.Owner);
         const project = this.props.project;
         project.creationDate = project.creationDate.slice(0,10);
         return (
@@ -72,10 +88,12 @@ class ProjectData extends React.Component {
                 <p><b>Groupsize:</b></p>
                 <span>{project.groupsize}</span>
                 </div>
-
-
             </div>
         )
+        } return(
+            <p>Project Owner email could not be fetched</p>
+        );
+        
     };
 }
 
@@ -215,7 +233,6 @@ class Comments extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.id)
         fetch(`http://localhost:5000/comments/${this.props.id}`)
             .then(res => res.json())
             .then(res => this.setState({ comments: res, fetched:true }));
@@ -241,10 +258,9 @@ class Comments extends React.Component {
     
     render() {
         if (this.state.fetched) {
-            console.log(this.state.comments)
             const commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>
-                    <h4><i className="fas fa-user"></i> {comment.name}</h4>
+                    <h4><i className="fas fa-user"></i> {}</h4>
                     <p>{comment.comment}</p>
                     <Like commentId={comment.commentId}></Like>
                 </div>
@@ -271,6 +287,49 @@ class Comments extends React.Component {
     };
 }
 
+class ProjectProblems extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            problems:{},
+            fetched: false
+        };
+        
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/project/projectproblem/${this.props.id}`)
+            .then(res => res.json())
+            .then(res => this.setState({ problems: res, fetched: true }));
+    }
+
+    render() {
+        if(this.state.fetched) {
+
+            const ProblemList = this.state.problems.map(problem => (
+                <div className="problemBox" key={problem.problemId}>
+                    <p>{problem.problem}</p>
+                </div>
+            ))
+            return (
+                
+                <div>
+                    <h2 className="titleComments">Problems</h2>
+                    <p><i className="fas fa-user approachComment"></i>
+                    <input className="addProblemEditProj" type="text" placeholder="Add Problem" ></input>
+                    </p>
+                    {ProblemList}
+                </div>
+            )
+
+        }
+        return(
+            <p>Project problems could not be fetched</p>
+        );
+    };
+
+}
+
 class Projectpage extends React.Component {
     constructor(props) {
         super(props)
@@ -281,9 +340,8 @@ class Projectpage extends React.Component {
     }
 
     componentDidMount() {
-        
-        console.log()
-        fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
+        //fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
+        fetch(`http://localhost:5000/displayProject/1`)
             .then(res => res.json())
             .then(res => this.setState({ project: res[0], fetched:true }));
     }
@@ -296,15 +354,16 @@ class Projectpage extends React.Component {
             return (
                 <div>
                     <Header version="project" />
-                    <ProjectData project={this.state.project}/>
+                    <ProjectData project={this.state.project} />
                     <ProjectLinks id={id} />
+                    <ProjectProblems id={id}/>
                     <Tags id={id} />
                     <Comments id={id}/>
                 </div>
             );  
         }
         return (
-           <p>data can not be fetched</p>
+           <p>Project could not be fetched</p>
         );
     }
 }
