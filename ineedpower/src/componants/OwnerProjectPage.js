@@ -326,6 +326,7 @@ class Comments extends React.Component {
     }
 
     render() {
+        console.log(this.state.comments);
         if(this.state.fetched) {
             const commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>

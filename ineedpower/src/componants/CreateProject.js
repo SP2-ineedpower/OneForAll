@@ -19,6 +19,7 @@ const commentLikes = [
         commentId:3
     }
 ]
+
 class Tags extends React.Component {
     constructor(props) {
         super(props)
@@ -115,8 +116,7 @@ class EditProjectName extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            projName: this.props.name,
-            value:this.props.name,
+            value:this.props.value,
             updated: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -158,7 +158,7 @@ class EditProjectName extends React.Component{
                     </p>
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
+                            <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -171,8 +171,8 @@ class EditDescription extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            projDesc: this.props.description,
-            value:this.props.description,
+            value:this.props.value,
+            updated: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -189,7 +189,7 @@ class EditDescription extends React.Component{
         fetch(`http://localhost:5000/project/description`, {
             method: 'POST',
             body: JSON.stringify({
-                "name": description,
+                "description": description,
                 "id": this.props.id
             }),
             headers: {
@@ -226,8 +226,8 @@ class EditGroupsize extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            projSize: this.props.groupsize,
-            value:this.props.groupsize,
+            value: this.props.value,
+            updated: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -246,7 +246,7 @@ class EditGroupsize extends React.Component{
         fetch(`http://localhost:5000/project/groupsize`, {
             method: 'POST',
             body: JSON.stringify({
-                "name": groupsize,
+                "groupsize": groupsize,
                 "id": this.props.id
             }),
             headers: {
@@ -364,7 +364,7 @@ class EditParticipants extends React.Component{
             participantId:4,
             name:this.state.value
         }
-        this.state.participant.push(participant);
+        this.state.participants.push(participant);
         this.setState({
             value:""
         });
@@ -372,12 +372,12 @@ class EditParticipants extends React.Component{
 
     handleClick(id,event){
         let pos = -1;
-        for (let index = 0; index < this.state.participant.length; index++) {
-            if (this.state.participant[index].participantId === id) {
+        for (let index = 0; index < this.state.participants.length; index++) {
+            if (this.state.participants[index].participantId === id) {
                 pos = index;
             }
         }
-        this.state.participant.splice(pos, 1);
+        this.state.participants.splice(pos, 1);
         this.setState({
         });
     }
@@ -655,12 +655,12 @@ class EditProject extends React.Component {
             return (
                 <div>
                     <Header version="newProject" />
-                    <EditProjectName name={projName}/>
-                    <EditDescription description={projDesc} />
-                    <EditGroupsize groupsize={projSize} />
+                    <EditProjectName value={projName} id={this.state.project.projectId}/>
+                    <EditDescription value={projDesc} id={this.state.project.projectId} />
+                    <EditGroupsize value={projSize} id={this.state.project.projectId} />
                     <EditParticipants id={projId}  />
                     <Problems id={this.state.project.projectId}/>
-                    <ProjectComments id = {this.state.project.projId}/>
+                    <ProjectComments id = {projId}/>
                     <ProjectLinks id={this.state.project.projectId}/>
                     <Tags id={projId}/>
                     <SaveButton />

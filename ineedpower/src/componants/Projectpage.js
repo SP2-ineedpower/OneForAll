@@ -315,9 +315,6 @@ class ProjectProblems extends React.Component{
                 
                 <div>
                     <h2 className="titleComments">Problems</h2>
-                    <p><i className="fas fa-user approachComment"></i>
-                    <input className="addProblemEditProj" type="text" placeholder="Add Problem" ></input>
-                    </p>
                     {ProblemList}
                 </div>
             )
