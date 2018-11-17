@@ -27,21 +27,37 @@ class ProjectData extends React.Component {
     constructor(props) {
         super(props);
         this.state= {
-            email: ""
+            project: this.props.project,
+            Owner:[],
+            fetched: false
         }
+        this.handleEmailClick = this.handleEmailClick.bind(this);
     }
 
     handleEmailClick(){
-        var address = "maxime.degrauwe@student.ehb.be";
-        var body = "Could I join your project?" //naam van project erbij zou fijn zijn
-        var subject = "Joining Project" //met de project name erbij
-        var href = "mailto:" + address + "?"
+        var body=`Dear ${this.state.Owner.name},`+ "%0D%0A" + "%0D%0A" 
+         body += `Could I join ${this.state.project.name}?` + "%0D%0A" 
+         body += `I would like to help you on your project.` + "%0D%0A" + "%0D%0A" 
+         body += `Yours sincerely`
+        var address = this.state.Owner.email;
+        var subject = `Joining ${this.state.project.name}`
+        var mail = "mailto:" + address + "?"
          + "subject=" + subject + "&"
          + "body=" + body;
-        return href;
+        return mail;
        
     }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/project/owner/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ Owner: res[0], fetched: true }));
+    }
+
+
     render() {
+        if(this.state.fetched) {
+            console.log(this.state.Owner);
         const project = this.props.project;
         project.creationDate = project.creationDate.slice(0,10);
         return (
@@ -72,10 +88,12 @@ class ProjectData extends React.Component {
                 <p><b>Groupsize:</b></p>
                 <span>{project.groupsize}</span>
                 </div>
-
-
             </div>
         )
+        } return(
+            <p>Project Owner email could not be fetched</p>
+        );
+        
     };
 }
 
@@ -336,7 +354,7 @@ class Projectpage extends React.Component {
             return (
                 <div>
                     <Header version="project" />
-                    <ProjectData project={this.state.project}/>
+                    <ProjectData project={this.state.project} />
                     <ProjectLinks id={id} />
                     <ProjectProblems id={id}/>
                     <Tags id={id} />

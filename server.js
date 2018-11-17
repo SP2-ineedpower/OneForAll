@@ -100,6 +100,7 @@ connection.connect((error) => {
         });
     });
 
+
 //PROJECTS
 
 
@@ -155,6 +156,59 @@ connection.connect((error) => {
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
+        });
+    });
+
+    //Select the mail of owner of a project
+    app.get('/project/owner/:id', (req, res)=>{
+        let query = connection.query("SELECT u.userId, u.name, u.email FROM project p, user u WHERE p.projectId = ? AND p.creatorId = u.userId", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
+//UPDATE PROJECTS
+
+    //Updated the project
+    app.put('/projects/:id', (req, res)=>{
+
+        var data = {
+            name:req.body.name,
+            description:req.body.description,
+            groupsize:req.body.groupsize
+        };
+
+        let query = connection.query("UPDATE project SET ? WHERE projectId = ?", [data, req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Project with ID ${req.params.id} is updated`);
+        });
+    });
+
+    //Update the project name
+    app.post('/project/name', (req, res)=>{
+        var data = req.body.name;
+        let query = connection.query("UPDATE project SET name= ? WHERE projectId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Project with ID ${req.params.id} is updated`);
+        });
+    });
+
+    //Update the project description
+    app.post('/project/description', (req, res)=>{
+        var data = req.body.description;
+        let query = connection.query("UPDATE project SET description= ? WHERE projectId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Project with ID ${req.params.id} is updated`);
+        });
+    });
+
+    //Update the project groupsize
+    app.post('/project/groupsize', (req, res)=>{
+        var data = req.body.groupsize;
+        let query = connection.query("UPDATE project SET groupsize= ? WHERE projectId = ?", [data, req.body.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Project with ID ${req.params.id} is updated`);
         });
     });
 

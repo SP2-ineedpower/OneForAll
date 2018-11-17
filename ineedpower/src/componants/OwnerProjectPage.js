@@ -34,7 +34,8 @@ class ProjectData extends React.Component {
     }
     
     render() {
-        //console.log(this.state.project); werkt
+        const project = this.state.project;
+        project.creationDate = project.creationDate.slice(0,10);
         return (
             <div>
                 <div className="rightButton">
@@ -44,7 +45,7 @@ class ProjectData extends React.Component {
                 </div>
                 <div className="paragraafEditProj">
                 <p><b>Project name:</b></p>
-                <span>{this.state.project.name}</span>
+                <span>{project.name}</span>
 
                 <div>
                 <p><b>Likes:</b></p>
@@ -52,16 +53,16 @@ class ProjectData extends React.Component {
                 </div>
 
                 <p><b>Owner:</b></p>
-                <span>{this.state.project.creatorId}, voorlopig nog het ID</span>
+                <span>{project.creatorId}, voorlopig nog het ID</span>
 
                 <p><b>Creation Date:</b></p>
-                <span>{this.state.project.creationDate}</span>
+                <span>{project.creationDate}</span>
 
                 <p><b>Description:</b></p>
-                <span>{this.state.project.description}</span>
+                <span>{project.description}</span>
 
                 <p><b>Groupsize:</b></p>
-                <span>{this.state.project.groupsize}</span>
+                <span>{project.groupsize}</span>
 
                 </div>
 
