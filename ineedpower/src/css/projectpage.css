@@ -50,12 +50,11 @@ div .paragraafEditProj p, .paragraafEditProj span{
 
 .addCommentEditProj{
     border: 1px solid gray;
-    padding:5px 20px;
+    padding:10px 20px;
     border-radius: 4px;
     margin-left: 5px;
-    margin-bottom: 60px;
-    margin-top: 20px;
-    width: 400px;
+    margin-bottom: 20px;
+    width: 80%;
     
 }
 .addCommentEditProj:hover{
@@ -112,6 +111,7 @@ div .paragraafEditProj p, .paragraafEditProj span{
 
 .problemBox p {
     padding: 10px 0px;
+    position: relative; 
 }
 .addProblemEditProj{
     border: 1px solid gray;
@@ -131,5 +131,15 @@ div .paragraafEditProj p, .paragraafEditProj span{
 }
 
 .ProjectLike{
-    display: inline-block;
+    display: block;
+    padding: 10px 0px;
+}
+
+.reply{
+    position: absolute;
+    right: 0;
+}
+
+.reply:hover{
+    color: lightskyblue;
 }
