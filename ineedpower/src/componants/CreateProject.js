@@ -337,7 +337,7 @@ class Problems extends React.Component{
             ))
             return (
                 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="profileContainer">
                     <h2 className="titleComments">Problems</h2>
                     <p><i className="fas fa-user approachComment"></i>
                     <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
@@ -412,7 +412,7 @@ class EditParticipants extends React.Component{
             ))
     
                 return (
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} className="profileContainer">
                         <h2 className="titleComments">Participants</h2>
                         <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
                         {participantList}
@@ -641,7 +641,7 @@ class ProjectComments extends React.Component {
             ))
             return (
                 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="profileContainer">
                     <h2 className="titleComments">Comments</h2>
                     <p><i className="fas fa-user approachComment"></i>
                     <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
