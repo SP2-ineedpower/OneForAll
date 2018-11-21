@@ -93,7 +93,7 @@ class Tags extends React.Component {
             ))
             return (
                 <div>
-                    <div className="importantCompetences">
+                    <div className="profileTitle">
                         <b>Tags:</b>
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
@@ -153,12 +153,9 @@ class EditProjectName extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Name of project: </b>
-                    </p>
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                            <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Name of project: </b> <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -207,12 +204,10 @@ class EditDescription extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Description: </b>
-                    </p>
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Description: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                     
@@ -265,12 +260,10 @@ class EditGroupsize extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Groupsize: </b>
-                    </p>
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Groupsize: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -336,14 +329,21 @@ class Problems extends React.Component{
                 </div>
             ))
             return (
-                
-                <form onSubmit={this.handleSubmit} className="profileContainer">
-                    <h2 className="titleComments">Problems</h2>
-                    <p><i className="fas fa-user approachComment"></i>
-                    <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
-                    </p>
-                    {ProblemList}
-                </form>
+                <div>
+                    <div>
+                    <h2 className="profileTitle">Problems</h2>
+                    </div>
+                    <div>
+                    <form onSubmit={this.handleSubmit} className="profileContainer">
+                   
+                        <p><i className="fas fa-user approachComment"></i>
+                        <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
+                        </p>
+                            {ProblemList}
+                        </form>
+                    </div>
+                </div>
+
             )
         } return(
             <p>Project problem could not be fetched</p>

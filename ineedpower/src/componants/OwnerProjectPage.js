@@ -43,7 +43,7 @@ class ProjectData extends React.Component {
                         <NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
                     </div>
                 </div>
-                <div className="paragraafEditProj">
+                <div className="paragraafEditProjMax">
                 <p><b>Project name:</b></p>
                 <span>{project.name}</span>
 
@@ -144,7 +144,7 @@ class Tags extends React.Component {
             return (
                 <div>
                     <div className="profileTitle">
-                        <b>Project Tags</b>
+                        <b>Tags</b>
                     </div>
                     <div className="profileContainer">
                         {competenceList}
@@ -276,8 +276,12 @@ class ProblemsOwner extends React.Component{
             ))
             return (
                 <div>
-                    <h2 className="titleComments">Problems</h2>
-                    {ProblemList}
+                    <div>
+                        <h2 className="profileTitle">Problems</h2>
+                    </div>
+                    <div className="profileContainer">
+                        {ProblemList}
+                    </div>
                 </div>
             )
         }
@@ -336,14 +340,17 @@ class Comments extends React.Component {
                 </div>
             ))
             return (
-                
-                <form onSubmit={this.handleSubmit}>
-                    <h2 className="titleComments">Comments</h2>
+                <div>
+                    <div>
+                        <h2 className="profileTitle">Comments</h2>
+                    </div>
+                    <form onSubmit={this.handleSubmit} className="profileContainer">
                     <p><i className="fas fa-user approachComment"></i>
                     <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
                     </p>
                     {commentsList}
-                </form>
+                    </form>
+                </div>
             )
         }
         return(
