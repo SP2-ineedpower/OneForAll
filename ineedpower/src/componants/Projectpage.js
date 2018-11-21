@@ -18,10 +18,7 @@ const commentLikes = [
     }
 ]
 
-const projectLike =
-{
-    projectLikeId: 1
-}
+
 
 class ProjectData extends React.Component {
     constructor(props) {
