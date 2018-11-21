@@ -93,7 +93,7 @@ class Tags extends React.Component {
             ))
             return (
                 <div>
-                    <div className="importantCompetences">
+                    <div className="profileTitle">
                         <b>Tags:</b>
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
