@@ -29,9 +29,17 @@ class ProjectData extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            project: this.props.project
+            project: this.props.project,
+            Owner:{}
         }
     }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/project/owner/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ Owner: res[0], fetched: true }));
+    }
+
     
     render() {
         const project = this.state.project;
@@ -53,7 +61,7 @@ class ProjectData extends React.Component {
                 </div>
 
                 <p><b>Owner:</b></p>
-                <span>{project.creatorId}, voorlopig nog het ID</span>
+                <span>{this.state.Owner.name}</span>
 
                 <p><b>Creation Date:</b></p>
                 <span>{project.creationDate}</span>

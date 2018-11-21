@@ -300,6 +300,7 @@ connection.connect((error) => {
         });
     });
 
+    //insert new comment in database
     app.post('/comments/add/', (req, res)=>{
 
         let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
@@ -319,6 +320,24 @@ connection.connect((error) => {
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
+        });
+    });
+
+    //insert problem in database
+    app.post('/problems/add/', (req, res)=>{
+
+        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId,req.body.problem], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("problem added");
+        });
+    });
+
+    //delete problem in database
+    app.delete('/problems/:proj/:problem', (req, res)=>{
+        let query = connection.query("DELETE FROM problem WHERE projectId = ? AND problem LIKE '%?%'", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is deleted`);
         });
     });
 
