@@ -293,13 +293,26 @@ class Problems extends React.Component{
 
     handleSubmit(event){
         event.preventDefault();
+        const tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1; //temporary id of the link
         const problem = {
-            problemId:4,
-            problem:this.state.value
+            problemId: tempNum,
+            problem: this.state.value
         }
+
+        fetch(`http://localhost:5000/problems/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "problem": this.state.value,
+                "projId": this.props.id,
+                //"userId": 1  //Moet veranderd worden
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.problems.push(problem);
         this.setState({
-            value:""
+            value: ""
         });
     }    
 
@@ -602,13 +615,26 @@ class ProjectComments extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
+        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
         const comment = {
-            commentId:4,
-            comment:this.state.value
+            commentId: tempNum,
+            comment: this.state.value
         }
+
+        fetch(`http://localhost:5000/comments/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "comment": this.state.value,
+                "projId": this.props.id,
+                "userId": 1  //Moet veranderd worden
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.comments.push(comment);
         this.setState({
-            value:""
+            value: ""
         });
     }    
 
@@ -680,15 +706,17 @@ class EditProject extends React.Component {
             return (
                 <div>
                     <Header version="newProject" />
+                    <div className="backgroundprofile">
                     <EditProjectName value={projName} id={this.state.project.projectId}/>
                     <EditDescription value={projDesc} id={this.state.project.projectId} />
                     <EditGroupsize value={projSize} id={this.state.project.projectId} />
                     <ProjectLinks id={this.state.project.projectId}/>
                     <EditParticipants id={projId}  />
                     <Problems id={this.state.project.projectId}/>
-                    <ProjectComments id = {projId}/>
+                    <ProjectComments id={projId} user={1}/>
                     <Tags id={projId}/>
                     <SaveButton />
+                    </div>
                 </div>
             );
         }
