@@ -52,25 +52,19 @@ class ProjectData extends React.Component {
                     </div>
                 </div>
                 <div className="paragraafEditProjMax">
-                <p><b>Project name:</b></p>
-                <span>{project.name}</span>
+                <p><b>Project name:</b> <span>{project.name}</span></p>
 
                 <div>
-                <p><b>Likes:</b></p>
-                <span className="fitIn"><LikeOwner projectLikeId={projectLike.projectLikeId}></LikeOwner></span>
+                <p><b>Likes:</b> <span className="fitIn"><LikeOwner projectLikeId={projectLike.projectLikeId}></LikeOwner></span></p>
                 </div>
 
-                <p><b>Owner:</b></p>
-                <span>{this.state.Owner.name}</span>
+                <p><b>Owner:</b> <span>{this.state.Owner.name}</span></p>
 
-                <p><b>Creation Date:</b></p>
-                <span>{project.creationDate}</span>
+                <p><b>Creation Date:</b> <span>{project.creationDate}</span></p>
 
-                <p><b>Description:</b></p>
-                <span>{project.description}</span>
+                <p><b>Description:</b> <span>{project.description}</span></p>
 
-                <p><b>Groupsize:</b></p>
-                <span>{project.groupsize}</span>
+                <p><b>Groupsize:</b> <span>{project.groupsize}</span></p>
 
                 </div>
 
@@ -321,13 +315,26 @@ class Comments extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
+        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
         const comment = {
-            commentId:4,
-            comment:this.state.value
+            commentId: tempNum,
+            comment: this.state.value
         }
+
+        fetch(`http://localhost:5000/comments/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "comment": this.state.value,
+                "projId": this.props.id,
+                "userId": 1  //Moet veranderd worden
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.comments.push(comment);
         this.setState({
-            value:""
+            value: ""
         });
     }    
 

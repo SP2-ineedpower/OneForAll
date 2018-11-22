@@ -1,0 +1,12 @@
+body{
+    background-color: dimgrey;
+}
+
+.centerJoinProjectData{
+    border: 2px solid blue;
+    border-radius:10px;
+    margin: auto;
+    text-align: center;
+    width: 500px;
+    height: 100px;
+}
