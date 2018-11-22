@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import {NavLink} from 'react-router-dom'
 import '../css/projectpage.css';
-import Participants from './Participants';
+import Users from './Users';    // this displays users 
 
 const commentLikes = [
     {
@@ -439,7 +439,7 @@ class Projectpage extends React.Component {
                 <div>
                     <Header version="project" />
                     <ProjectData project={this.state.project} user={1 /*needs to change in the future*/} />
-                    <Participants id={id} />
+                    <Users fetch={`http://localhost:5000/project/participants/${id}`} title="Participants"/>
                     <ProjectLinks id={id} />
                     <Tags id={id} />
                     <ProjectProblems id={id} />
