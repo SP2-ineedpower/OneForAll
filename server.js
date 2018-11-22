@@ -150,15 +150,6 @@ connection.connect((error) => {
         });
     });
 
-    //Select participants of a project based on the id of the project
-    app.get('/project/participants/:id', (req, res)=>{
-        let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
-            if(err) console.log("Error");
-            console.log(results);
-            res.send(results);
-        });
-    });
-
     //Select the mail of owner of a project
     app.get('/project/owner/:id', (req, res)=>{
         let query = connection.query("SELECT u.userId, u.name, u.email FROM project p, user u WHERE p.projectId = ? AND p.creatorId = u.userId", [req.params.id], (err, results)=>{
@@ -310,6 +301,14 @@ connection.connect((error) => {
         });
     });
 
+    //delete comments in database with commentId
+    app.post('/comments/delete/:id', (req, res)=>{
+        let query = connection.query("DELETE FROM projectcomment WHERE commentId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Comment with ID ${req.params.id} is deleted`);
+        });
+    });
+
 
 
 //PROBLEMS
@@ -342,10 +341,29 @@ connection.connect((error) => {
     });
 
     //delete problem in database
-    app.delete('/problems/:proj/:problem', (req, res)=>{
-        let query = connection.query("DELETE FROM problem WHERE projectId = ? AND problem LIKE '%?%'", [req.params.id], (err, result)=>{
+    app.post('/problems/delete/:id', (req, res)=>{
+        let query = connection.query("DELETE FROM problem WHERE problemId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
-            res.send(`User with ID ${req.params.id} is deleted`);
+            res.send(`Problem with ID ${req.params.id} is deleted`);
+        });
+    });
+
+//PARTICIPANTS
+
+    //Select participants of a project based on the id of the project
+    app.get('/project/participants/:id', (req, res)=>{
+        let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
+    //delete participants
+    app.post('/participants/delete/:id', (req, res)=>{
+        let query = connection.query("DELETE FROM participants WHERE participantId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Participant with ID ${req.params.id} is deleted`);
         });
     });
 

@@ -304,7 +304,6 @@ class Problems extends React.Component{
             body: JSON.stringify({
                 "problem": this.state.value,
                 "projId": this.props.id,
-                //"userId": 1  //Moet veranderd worden
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -316,10 +315,28 @@ class Problems extends React.Component{
         });
     }    
 
-    handleClick(id,event){
+    handleClick(deleteId,event){
+        event.preventDefault();
+        const tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1; //temporary id of the link
+        const problem = {
+            problemId: tempNum,
+            problem: this.state.value
+        }
+        console.log(deleteId);
+
+        fetch(`http://localhost:5000/problems/delete/${deleteId}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "problemId": deleteId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
         let pos = -1;
         for (let index = 0; index < this.state.problems.length; index++) {
-            if (this.state.problems[index].problemId === id) {
+            if (this.state.problems[index].problemId === problem.problemId) {
                 pos = index;
             }
         }
@@ -338,7 +355,9 @@ class Problems extends React.Component{
         if(this.state.fetched) {
             const ProblemList = this.state.problems.map(problem => (
                 <div className="problemBox" key={problem.problemId}>
-                    <p>{problem.problem} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, problem.problemId)}></i></p>
+                    <form>
+                        <p>{problem.problem} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, problem.problemId)}></i></p>
+                    </form>
                 </div>
             ))
             return (
@@ -374,7 +393,6 @@ class EditParticipants extends React.Component{
             fetched: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -384,22 +402,26 @@ class EditParticipants extends React.Component{
         });
     }
 
-    handleSubmit(event){
+    handleClick(deleteId,event){
         event.preventDefault();
+        const tempNum = this.state.participants[this.state.participants.length - 1].participantId + 1; //temporary id of the link
         const participant = {
-            participantId:4,
-            name:this.state.value
+            participantId: tempNum,
         }
-        this.state.participants.push(participant);
-        this.setState({
-            value:""
-        });
-    }
 
-    handleClick(id,event){
+        fetch(`http://localhost:5000/participants/delete/:id${deleteId}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "participantId": deleteId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
         let pos = -1;
         for (let index = 0; index < this.state.participants.length; index++) {
-            if (this.state.participants[index].participantId === id) {
+            if (this.state.participants[index].participantId === deleteId) {
                 pos = index;
             }
         }
@@ -420,14 +442,13 @@ class EditParticipants extends React.Component{
         if(this.state.fetched){
             const participantList = this.state.participants.map(participant => (
                 <div className="participantBox" key={participant.participantId}>
-                    <i className="fas fa-user userIconEditParticipant"></i><p className="centerNameParticipant">{participant.name} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
+                    <p className="centerNameParticipant">{participant.name} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, participant.participantId)}></i></p>
                 </div>
             ))
-    
                 return (
-                    <form onSubmit={this.handleSubmit} className="profileContainer">
+                    <form className="profileContainer">
                         <h2 className="titleComments">Participants</h2>
-                        <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
+                        
                         {participantList}
                     </form>
                 )
@@ -638,10 +659,27 @@ class ProjectComments extends React.Component {
         });
     }    
 
-    handleClick(id,event){
+    handleClick(deleteId,event){
+        event.preventDefault();
+        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
+        const comment = {
+            commentId: tempNum,
+            comment: this.state.value
+        }
+
+        fetch(`http://localhost:5000/comments/delete/${deleteId}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "commentId": deleteId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
         let pos = -1;
         for (let index = 0; index < this.state.comments.length; index++) {
-            if (this.state.comments[index].commentId === id) {
+            if (this.state.comments[index].commentId === deleteId) {
                 pos = index;
             }
         }
