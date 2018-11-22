@@ -17,7 +17,7 @@ class UserSearch extends React.Component {
   render() {
     const querry = `http://localhost:5000/users/${this.props.search}`;
     console.log(querry);
-    return <Userdata title={this.props.search} fetch={querry} />;
+    return <p />;
   }
 }
 
@@ -33,17 +33,22 @@ class ProblemSearch extends React.Component {
 
 class SearchPage extends React.Component {
   render() {
-    const hash = this.props.location.hash.substr(1);
-    return (
-      //if(){    (on submit / knopje voor filter?)
-      <div>
-        <Header version="home" />
-        <div className="projectContainer">
-          <Projects search={hash} />
-        </div>
-      </div>
+    const hash = this.props.location.hash.substr(1); // splitsen van zoektermen
 
-      /*             <div>
+    if (true) {
+      return (
+        <div>
+          <Header version="home" />
+          <div className="projectContainer">
+            <Projects search={hash} />
+          </div>
+        </div>
+      );
+    } else {
+      return <p />;
+    }
+
+    /*             <div>
                 <Header version="home" />
                 <div className="profileContainer">
                 <UserSearch search={hash} ></UserSearch>
@@ -56,8 +61,7 @@ class SearchPage extends React.Component {
                 <ProblemSearch search={hash} ></ProblemSearch>
                 </div>
             </div> */
-      // }     (haakje van if)
-    );
+    // }     (haakje van if)
   }
 }
 
