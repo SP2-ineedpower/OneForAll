@@ -12,6 +12,8 @@ import Errorpage from './componants/Error';
 import Profile from './componants/Profile';
 import NewProject from './componants/CreateProject';
 import SearchPage from './componants/SearchPage';
+import { isPrimitive } from 'util';
+import JoinProject from './componants/JoinProject';
 
 
 class Application extends React.Component {
@@ -27,6 +29,7 @@ class Application extends React.Component {
             <Route path="/Profile" component={Profile} />
             <Route path="/createproject" component={NewProject} />
             <Route path="/Search" component={SearchPage} />
+            <Route path="/JoinProject" component={JoinProject} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>

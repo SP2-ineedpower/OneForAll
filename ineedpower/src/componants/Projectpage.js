@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import {NavLink} from 'react-router-dom'
 import '../css/projectpage.css';
 
 const commentLikes = [
@@ -28,21 +29,6 @@ class ProjectData extends React.Component {
             Owner: {},
             fetched: false
         }
-        this.handleEmailClick = this.handleEmailClick.bind(this);
-    }
-
-    handleEmailClick() {
-        var body = `Dear ${this.state.Owner.name},` + "%0D%0A" + "%0D%0A"
-        body += `Could I join ${this.state.project.name}?` + "%0D%0A"
-        body += `I would like to help you on your project.` + "%0D%0A" + "%0D%0A"
-        body += `Yours sincerely`
-        var address = this.state.Owner.email;
-        var subject = `Joining ${this.state.project.name}`
-        var mail = "mailto:" + address + "?"
-            + "subject=" + subject + "&"
-            + "body=" + body;
-        return mail;
-
     }
 
     componentDidMount() {
@@ -62,7 +48,7 @@ class ProjectData extends React.Component {
 
                     <div className="paragraafEditProj">
 
-                        <button className="buttonEditProj"><a value={this.state.testUser} href={this.handleEmailClick()}>JOIN</a></button>
+                        <NavLink to={`/JoinProject/#${this.state.project.projectId}`} className="buttonEditProj">JOIN</NavLink>
 
                         <p>
                             <span><b>Project name:</b></span>
@@ -100,9 +86,7 @@ class ProjectData extends React.Component {
             return (
                 <div>
                     <div className="rightButton">
-                        <div>
-                            <div ><span className="buttonEditProj"><a value={this.state.testUser} href={this.handleEmailClick()}>JOIN</a></span></div>
-                        </div>
+                            <NavLink to="/JoinProject" className="buttonEditProj">JOIN</NavLink>
                     </div>
                     <div className="paragraafEditProj">
                         <p><b>Project name:</b></p>
