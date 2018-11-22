@@ -1,3 +1,4 @@
+
 .buttonEditProj{
     font-weight: 100;
     display:inline-block;
@@ -17,26 +18,53 @@
 }
 .centerData p{
     margin-top: 20px;
-    margin-left: 80px;
+   /* margin-left: 80px;*/
 }
 .centerData span{
     margin-top:3px;
 }
 
 .paragraafEditProj{
-    margin-top: -70px;
-    margin-bottom: 20px;
-    margin-left:10px;
+    position: relative;
+    margin:50px 100px;
     text-align: left;
     font-size: 1.5em;
 }
+
+.paragraafEditProj button{
+    position: absolute;
+    right: 0;
+}
+
 div .paragraafEditProj p, .paragraafEditProj span{
     margin-top: 20px;
     margin-bottom: 10px;
-    padding-left: 90px;
+    padding-right: 20px;
 }
+
+.paragraafEditProjMax{
+    position: relative;
+    margin-left:100px;
+    margin-right:100px;
+    margin-top:-80px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.paragraafEditProjMax button{
+    position: absolute;
+    right: 0;
+}
+
+div .paragraafEditProjMax p, .paragraafEditProjMax span{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-right: 20px;
+}
+
 .titleComments{
-    margin: 0px 80px;
+    /*margin: 0px 80px;*/
     padding-bottom: 10px;
     font-size: 2em;
     border-bottom: 1px solid lightgray;
@@ -44,19 +72,18 @@ div .paragraafEditProj p, .paragraafEditProj span{
 
 .addCommentEditProj{
     border: 1px solid gray;
-    padding:5px 20px;
+    padding:10px 20px;
     border-radius: 4px;
     margin-left: 5px;
-    margin-bottom: 60px;
-    margin-top: 20px;
-    width: 400px;
+    margin-bottom: 20px;
+    width: 80%;
     
 }
 .addCommentEditProj:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117) 
 }
 .approachComment{
-    margin-left: 90px;
+    /*margin-left: 90px;*/
     padding-left: 0px;
 }
 .commentBox{
@@ -64,8 +91,8 @@ div .paragraafEditProj p, .paragraafEditProj span{
     border-radius: 4px;
     padding:5px 20px;
     margin-bottom: 20px;
-    margin-left:80px;
-    margin-right:80px;    
+   /* margin-left:80px;
+    margin-right:80px;  */  
 }
 .styleLikeComment{
     color: lightgray;
@@ -87,7 +114,7 @@ div .paragraafEditProj p, .paragraafEditProj span{
     margin-right: 5px;
 }
 .fitIn{
-    display: block;
+    display: inline-block;
     margin-left: 5px;
 }
 .centerUlProblem{
@@ -96,22 +123,24 @@ div .paragraafEditProj p, .paragraafEditProj span{
 .problemBox{
     border: 1px solid gray;
     border-radius: 4px;
-    padding:5px 5px;
+    padding:10px 10px;
     margin-bottom: 20px;
-    margin-left:80px;
-    margin-right:80px;  
-    margin-top:20px;
 }
+
+.problemBox:hover{
+    box-shadow: 1px 1px 10px rgba(117, 117, 117, 0.418);
+}
+
 .problemBox p {
     padding: 10px 0px;
+    position: relative; 
 }
 .addProblemEditProj{
     border: 1px solid gray;
     padding:5px 20px;
     border-radius: 4px;
     margin-left: 5px;
-    margin-bottom: 60px;
-    margin-top: 20px;
+    margin-bottom: 20px;
     width: 400px;
     
 }
@@ -120,4 +149,18 @@ div .paragraafEditProj p, .paragraafEditProj span{
 }
 .solvedProblem{
     border: 1px solid rgb(7, 250, 7);
+}
+
+.ProjectLike{
+    display: block;
+    padding: 10px 0px;
+}
+
+.reply{
+    position: absolute;
+    right: 0;
+}
+
+.reply:hover{
+    color: lightskyblue;
 }

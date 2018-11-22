@@ -300,6 +300,16 @@ connection.connect((error) => {
         });
     });
 
+    //insert new comment in database
+    app.post('/comments/add/', (req, res)=>{
+
+        let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("comment added");
+        });
+    });
+
 
 
 //PROBLEMS
@@ -313,5 +323,51 @@ connection.connect((error) => {
         });
     });
 
+    //insert problem in database
+    app.post('/problems/add/', (req, res)=>{
+
+        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId,req.body.problem], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("problem added");
+        });
+    });
+
+    //delete problem in database
+    app.delete('/problems/:proj/:problem', (req, res)=>{
+        let query = connection.query("DELETE FROM problem WHERE projectId = ? AND problem LIKE '%?%'", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`User with ID ${req.params.id} is deleted`);
+        });
+    });
+
+//LIKES
+
+    //Get all likes of a project
+    app.get('/projectlikes/:id', (req, res)=>{
+        let query = connection.query("SELECT * from projectlike where projectId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //add like on project into database
+    app.get('/projectlike/add/:proj/:user', (req, res)=>{
+        let query = connection.query("Insert into projectlike values(null,?,?,CURRENT_TIMESTAMP)", [req.params.proj,req.params.user], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //Delete like on project from database
+    app.get('/projectlike/delete/:proj/:user', (req, res)=>{
+        let query = connection.query("delete from projectlike where projectId= ? AND userId = ?", [req.params.proj,req.params.user], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
 app.listen('5000', () => console.log("Server started on port 5000"));

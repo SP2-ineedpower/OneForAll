@@ -93,7 +93,7 @@ class Tags extends React.Component {
             ))
             return (
                 <div>
-                    <div className="importantCompetences">
+                    <div className="profileTitle">
                         <b>Tags:</b>
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
@@ -153,12 +153,9 @@ class EditProjectName extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Name of project: </b>
-                    </p>
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                            <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Name of project: </b> <input type="text" placeholder="I Need Power" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -207,12 +204,10 @@ class EditDescription extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Description: </b>
-                    </p>
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Description: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                     
@@ -265,12 +260,10 @@ class EditGroupsize extends React.Component{
             <div className="centerProjectdata">
 
                 <div className="projectName">
-                    <p>
-                        <b>Groupsize: </b>
-                    </p>
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Groupsize: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
                         </p>
                     </form>
                 </div>
@@ -289,6 +282,7 @@ class Problems extends React.Component{
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event){
@@ -299,15 +293,40 @@ class Problems extends React.Component{
 
     handleSubmit(event){
         event.preventDefault();
+        const tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1; //temporary id of the link
         const problem = {
-            problemId:4,
-            problem:this.state.value
+            problemId: tempNum,
+            problem: this.state.value
         }
+
+        fetch(`http://localhost:5000/problems/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "problem": this.state.value,
+                "projId": this.props.id,
+                //"userId": 1  //Moet veranderd worden
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.problems.push(problem);
         this.setState({
-            value:""
+            value: ""
         });
     }    
+
+    handleClick(id,event){
+        let pos = -1;
+        for (let index = 0; index < this.state.problems.length; index++) {
+            if (this.state.problems[index].problemId === id) {
+                pos = index;
+            }
+        }
+        this.state.problems.splice(pos, 1);
+        this.setState({
+        });
+    }
 
     componentDidMount() {
         fetch(`http://localhost:5000/project/projectproblem/${this.props.id}`)
@@ -319,18 +338,25 @@ class Problems extends React.Component{
         if(this.state.fetched) {
             const ProblemList = this.state.problems.map(problem => (
                 <div className="problemBox" key={problem.problemId}>
-                    <p>{problem.problem}</p>
+                    <p>{problem.problem} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, problem.problemId)}></i></p>
                 </div>
             ))
             return (
-                
-                <form onSubmit={this.handleSubmit}>
-                    <h2 className="titleComments">Problems</h2>
-                    <p><i className="fas fa-user approachComment"></i>
-                    <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
-                    </p>
-                    {ProblemList}
-                </form>
+                <div>
+                    <div>
+                    <h2 className="profileTitle">Problems</h2>
+                    </div>
+                    <div>
+                    <form onSubmit={this.handleSubmit} className="profileContainer">
+                   
+                        <p><i className="fas fa-user approachComment"></i>
+                        <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
+                        </p>
+                            {ProblemList}
+                        </form>
+                    </div>
+                </div>
+
             )
         } return(
             <p>Project problem could not be fetched</p>
@@ -399,7 +425,7 @@ class EditParticipants extends React.Component{
             ))
     
                 return (
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} className="profileContainer">
                         <h2 className="titleComments">Participants</h2>
                         <i className="fas fa-user approachComment"></i><input type="text" placeholder="add participant" className="marginInputParticipant" value={this.state.value} onChange={this.handleChange}></input>
                         {participantList}
@@ -578,7 +604,7 @@ class ProjectComments extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event){
@@ -589,15 +615,40 @@ class ProjectComments extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
+        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
         const comment = {
-            commentId:4,
-            comment:this.state.value
+            commentId: tempNum,
+            comment: this.state.value
         }
+
+        fetch(`http://localhost:5000/comments/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "comment": this.state.value,
+                "projId": this.props.id,
+                "userId": 1  //Moet veranderd worden
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.comments.push(comment);
         this.setState({
-            value:""
+            value: ""
         });
     }    
+
+    handleClick(id,event){
+        let pos = -1;
+        for (let index = 0; index < this.state.comments.length; index++) {
+            if (this.state.comments[index].commentId === id) {
+                pos = index;
+            }
+        }
+        this.state.comments.splice(pos, 1);
+        this.setState({
+        });
+    }
 
     componentDidMount() {
         fetch(`http://localhost:5000/comments/${this.props.id}`)
@@ -610,13 +661,13 @@ class ProjectComments extends React.Component {
             const commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>
                     <h4><i className="fas fa-user"></i> {}</h4>
-                    <p>{comment.comment}</p>
+                    <p>{comment.comment} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, comment.commentId)}></i></p>
                     <Like commentId={comment.commentId}></Like>
                 </div>
             ))
             return (
                 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="profileContainer">
                     <h2 className="titleComments">Comments</h2>
                     <p><i className="fas fa-user approachComment"></i>
                     <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
@@ -655,15 +706,17 @@ class EditProject extends React.Component {
             return (
                 <div>
                     <Header version="newProject" />
+                    <div className="backgroundprofile">
                     <EditProjectName value={projName} id={this.state.project.projectId}/>
                     <EditDescription value={projDesc} id={this.state.project.projectId} />
                     <EditGroupsize value={projSize} id={this.state.project.projectId} />
+                    <ProjectLinks id={this.state.project.projectId}/>
                     <EditParticipants id={projId}  />
                     <Problems id={this.state.project.projectId}/>
-                    <ProjectComments id = {projId}/>
-                    <ProjectLinks id={this.state.project.projectId}/>
+                    <ProjectComments id={projId} user={1}/>
                     <Tags id={projId}/>
                     <SaveButton />
+                    </div>
                 </div>
             );
         }
