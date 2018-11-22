@@ -23,7 +23,7 @@ class UserSearch extends React.Component {
 
 class ProblemSearch extends React.Component {
   render() {
-    const querry = `http://localhost:5000/project/projectproblem/${
+    const querry = `http://localhost:5000/project/projectproblem/tag/${
       this.props.search
     }`;
     console.log(querry);

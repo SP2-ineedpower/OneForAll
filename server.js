@@ -322,6 +322,14 @@ connection.connect((error) => {
         });
     });
 
+    app.get('/project/projectproblem/tag/:tag', (req, res)=>{
+        let query = connection.query("SELECT * from projecttag where tag = ?", [req.params.tag], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
     //insert problem in database
     app.post('/problems/add/', (req, res)=>{
 
