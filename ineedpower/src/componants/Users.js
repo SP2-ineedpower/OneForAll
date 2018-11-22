@@ -1,21 +1,21 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import '../css/participants.css';
+import '../css/users.css';
 
-class Participants extends React.Component {
+class Users extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            participants: [],
+            users: [],
             fetched: false
         }
         this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/project/participants/${this.props.id}`)
+        fetch(this.props.fetch)
             .then(res => res.json())
-            .then(res => this.setState({ participants: res, fetched: true }));
+            .then(res => this.setState({ users: res, fetched: true }));
     }
 
     onClick() {
@@ -28,24 +28,24 @@ class Participants extends React.Component {
             if(this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
                 delIcon = <i class="fas fa-minus-circle fa-2x del" onClick={this.onClick}></i>
             }
-            const participantsList = this.state.participants.map(participant => (
-                <NavLink key={participant.participantId} to={`/Userpage/#${participant.userId}`}>
+            const userList = this.state.users.map(user => (
+                <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}>
                     <div className="participantContainer" >
                         {delIcon}
                         <div className="participantIcon">
                             <i className="fas fa-user-circle fa-4x"></i>
                         </div>
-                        <p>{participant.name}</p>
+                        <p>{user.name}</p>
                     </div>
                 </NavLink>
             ));
             return (
                 <div>
                     <div className="profileTitle">
-                        <b>Participants</b>
+                        <b>{this.props.title}</b>
                     </div>
                     <div className="profileContainer">
-                        {participantsList}
+                        {userList}
                     </div>
                 </div>
             );
@@ -54,9 +54,7 @@ class Participants extends React.Component {
                 <p></p>
             );
         }
-
     }
-
 }
 
-export default Participants;
+export default Users;

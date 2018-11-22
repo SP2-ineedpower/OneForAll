@@ -56,6 +56,16 @@ connection.connect((error) => {
         });
     });
 
+    //Select all users having a specific competence
+    app.get('/users/competence/:competence', (req, res)=>{
+        let query = connection.query("SELECT u.name,u.userId FROM user u, competence c WHERE u.userId = c.userId and lower(competence) = ?", [req.params.competence], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+
 //UPDATE USERS
     app.put('/users/:id', (req, res)=>{
 

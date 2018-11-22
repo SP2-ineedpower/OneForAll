@@ -72,6 +72,14 @@ function Headerversion(version) {
                 {profileImg}
             </div>
         );
+    } if (version ==="search") {
+        return(
+            <div className="grid header">
+            {back}
+            <p className="title">Search</p>
+            {profileImg}
+        </div>
+        );
     }
 }
 
