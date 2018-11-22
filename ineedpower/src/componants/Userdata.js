@@ -11,52 +11,7 @@ function Button(props) {
     return <p></p>;
 }
 
-class AgeInput extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: this.props.value,
-            updated: false
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const age = this.state.value;
-        fetch(`http://localhost:5000/user/age`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "age": age,
-                "id": this.props.id
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({ value: nextProps.value });
-    }
-
-    render() {
-        return (
-            <form className="profileInput" onSubmit={this.handleSubmit}>
-                <label>
-                    <input value={this.state.value} onChange={this.handleChange} type="text" name="age"></input>
-                    <img src={pencil} alt="edit button" className="pencil" />
-                </label>
-            </form>
-        );
-    }
-
-}
 
 class StudyField extends React.Component {
     constructor(props) {
@@ -176,12 +131,7 @@ class Userdata extends React.Component {
                                 <b>Email: </b>
                                 <span>{this.state.User.email}</span>
                             </p>
-                            <div className="profile">
-                                <b>Age: </b>
-                                <AgeInput value={usr.age} id={usr.userId} type="number"></AgeInput>
-
-                            </div>
-
+        
                             <div className="profile">
                                 <b>Field of study: </b>
                                 <StudyField value={usr.subject} id={usr.userId} type="text"></StudyField>
@@ -211,11 +161,6 @@ class Userdata extends React.Component {
                             <b>Email: </b>
                             <span>{this.state.User.email}</span>
                         </p>
-                        <div className="profile">
-                            <b>Age: </b>
-                            <span>{usr.age}</span>
-
-                        </div>
 
                         <div className="profile">
                             <b>Field of study: </b>

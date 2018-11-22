@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import '../css/projectpage.css';
+import Participants from './Participants';
 
 const commentLikes = [
     {
@@ -454,6 +455,7 @@ class Projectpage extends React.Component {
                 <div>
                     <Header version="project" />
                     <ProjectData project={this.state.project} user={1 /*needs to change in the future*/} />
+                    <Participants id={id} />
                     <ProjectLinks id={id} />
                     <Tags id={id} />
                     <ProjectProblems id={id} />
