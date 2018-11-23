@@ -1,12 +1,39 @@
-body{
-   /* background-color: dimgrey;   dat maakt heel de website deze kleur */
-}
-
 .centerJoinProjectData{
-    border: 2px solid blue;
+    border: 2px solid lightgrey;
     border-radius:10px;
     margin: auto;
+    margin-top:10px;
     text-align: center;
     width: 500px;
     height: 100px;
+}
+.YesButtonJoin{
+    font-size: 1.2em;
+    margin:10px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+.YesButtonJoin:hover{
+    margin:10px;
+    border: 1px solid green;
+    border-radius: 10px;
+}
+.YesButtonJoin:focus{
+   background-color: green;
+   border: 1px solid green;
+   color: white;
+}
+.NoButtonJoin{
+    font-size: 1.2em;
+    margin:10px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+.NoButtonJoin:hover{
+    margin:10px;
+    border: 1px solid red;
+    border-radius: 10px;
+}
+.GroterFont{
+    font-size: 1.2em;
 }

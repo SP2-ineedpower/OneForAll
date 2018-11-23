@@ -20,8 +20,6 @@ const commentLikes = [
     }
 ]
 
-
-
 class ProjectData extends React.Component {
     constructor(props) {
         super(props);
@@ -38,6 +36,9 @@ class ProjectData extends React.Component {
             .then(res => this.setState({ Owner: res[0], fetched: true }));
     }
 
+    getNav(id){
+        return `/JoinProject/#${id}`
+    }
 
     render() {
         if (this.state.fetched) {
@@ -49,7 +50,7 @@ class ProjectData extends React.Component {
 
                     <div className="paragraafEditProj">
 
-                        <NavLink to={`/JoinProject/#${this.state.project.projectId}`} className="buttonEditProj">JOIN</NavLink>
+                        <NavLink to={this.getNav(project.projectId)} className="buttonEditProj">JOIN</NavLink>
 
                         <p>
                             <span><b>Project name:</b></span>

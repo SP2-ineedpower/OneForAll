@@ -322,7 +322,6 @@ class Problems extends React.Component{
             problemId: tempNum,
             problem: this.state.value
         }
-        console.log(deleteId);
 
         fetch(`http://localhost:5000/problems/delete/${deleteId}`, {
             method: 'POST',
@@ -435,9 +434,8 @@ class EditParticipants extends React.Component{
             .then(res => res.json())
             .then(res => this.setState({ participants: res, fetched:true }));
     }
-    render() {
 
-        console.log(this.state.participants);
+    render() {
 
         if(this.state.fetched){
             const participantList = this.state.participants.map(participant => (
@@ -448,7 +446,6 @@ class EditParticipants extends React.Component{
                 return (
                     <form className="profileContainer">
                         <h2 className="titleComments">Participants</h2>
-                        
                         {participantList}
                     </form>
                 )
@@ -458,6 +455,94 @@ class EditParticipants extends React.Component{
             )
         }
     };
+}
+
+class ParticipantsRequest extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            participantrequest: [],
+            fetched: false
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    deleteParticipantFromParticipantRequest(participantrequestId){
+        fetch(`http://localhost:5000/participantrequest/delete/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "participantrequestId": participantrequestId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+    }
+
+    handleClick(participantrequestId,event){
+        event.preventDefault();
+        let posi = -1;
+        for (let index = 0; index < this.state.participantrequest.length; index++) {
+            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+                posi = index;
+            }
+        }
+        const toBecomeParticipant = this.state.participantrequest[posi]
+        fetch(`http://localhost:5000/participants/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": toBecomeParticipant.userId,
+                "projectId": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        //functie die participantrequest gaat delete
+        this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId);
+
+        let pos = -1;
+        for (let index = 0; index < this.state.participantrequest.length; index++) {
+            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+                pos = index;
+            }
+        }
+        this.state.participantrequest.splice(pos, 1);
+        this.setState({
+        });
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/participantrequest/${this.props.id}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequest: res, fetched:true }));
+    }
+
+    render(){
+        console.log(this.state.participantrequest.userId);
+        console.log(this.props.id);
+        const participantrequestList = this.state.participantrequest.map(participantrequest => (
+            <div className="participantBox" key={participantrequest.participantrequestId}>
+                <form>
+                <p className="centerNameParticipant">{participantrequest.email}</p> <i className="fas fa-check-square participantAcceptIcon" onClick={this.handleClick.bind(this, participantrequest.participantrequestId)}></i>
+                </form>
+            </div>
+        ))
+        if(this.state.fetched){
+            return(
+                <div>
+                    <p className="profileTitle">Participants Request</p>
+                    <div className="profileContainer">
+                        {participantrequestList}
+                    </div>
+                </div>
+            );
+        } 
+        return(
+            <p>ParticipantsRequest not found</p>
+        );
+    }
 }
 
 class SaveButton extends React.Component{
@@ -750,6 +835,7 @@ class EditProject extends React.Component {
                     <EditGroupsize value={projSize} id={this.state.project.projectId} />
                     <ProjectLinks id={this.state.project.projectId}/>
                     <EditParticipants id={projId}  />
+                    <ParticipantsRequest id={projId} />
                     <Problems id={this.state.project.projectId}/>
                     <ProjectComments id={projId} user={1}/>
                     <Tags id={projId}/>
