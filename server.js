@@ -56,6 +56,16 @@ connection.connect((error) => {
         });
     });
 
+    //Select all users having a specific competence
+    app.get('/users/competence/:competence', (req, res)=>{
+        let query = connection.query("SELECT u.name,u.userId FROM user u, competence c WHERE u.userId = c.userId and lower(competence) = ?", [req.params.competence], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+
 //UPDATE USERS
     app.put('/users/:id', (req, res)=>{
 
@@ -316,6 +326,14 @@ connection.connect((error) => {
     //Select all problems from a project with the project id
     app.get('/project/projectproblem/:id', (req, res)=>{
         let query = connection.query("SELECT proj.projectId, prob.problemId, prob.problem FROM problem prob, project proj WHERE proj.projectId = ? AND prob.projectId = proj.projectId", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    app.get('/project/projectproblem/tag/:tag', (req, res)=>{
+        let query = connection.query("SELECT * from projecttag where tag = ?", [req.params.tag], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
