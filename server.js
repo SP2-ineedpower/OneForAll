@@ -369,11 +369,50 @@ connection.connect((error) => {
         });
     });
 
-    //delete participants
+    //insert participant
+    app.post('/participants/add/', (req, res)=>{
+        let query = connection.query("Insert into participant values(null,?,?,0,0)", [req.body.userId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Participant with ID ${req.params.id} is added`);
+        });
+    });
+
+    //delete participant
     app.post('/participants/delete/:id', (req, res)=>{
         let query = connection.query("DELETE FROM participants WHERE participantId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             res.send(`Participant with ID ${req.params.id} is deleted`);
+        });
+    });
+
+//PARTICIPANTS REQUEST (PARTICIPANTS IN WACHTRIJ)
+
+    //select all participantsrequest for a project with the projectId
+    app.get('/participantrequest/:id', (req, res)=>{
+        let query = connection.query("SELECT pa.participantrequestId, pa.userId, u.email FROM participantrequest pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
+    //insert a new participantRequest
+    app.post('/participantrequest/add/', (req, res)=>{
+
+        let query = connection.query("insert into participantrequest values(null,?,?)", [req.body.userId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("participantrequest added");
+        });
+    });
+
+    //delete participantrequest
+    app.post('/participantrequest/delete/', (req, res)=>{
+
+        let query = connection.query("Delete from participantrequest WHERE participantrequestId = ?", [req.body.participantrequestId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.participantrequestId);
+            res.send("participantrequest deleted");
         });
     });
 
