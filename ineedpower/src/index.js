@@ -10,9 +10,10 @@ import Projectpage from './componants/Projectpage';
 import OwnerProjectPage from './componants/OwnerProjectPage';
 import Errorpage from './componants/Error';
 import Profile from './componants/Profile';
-import NewProject from './componants/CreateProject';
+import EditProject from './componants/CreateProject';
 import SearchPage from './componants/SearchPage';
 import JoinProject from './componants/JoinProject';
+import NewProject from './componants/MakeNewProject';
 
 
 class Application extends React.Component {
@@ -26,7 +27,8 @@ class Application extends React.Component {
             <Route path="/Projectpage" component={Projectpage} />
             <Route path="/OwnerProjectPage" component={OwnerProjectPage} />
             <Route path="/Profile" component={Profile} />
-            <Route path="/createproject" component={NewProject} />
+            <Route path="/CreateProject" component={EditProject} />
+            <Route path="/MakeNewProject" component={NewProject} />
             <Route path="/Search" component={SearchPage} />
             <Route path="/JoinProject" component={JoinProject} />
             <Route component={Errorpage} />

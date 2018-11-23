@@ -113,6 +113,13 @@ connection.connect((error) => {
 
 //PROJECTS
 
+    //insert a new project
+    app.post('/project/add', (req, res)=>{
+        let query = connection.query("insert into project values(null,?,?,?,0,CURRENT_TIMESTAMP,?) WHERE userId = ?", [req.body.name, req.body.creatorId, req.body.description,req.body.groupsize], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Project with ID ${req.params.id} is updated`);
+        });
+    });
 
     //Select all projects from the database
     app.get('/displayProjects', (req, res)=>{
