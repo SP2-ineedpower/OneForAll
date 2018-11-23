@@ -48,6 +48,14 @@ function Headerversion(version) {
                 {profileImg}
             </div>
         );
+    }if (version === "newproject") {
+        return(
+            <div className="grid header">
+                {back}
+                <p className="title">New Project</p>
+                {profileImg}
+            </div>
+        );
     }if (version === "JoinProject") {
         return(
             <div className="grid header">

@@ -1,0 +1,32 @@
+.positionNewProject{
+    margin-left: 100px;
+    font-size: 1.2em;
+}
+.positionNewProject p{
+    margin-top: 20px;
+}
+.positionNewProject input{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.positionNewProject textarea{
+    border-radius: 5px;
+}
+.saveNewProject{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+.saveNewProject:hover{
+    box-shadow: 1px 1px 6px rgb(117, 117, 117);
+}
+.newProjectFieldset{
+    width: 200px;
+    border-radius: 5px;
+    margin-top: 100px;
+    margin-left:350px;
+}
+.displayNone{
+    display: none;
+}

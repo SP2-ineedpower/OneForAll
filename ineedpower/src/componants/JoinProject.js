@@ -60,11 +60,8 @@ class JoinProject extends React.Component{
             .then(res => res.json())
             .then(res => this.setState({ project: res[0], fetched: true }));
     }
-    chichi() {
-        console.log(this.state.project);
-    }
+
     render(){
-        {this.chichi()}
         if(this.state.fetched){
             return(
                 <div>

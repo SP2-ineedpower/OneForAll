@@ -545,18 +545,6 @@ class ParticipantsRequest extends React.Component{
     }
 }
 
-class SaveButton extends React.Component{
-    render() {
-        return (
-            <div className="centerSave">
-                <div className="spatie">
-                    <NavLink to="/OwnerProjectPage"><div className="back"><span className="save">SAVE</span></div></NavLink>
-                </div>
-            </div>
-        )
-    };
-}
-
 class ProjectLinks extends React.Component {
     constructor(props) {
         super(props)
@@ -815,9 +803,10 @@ class EditProject extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/displayProject/1`)
+        console.log(this.props.location.hash.substr(1));
+        fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
-            .then(res => this.setState({ project: res[0], fetched:true }));
+            .then(res => this.setState({ project: res[0], fetched: true }));
     }
 
     render() {
@@ -839,7 +828,6 @@ class EditProject extends React.Component {
                     <Problems id={this.state.project.projectId}/>
                     <ProjectComments id={projId} user={1}/>
                     <Tags id={projId}/>
-                    <SaveButton />
                     </div>
                 </div>
             );

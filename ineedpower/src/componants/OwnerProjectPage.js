@@ -25,7 +25,6 @@ const commentLikes = [
 ]
 
 class ProjectData extends React.Component {
-
     constructor(props) {
         super(props)
         this.state = {
@@ -40,7 +39,10 @@ class ProjectData extends React.Component {
             .then(res => this.setState({ Owner: res[0], fetched: true }));
     }
 
-    
+    getNav(id){
+        return `/CreateProject/#${id}`
+    }
+
     render() {
         const project = this.state.project;
         project.creationDate = project.creationDate.slice(0,10);
@@ -48,7 +50,7 @@ class ProjectData extends React.Component {
             <div>
                 <div className="rightButton">
                     <div>
-                        <NavLink to="/CreateProject"><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
+                        <NavLink to={this.getNav(project.projectId)}><p className="back"><span className="buttonEditProj">Edit Project</span></p></NavLink>
                     </div>
                 </div>
                 <div className="paragraafEditProjMax">
@@ -304,7 +306,6 @@ class Comments extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
     }
 
     handleChange(event){
@@ -384,7 +385,7 @@ class Projectpage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/displayProject/1`)
+        fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
             .then(res => this.setState({ project: res[0], fetched:true }));
     }
