@@ -26,7 +26,6 @@ class NewProjectData extends React.Component{
         const name = this.state.name;
         const description = this.state.description;
         const groupsize = this.state.groupsize;
-        console.log(this.props.id);
         fetch(`http://localhost:5000/project/add`, {
             method: 'POST',
             body: JSON.stringify({
