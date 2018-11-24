@@ -38,14 +38,6 @@ class YesButton extends React.Component{
     }
 }
 
-class NoButton extends React.Component{
-    render(){
-        return(
-            <button className="NoButtonJoin">No</button>
-        );
-    }
-}
-
 class JoinProject extends React.Component{
     constructor(props) {
         super(props);
@@ -68,7 +60,7 @@ class JoinProject extends React.Component{
                     <Header version="JoinProject" />
                     <div className="centerJoinProjectData">
                         <p className="GroterFont">Would you like to join {this.state.project.name}?</p>
-                        <YesButton project={this.state.project}/> <NoButton />
+                        <YesButton project={this.state.project}/>
                     </div>
                 </div>
             )
