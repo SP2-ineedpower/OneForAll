@@ -97,7 +97,6 @@ class ProjectOwner extends React.Component {
 
     render() {
         if (this.state.fetched) {
-            console.log(this.state.owner)
             return <p>by {this.state.owner.name}</p>;
         } else {
             return <p>by </p>;

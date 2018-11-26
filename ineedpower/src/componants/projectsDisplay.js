@@ -7,20 +7,29 @@ class ProjectDisplay extends React.Component {
         super(props)
         this.state = {
             projects: [],
-            fetched: false
+            fetched: false,
+            update:''
         }
     }
 
-    componentDidMount() {
-        fetch(this.props.fetch)  // must change later
+    fetchData(dataFetch) {
+        console.log(dataFetch)
+        fetch(dataFetch)  // must change later
             .then(res => res.json())
             .then(res => this.setState({ projects: res, fetched: true }));
-        console.log(this.props.projects)
+    }
+
+    componentDidMount() {
+        this.fetchData(this.props.fetch);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps.fetch);
+        this.fetchData(nextProps.fetch);
     }
     
     render() {
         if (this.state.fetched) {
-            console.log(this.state.projects);
             return (
                 <div>
                     <p className="profileTitle"><b>{this.props.title}</b></p>

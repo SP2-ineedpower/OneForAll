@@ -22,6 +22,12 @@ class Users extends React.Component {
         // hier code implementeren op participant te verwijderen
     }
 
+    componentWillReceiveProps(nextProps) {
+        fetch(nextProps.fetch)
+            .then(res => res.json())
+            .then(res => this.setState({ users: res, fetched: true }));
+    }
+
     render() {
         if (this.state.fetched) {
             let delIcon = "";
