@@ -102,7 +102,7 @@
     width: 160px;
     height:30px;
     text-align: center;
-    padding: 2px 20px 2px 5px;
+    padding: 2px 30px 2px 5px;
     margin-left: 40px;
     margin-top:15px;
     margin-bottom: 7px;
@@ -114,11 +114,22 @@
     text-align: center;
 }
 .participantDeleteIcon{
+    padding:0px;
+    margin: 0px;
+    display: block;
     float: right;
-    margin-top: -200;
 }
 .participantDeleteIcon:hover{
     color:#cc0000;
+}
+.participantAcceptIcon{
+    padding:0px;
+    margin: 0px;
+    display: block;
+    float: right;
+}
+.participantAcceptIcon:hover{
+    color: green;
 }
 .centerNameParticipant{
     margin-right: 25px;

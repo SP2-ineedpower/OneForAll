@@ -2,13 +2,20 @@ import React from 'react';
 import pencil from '../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
 
-function Button(props) {
-    if (props.active) {
+class Button extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+    getNav(id){
+        return `/MakeNewProject/#${id}`
+    }
+    render() {
         return (
-            <NavLink to="/createproject"> <button className="projbutton">Make new project</button></NavLink>
+            <NavLink to={this.getNav(this.props.id)} className="projbutton">Make new project</NavLink>
         );
     }
-    return <p></p>;
 }
 
 
@@ -144,7 +151,7 @@ class Userdata extends React.Component {
                         </div>
                     </div>
                     <div id="wrapper">
-                        <Button active={true} />
+                        <Button id={usr.userId} active={true} />
                     </div>
                 </div>
             );
