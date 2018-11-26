@@ -65,6 +65,15 @@ connection.connect((error) => {
         });
     });
 
+    app.get('/users/search/:search', (req, res)=>{
+        const like = `%${req.params.search}%`;
+        let query = connection.query("SELECT DISTINCT u.name,u.userId FROM user u, competence c WHERE u.userId = c.userId and lower(competence) LIKE ? OR  u.userId = c.userId and lower(u.name) LIKE ?", [like,like], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
 
 //UPDATE USERS
     app.put('/users/:id', (req, res)=>{
@@ -143,6 +152,17 @@ connection.connect((error) => {
     //Select a group of projects by one of their tags
     app.get('/displayProjects/tag/:tag', (req, res)=>{
         let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId and LOWER(tag) = ?", [req.params.tag], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
+    //Select a project by his name or owner or name
+    app.get('/displayProjects/search/:search', (req, res)=>{
+        const like = `%${req.params.search}%`;
+        console.log(like);
+        let query = connection.query("SELECT DISTINCT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId and p.name LIKE ? OR  p.projectId = t.projectId and p.creatorId = u.userId and u.name LIKE ? OR  p.projectId = t.projectId and p.creatorId = u.userId and LOWER(t.tag) = ?", [like,like,req.params.search], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
