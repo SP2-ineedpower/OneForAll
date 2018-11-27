@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom'
 import Header from './Header';
 import '../css/createproject.css';
 
-//Deze pagina wordt gebruikt om bestaande projecten te editen en nieuwe projecten aan te maken
+//Deze pagina wordt gebruikt om bestaande projecten te editen
 const commentLikes = [
     {
         likeId:1,
@@ -803,7 +803,6 @@ class EditProject extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.location.hash.substr(1));
         fetch(`http://localhost:5000/displayProject/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
             .then(res => this.setState({ project: res[0], fetched: true }));

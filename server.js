@@ -405,7 +405,6 @@ connection.connect((error) => {
 
     //insert a new participantRequest
     app.post('/participantrequest/add/', (req, res)=>{
-
         let query = connection.query("insert into participantrequest values(null,?,?)", [req.body.userId,req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
@@ -415,7 +414,6 @@ connection.connect((error) => {
 
     //delete participantrequest
     app.post('/participantrequest/delete/', (req, res)=>{
-
         let query = connection.query("Delete from participantrequest WHERE participantrequestId = ?", [req.body.participantrequestId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.participantrequestId);
@@ -447,9 +445,27 @@ connection.connect((error) => {
     app.get('/projectlike/delete/:proj/:user', (req, res)=>{
         let query = connection.query("delete from projectlike where projectId= ? AND userId = ?", [req.params.proj,req.params.user], (err, result)=>{
             if(err) console.log("Error");
-            console.log(result);
             res.send(result);
         });
     });
+
+//RATINGS
+
+    //add a rating
+    app.post('/rating/add/', (req, res)=>{
+        let query = connection.query("insert into ratedUser values(?,?,?,null)", [req.body.userId,req.body.rateduserId,req.body.score], (err, result)=>{
+            if(err) console.log("Error");
+            res.send("rating added");
+        });
+    });
+
+    //display users and their rating
+    app.get('/Leaderbord/', (req, res)=>{
+        let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId > 1", (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
 
 app.listen('5000', () => console.log("Server started on port 5000"));

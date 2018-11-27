@@ -14,6 +14,7 @@ import EditProject from './componants/CreateProject';
 import SearchPage from './componants/SearchPage';
 import JoinProject from './componants/JoinProject';
 import NewProject from './componants/MakeNewProject';
+import Leaderbord from './componants/Leaderbord';
 
 
 class Application extends React.Component {
@@ -31,6 +32,7 @@ class Application extends React.Component {
             <Route path="/MakeNewProject" component={NewProject} />
             <Route path="/Search" component={SearchPage} />
             <Route path="/JoinProject" component={JoinProject} />
+            <Route path="/Leaderbord" component={Leaderbord} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>
