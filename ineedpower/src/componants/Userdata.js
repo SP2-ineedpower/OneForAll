@@ -2,6 +2,10 @@ import React from 'react';
 import pencil from '../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
 
+const actifUser = { //must change later
+    userId: 2
+}
+
 class Button extends React.Component {
     constructor(props) {
         super(props)
@@ -17,8 +21,6 @@ class Button extends React.Component {
         );
     }
 }
-
-
 
 class StudyField extends React.Component {
     constructor(props) {
@@ -114,6 +116,49 @@ class Bio extends React.Component {
     }
 }
 
+class Rating extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+            value:""
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const score = this.state.value;
+        fetch(`http://localhost:5000/rating/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "rateduserId": this.props.id,
+                "userId": actifUser.userId,
+                "score": score
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+    }
+
+    render() {
+        return (
+            <form className="profileInput" onSubmit={this.handleSubmit}>
+                <label>
+                    <input type={this.props.type} value={this.state.value} onChange={this.handleChange} className="textinput" min="1" max="5"></input>
+                    <img src={pencil} alt="edit button" className="pencil" />
+                </label>
+            </form>
+        );
+    }
+}
+
 class Userdata extends React.Component {
     constructor(props) {
         super(props)
@@ -142,6 +187,11 @@ class Userdata extends React.Component {
                             <div className="profile">
                                 <b>Field of study: </b>
                                 <StudyField value={usr.subject} id={usr.userId} type="text"></StudyField>
+                            </div>
+
+                            <div className="profile">
+                                <b>Rating:</b>
+                                <Rating  id={usr.userId} type="number">></Rating>
                             </div>
 
                             <div className="profile">
