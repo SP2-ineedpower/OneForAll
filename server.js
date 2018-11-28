@@ -407,7 +407,7 @@ connection.connect((error) => {
 
     //delete participant
     app.post('/participants/delete/', (req, res)=>{
-        let query = connection.query("DELETE FROM participants WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result)=>{
+        let query = connection.query("DELETE FROM participant WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
             res.send(`Participant with ID ${req.body.participantId} is deleted from project with projectId ${req.body.projectId}`);
         });
