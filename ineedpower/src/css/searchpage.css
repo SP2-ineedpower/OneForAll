@@ -1,16 +1,11 @@
 .searchbar{
     margin-left: 100px;
     margin-top: 50px;
-    border-radius: 5px 0px 0px 5px;
-    border: 1px solid rgb(163, 163, 163);
-    padding: 7px 10px;
     
 }
 
 .searchSelect{
-    border-radius: 0px 5px 5px 0px;
-    border: 1px solid rgb(163, 163, 163);
-    padding: 6px 10px;
+    width: 100px;
 }
 
 
