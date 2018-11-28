@@ -31,6 +31,7 @@ class StudyField extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.submit = this.submit.bind(this);
     }
 
     handleChange(event) {
@@ -39,6 +40,10 @@ class StudyField extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.submit();
+    }
+
+    submit() {
         const subject = this.state.value;
         fetch(`http://localhost:5000/user/studies`, {
             method: 'POST',
@@ -50,7 +55,6 @@ class StudyField extends React.Component {
                 "Content-Type": "application/json",
             }
         });
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -59,7 +63,7 @@ class StudyField extends React.Component {
 
     render() {
         return (
-            <form className="profileInput" onSubmit={this.handleSubmit}>
+            <form className="profileInput" onSubmit={this.handleSubmit} onBlur={this.submit}>
                 <label>
                     <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
                     <img src={pencil} alt="edit button" className="pencil" />
@@ -109,7 +113,7 @@ class Bio extends React.Component {
             <form onSubmit={this.handleSubmit} className="bio">
                 <label>
                     <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea" name="bio"></textarea>
-                    <button type="submit">submit</button>
+                    <button type="submit">save</button>
                 </label>
             </form>
         );
@@ -230,7 +234,6 @@ class Userdata extends React.Component {
                         </div>
                     </div>
                     <div id="wrapper">
-                        <Button active={false} />
                     </div>
                 </div>
             );
