@@ -83,7 +83,7 @@ function Headerversion(version) {
     } if (version === "newProject") {
         return(
             <div className="grid header">
-                <NavLink to="/profile"><p className="back">Back to profile</p></NavLink>
+                {back}
                 <p className="title">Edit project</p>
                 {profileImg}
             </div>
@@ -95,6 +95,14 @@ function Headerversion(version) {
             <p className="title">Search</p>
             {profileImg}
         </div>
+        );
+    } if (version === "Leaderbord") {
+        return(
+            <div className="grid header">
+                {back}
+                <p className="title">Leaderboard</p>
+                {profileImg}
+            </div>
         );
     }
 }
