@@ -42,7 +42,6 @@ class ProjectData extends React.Component {
 
     render() {
         if (this.state.fetched) {
-            console.log(this.state.Owner);
             const project = this.props.project;
             project.creationDate = project.creationDate.slice(0, 10);
             return (
@@ -131,7 +130,6 @@ class Tags extends React.Component {
     render() {
         let competenceList = "";
         if (this.state.fetched) {
-            console.log(this.state.tags);
             competenceList = this.state.tags.map(tag => (
                 <div className="tags" key={tag.tagId}><span>{tag.tag}</span></div>
             ))
@@ -435,7 +433,6 @@ class Projectpage extends React.Component {
     render() {
         if (this.state.fetched) {
             const id = this.state.project.projectId;
-            console.log(this.state.project);
             return (
                 <div>
                     <Header version="project" />
