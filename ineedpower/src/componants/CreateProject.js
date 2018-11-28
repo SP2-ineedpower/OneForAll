@@ -408,10 +408,11 @@ class EditParticipants extends React.Component{
             participantId: tempNum,
         }
 
-        fetch(`http://localhost:5000/participants/delete/:id${deleteId}`, {
+        fetch(`http://localhost:5000/participants/delete/`, {
             method: 'POST',
             body: JSON.stringify({
-                "participantId": deleteId
+                "participantId": deleteId,
+                "projectId":this.props.id
             }),
             headers: {
                 "Content-Type": "application/json",
