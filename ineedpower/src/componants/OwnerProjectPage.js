@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import Header from './Header';
+import Users from './Users';
 import '../css/projectpage.css';
 
 const projectLike = 
@@ -23,6 +24,7 @@ const commentLikes = [
         commentId:3
     }
 ]
+
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -67,6 +69,8 @@ class ProjectData extends React.Component {
                 <p><b>Description:</b> <span>{project.description}</span></p>
 
                 <p><b>Groupsize:</b> <span>{project.groupsize}</span></p>
+                
+                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={true} id={project.projectId} />
 
                 </div>
 

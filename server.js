@@ -65,6 +65,7 @@ connection.connect((error) => {
         });
     });
 
+
     //Select users by a part of their name
     app.get('/users/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
@@ -396,7 +397,7 @@ connection.connect((error) => {
 
 //PARTICIPANTS
 
-    //Select participants of a project based on the id of the project
+    //Select all participants of a project based on the id of the project
     app.get('/project/participants/:id', (req, res)=>{
         let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
@@ -414,10 +415,10 @@ connection.connect((error) => {
     });
 
     //delete participant
-    app.post('/participants/delete/:id', (req, res)=>{
-        let query = connection.query("DELETE FROM participants WHERE participantId = ?", [req.params.id], (err, result)=>{
+    app.post('/participants/delete/', (req, res)=>{
+        let query = connection.query("DELETE FROM participants WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
-            res.send(`Participant with ID ${req.params.id} is deleted`);
+            res.send(`Participant with ID ${req.body.participantId} is deleted from project with projectId ${req.body.projectId}`);
         });
     });
 
