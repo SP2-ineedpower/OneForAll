@@ -65,6 +65,8 @@ connection.connect((error) => {
         });
     });
 
+
+    //Select users by a part of their name
     app.get('/users/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
         let query = connection.query("SELECT DISTINCT u.name,u.userId FROM user u, competence c WHERE u.userId = c.userId and lower(competence) LIKE ? OR  u.userId = c.userId and lower(u.name) LIKE ?", [like,like], (err, result)=>{
@@ -77,7 +79,6 @@ connection.connect((error) => {
 
 //UPDATE USERS
     app.put('/users/:id', (req, res)=>{
-
         var data = {
             bio:req.body.bio,
             subject:req.body.subject,
