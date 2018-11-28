@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from './Rating';
 import { NavLink } from 'react-router-dom'
 import '../css/users.css';
 
@@ -42,6 +43,7 @@ class Users extends React.Component {
                             <i className="fas fa-user-circle fa-4x"></i>
                         </div>
                         <p>{user.name}</p>
+                        <p><Rating></Rating></p>
                     </div>
                 </NavLink>
             ));
