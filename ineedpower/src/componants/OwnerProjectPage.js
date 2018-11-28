@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import Header from './Header';
+import Users from './Users';
 import '../css/projectpage.css';
 
 const projectLike = 
@@ -23,6 +24,11 @@ const commentLikes = [
         commentId:3
     }
 ]
+
+const actifUser = { //must change later
+    userId: 2
+}
+
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -67,6 +73,8 @@ class ProjectData extends React.Component {
                 <p><b>Description:</b> <span>{project.description}</span></p>
 
                 <p><b>Groupsize:</b> <span>{project.groupsize}</span></p>
+                
+                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={true} />
 
                 </div>
 
@@ -373,6 +381,49 @@ class Comments extends React.Component {
             <p>Project comments could not be fetched</p>
         )
     };
+}
+
+class Rating extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+            value:""
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const score = this.state.value;
+        fetch(`http://localhost:5000/rating/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "rateduserId": this.props.id,
+                "userId": actifUser.userId,
+                "score": score
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+    }
+
+    render() {
+        return (
+            <form className="profileInput" onSubmit={this.handleSubmit}>
+                <label>
+                    <b>Rating:</b>
+                    <input type={this.props.type} value={this.state.value} onChange={this.handleChange} className="textinput" min="1" max="5"></input>
+                </label>
+            </form>
+        );
+    }
 }
 
 class Projectpage extends React.Component {

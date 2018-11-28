@@ -10,7 +10,8 @@
     "react-sanitized-html": "^2.0.0",
     "react-scripts": "2.0.5",
     "react-x-editable": "0.0.10-beta",
-    "sanitize-html": "^1.19.1"
+    "sanitize-html": "^1.19.1",
+    "semantic-ui-react": "^0.83.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,9 +22,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-
   "proxy": "http://localhost:5000",
-  
   "browserslist": [
     ">0.2%",
     "not dead",

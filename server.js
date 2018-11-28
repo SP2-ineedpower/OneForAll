@@ -387,7 +387,7 @@ connection.connect((error) => {
 
 //PARTICIPANTS
 
-    //Select participants of a project based on the id of the project
+    //Select all participants of a project based on the id of the project
     app.get('/project/participants/:id', (req, res)=>{
         let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
