@@ -8,23 +8,25 @@ class Users extends React.Component {
         super(props);
         this.state = {
             users: [],
+            projectId: this.props.id,
             fetched: false
         }
-        this.onClick = this.onClick.bind(this);
+        this.onClick = this.onClick.bind(this);       
     }
 
     componentDidMount() {
         fetch(this.props.fetch)
             .then(res => res.json())
-            .then(res => this.setState({ users: res, fetched: true }));
+            .then(res => this.setState({ users: res, fetched: true })); 
     }
 
-    onClick(e,deleteId) {
+    onClick(deleteId,e) {
+        const projectId = this.state.projectId;
         fetch(`http://localhost:5000/participants/delete/`, {
             method: 'POST',
             body: JSON.stringify({
                 "participantId": deleteId,
-                "projectId":this.props.id
+                "projectId": projectId
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +61,7 @@ class Users extends React.Component {
     rating(id) {
         let rating = "";
             if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-                rating = <Rating userId={id}></Rating>;
+                rating = <Rating id={id}></Rating>;
             }
         return rating;
     }
@@ -68,11 +70,11 @@ class Users extends React.Component {
         if (this.state.fetched) {
             const userList = this.state.users.map(user => (
                 <div className="participantContainer" >
-                    {this.delete(user.userId)}
+                    {this.delete(user.participantId)}
                     <div className="participantIcon">
                         <i className="fas fa-user-circle fa-4x"></i>
                     </div>
-                    <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}><p>{user.name}</p></NavLink>
+                    <NavLink key={user.participantId} to={`/Userpage/#${user.participantId}`}>{user.name}</NavLink>
                     {this.rating(user.userId)}
                 </div>
             ));

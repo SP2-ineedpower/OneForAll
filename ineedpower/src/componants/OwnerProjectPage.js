@@ -70,7 +70,7 @@ class ProjectData extends React.Component {
 
                 <p><b>Groupsize:</b> <span>{project.groupsize}</span></p>
                 
-                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={true} id={project.projectId} />
+                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={true} id={this.props.project.projectId} />
 
                 </div>
 

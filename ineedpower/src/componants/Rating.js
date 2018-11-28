@@ -3,18 +3,19 @@ import { Rating } from 'semantic-ui-react'
 //code from https://react.semantic-ui.com/modules/rating/
 
 const actifUser = { //must change later
-  userId: 2
+  userId: 3
 }
 
 export default class RatingExampleOnRate extends Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
 }
   state = {}
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating })
 
-  pushDataToDatabase() {
+  handleClick() {
     fetch(`http://localhost:5000/rating/add/`, {
         method: 'POST',
         body: JSON.stringify({
@@ -31,8 +32,7 @@ export default class RatingExampleOnRate extends Component {
   render() {
     return (
       <div>
-        <Rating maxRating={5} onRate={this.handleRate}/>
-        {this.pushDataToDatabase}
+        <Rating maxRating={5} onRate={this.handleRate} onClick={this.handleClick}/>
       </div>
     )
   }
