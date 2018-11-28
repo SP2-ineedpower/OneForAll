@@ -2,10 +2,6 @@ import React from 'react';
 import pencil from '../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
 
-const actifUser = { //must change later
-    userId: 2
-}
-
 class Button extends React.Component {
     constructor(props) {
         super(props)
@@ -120,7 +116,7 @@ class Bio extends React.Component {
     }
 }
 
-class Rating extends React.Component{
+/*class Rating extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -161,7 +157,7 @@ class Rating extends React.Component{
             </form>
         );
     }
-}
+}*/
 
 class Userdata extends React.Component {
     constructor(props) {
@@ -191,11 +187,6 @@ class Userdata extends React.Component {
                             <div className="profile">
                                 <b>Field of study: </b>
                                 <StudyField value={usr.subject} id={usr.userId} type="text"></StudyField>
-                            </div>
-
-                            <div className="profile">
-                                <b>Rating:</b>
-                                <Rating  id={usr.userId} type="number">></Rating>
                             </div>
 
                             <div className="profile">

@@ -158,7 +158,7 @@ connection.connect((error) => {
         });
     });
 
-    //Select a project by his name or owner or name
+    //Select a project by his name or owner or name or tags
     app.get('/displayProjects/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
         console.log(like);
@@ -169,9 +169,18 @@ connection.connect((error) => {
         });
     });
 
+    //Select the 8 most popular projects
+    app.get('/displayProjects/liked/:id', (req, res)=>{
+        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p, projectlike pl,user u where p.projectId=pl.projectId and p.creatorId = u.userId and pl.userId = ?", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
     //Select a group of projects by the owner or participant id
     app.get('/displayProjects/user/:user', (req, res)=>{
-        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ${req.params.user} OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ${req.params.user}`, [req.params.user], (err, results)=>{
+        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ? OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ?`, [req.params.user,req.params.user], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
