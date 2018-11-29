@@ -10,35 +10,52 @@ const actifUser = { //must change later
   userId: 5
 }
 
-export default class RatingExampleOnRate extends Component {
-  state = {}
-
+class RatingUser extends Component {
+  constructor(props) {
+    super(props);
+      this.state = {
+        rating:{},
+        fetched:false
+      }
+    }
 
   handleRate = (e, { rating, maxRating }) => {
     this.setState({ rating, maxRating });
-
     fetch(`http://localhost:5000/rating/add/`, {
       method: 'POST',
       body: JSON.stringify({
           "userId": actifUser.userId,
           "rateduserId": this.props.userId,
-          "score": this.state
+          "score": rating,
+          "projectId": this.props.projectId
       }),
       headers: {
           "Content-Type": "application/json",
       }
     });
-
    }
 
-//<pre>{JSON.stringify(this.state, null, 2)}</pre>
+   componentDidMount() {
+    fetch(`http://localhost:5000/userRating/${this.props.projectId}/${this.props.userId}`)
+    .then(res => res.json())
+    .then(res => this.setState({ rating: res[0], fetched: true }));
+   }
+   
   render() {
-    console.log(this.props.projectId);
-    console.log(this.props.userId);
+    if (this.state.fetched && this.state.rating != undefined) {
       return (
         <div>
-          <Rating maxRating={5} defaultRating={0} onRate={this.handleRate} />
+          <Rating maxRating={5} rating={this.state.rating.score} onRate={this.handleRate} />
         </div>
       )
+    } else {
+      return (
+        <div>
+          <Rating maxRating={5} rating={0} onRate={this.handleRate} />
+        </div>
+      )
+    }
   }
 }
+
+export default RatingUser
