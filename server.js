@@ -241,20 +241,41 @@ connection.connect((error) => {
         });
     });
 
-//LINKS
+//PROJECTLINKS
 
-    //Select all UserLinks from the database, based on the userID
-    app.get('/userLinks/:id', (req, res)=>{
-        let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+     //Select all projectlinks from the database, based on the projectId
+     app.get('/projectlinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM projectlink WHERE projectId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
         });
     });
 
-    //Select all projectlinks from the database, based on the projectId
-    app.get('/projectlinks/:id', (req, res)=>{
-        let query = connection.query("SELECT * FROM projectlink WHERE projectId = ?", [req.params.id], (err, result)=>{
+     //Delete one of the links of a project
+     app.post('/projectlinks/delete/', (req, res)=>{
+        let query = connection.query("delete FROM projectlink WHERE projectLinkId = ? AND projectId = ?", [req.body.projectLinkId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //Add link in projectlink
+    app.post('/projectlinks/add/', (req, res)=>{
+        let query = connection.query("insert into projectlink values(null,?,?)", [req.body.projectId, req.body.url], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send("link added");
+        });
+    });
+
+
+//LINKS
+
+    //Select all UserLinks from the database, based on the userID
+    app.get('/userLinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
@@ -331,7 +352,6 @@ connection.connect((error) => {
 
     //insert new comment in database
     app.post('/comments/add/', (req, res)=>{
-
         let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
@@ -346,8 +366,6 @@ connection.connect((error) => {
             res.send(`Comment with ID ${req.params.id} is deleted`);
         });
     });
-
-
 
 //PROBLEMS
 
@@ -370,8 +388,7 @@ connection.connect((error) => {
 
     //insert problem in database
     app.post('/problems/add/', (req, res)=>{
-
-        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId,req.body.problem], (err, result)=>{
+        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId, req.body.problem], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
             res.send("problem added");
@@ -379,8 +396,8 @@ connection.connect((error) => {
     });
 
     //delete problem in database
-    app.post('/problems/delete/:id', (req, res)=>{
-        let query = connection.query("DELETE FROM problem WHERE problemId = ?", [req.params.id], (err, result)=>{
+    app.post('/problems/delete/', (req, res)=>{
+        let query = connection.query("DELETE FROM problem WHERE problemId = ?", [req.body.problemId], (err, result)=>{
             if(err) console.log("Error");
             res.send(`Problem with ID ${req.params.id} is deleted`);
         });
@@ -472,17 +489,18 @@ connection.connect((error) => {
 
 //RATINGS
 
-    //add a rating
+    //add a rating to a user
     app.post('/rating/add/', (req, res)=>{
-        let query = connection.query("insert into ratedUser values(?,?,?,null)", [req.body.userId,req.body.rateduserId,req.body.score], (err, result)=>{
-            if(err) console.log("Error");
+        console.log("test")
+        let query = connection.query("insert into ratedUser values(?,?,?,null)", [req.body.userId, req.body.rateduserId, req.body.score], (err, result)=>{
+            if(err) console.log("Error:" + err);
             res.send("rating added");
         });
     });
 
     //display users and their rating
     app.get('/Leaderbord/', (req, res)=>{
-        let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId > 1", (err, result)=>{
+        let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId >= 1", (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
