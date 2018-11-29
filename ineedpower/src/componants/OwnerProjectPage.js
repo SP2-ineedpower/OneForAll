@@ -5,11 +5,6 @@ import Users from './Users';
 import '../css/projectpage.css';
 import Comments from './comments'
 
-const projectLike = 
-    {
-        projectLikeId:1
-    }
-
 const commentLikes = [
     {
         likeId:1,
@@ -60,7 +55,7 @@ class ProjectData extends React.Component {
                 <p><b>Project name:</b> <span>{project.name}</span></p>
 
                 <div>
-                <p><b>Likes:</b> <span className="fitIn"><LikeOwner projectLikeId={projectLike.projectLikeId}></LikeOwner></span></p>
+                    <b>Likes:</b> <span className="fitIn"><LikeOwner id={project.projectId}></LikeOwner></span>
                 </div>
 
                 <p><b>Owner:</b> <span>{this.state.Owner.name}</span></p>
@@ -71,7 +66,7 @@ class ProjectData extends React.Component {
 
                 <p><b>Groupsize:</b> <span>{project.groupsize}</span></p>
                 
-                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={true} id={project.projectId} />
+                <Users fetch={`http://localhost:5000/project/participants/${this.props.project.projectId}`} edit={false} id={this.props.project.projectId} />
 
                 </div>
 
@@ -82,50 +77,55 @@ class ProjectData extends React.Component {
 
 class LikeOwner extends React.Component {
     constructor(props) {
-        super(props);
-        this.state= {
-            email : ""
+        super(props)
+        this.state = {
+            likes: [],
+            liked:false,
+            class:"far fa-thumbs-up styleLikeComment"
         }
-        this.handleLikeClick = this.handleLikeClick.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
-    handleLikeClick(e){
+    componentDidMount() {
+        fetch(`http://localhost:5000/projectlikes/${this.props.id}`)
+        .then(res => res.json())
+        .then(res => this.setState({ likes: res}, function() {
+            this.state.likes.map(like => {
+                if (like.userId === this.props.user) { 
+                    this.setState({
+                        liked:true,
+                        class: "far fa-thumbs-up styleLikeComment likeClicked"
+                    })
+                }
+            })
+        }));
+    }
+
+    onClick() {
         if (!this.state.liked) {
-            e.target.className="far fa-thumbs-up styleLikeComment likeClicked";
-            const like = {
-                commentId:this.state.commentId
-            }
-            commentLikes.push(like);
+            this.state.likes.push({});
             this.setState({
-                liked:true
-            });
+                liked: true,
+                class: "far fa-thumbs-up styleLikeComment likeClicked"
+            })
+            fetch(`http://localhost:5000/projectlike/add/${this.props.id}/${this.props.user}`)
         } else {
-            e.target.className="far fa-thumbs-up styleLikeComment";
+            this.state.likes.pop();
             this.setState({
-                liked:false
-            });
-            commentLikes.pop();
+                liked: false,
+                class: "far fa-thumbs-up styleLikeComment"
+            })
+            fetch(`http://localhost:5000/projectlike/delete/${this.props.id}/${this.props.user}`)
         }
-    }
-
-    likes() {
-        let teller = 0;
-        for (let index = 0; index < commentLikes.length; index++) {
-            if(this.state.commentId === commentLikes[index].commentId)
-            {
-                teller ++;
-            }
-        }
-        return teller;
     }
 
     render() {
-        return(
+        return (
             <div>
-                <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
-                {this.likes()}
+                <i className={this.state.class} onClick={this.onClick}></i>
+                <span>{this.state.likes.length}</span>
             </div>
-        )
+        );
     }
 }
 
@@ -234,7 +234,7 @@ class ProjectLinks extends React.Component {
     render() {
         if(this.state.fetched){
             const linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.linkId}><a href={link.url}>{link.url}</a></div>
+                <div className="profileLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a></div>
             ))
             return (
                 <div>
