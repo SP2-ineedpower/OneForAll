@@ -4,6 +4,15 @@ const app = express();
 const cors = require('cors')
 app.use(cors());
 
+
+// const path = require('path');
+// app.use(express.static(path.join(__dirname, 'ineedpower/build')));
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
+// });
+//app.listen(9000);
+
+
 //code from https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -159,7 +168,7 @@ connection.connect((error) => {
         });
     });
 
-    //Select a project by his name or owner or name
+    //Select a project by his name or owner or name or tags
     app.get('/displayProjects/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
         console.log(like);
@@ -170,9 +179,18 @@ connection.connect((error) => {
         });
     });
 
+    //Select the 8 most popular projects
+    app.get('/displayProjects/liked/:id', (req, res)=>{
+        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p, projectlike pl,user u where p.projectId=pl.projectId and p.creatorId = u.userId and pl.userId = ?", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
     //Select a group of projects by the owner or participant id
     app.get('/displayProjects/user/:user', (req, res)=>{
-        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ${req.params.user} OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ${req.params.user}`, [req.params.user], (err, results)=>{
+        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ? OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ?`, [req.params.user,req.params.user], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -350,9 +368,28 @@ connection.connect((error) => {
         });
     });
 
+    
+    app.get('/problemComments/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM problemcomment,user WHERE user.userId = problemcomment.userId AND problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
     //insert new comment in database
     app.post('/comments/add/', (req, res)=>{
         let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("comment added");
+        });
+    });
+
+    //Insert new comment in problemcomment table
+    app.post('/problemComments/add/', (req, res)=>{
+
+        let query = connection.query("insert into problemcomment values(null,?,?,?)", [req.body.problemId,req.body.comment,req.body.userId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
             res.send("comment added");
@@ -368,6 +405,14 @@ connection.connect((error) => {
     });
 
 //PROBLEMS
+
+    app.get('/problem/:id', (req, res)=>{
+        let query = connection.query("SELECT prob.problemId, prob.problem FROM problem prob WHERE problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
     //Select all problems from a project with the project id
     app.get('/project/projectproblem/:id', (req, res)=>{
@@ -402,6 +447,8 @@ connection.connect((error) => {
             res.send(`Problem with ID ${req.params.id} is deleted`);
         });
     });
+
+
 
 //PARTICIPANTS
 

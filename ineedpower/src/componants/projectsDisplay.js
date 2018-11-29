@@ -13,7 +13,6 @@ class ProjectDisplay extends React.Component {
     }
 
     fetchData(dataFetch) {
-        console.log(dataFetch)
         fetch(dataFetch)  // must change later
             .then(res => res.json())
             .then(res => this.setState({ projects: res, fetched: true }));

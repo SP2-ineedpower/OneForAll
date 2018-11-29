@@ -291,7 +291,10 @@ class Problems extends React.Component{
 
     handleSubmit(event){
         event.preventDefault();
-        const tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1; //temporary id of the link
+        let tempNum = 1;  //temporary id of the comment
+        if (this.state.problems.length > 0) {
+            tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1;
+        }
         const problem = {
             problemId: tempNum,
             problem: this.state.value
