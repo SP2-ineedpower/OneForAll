@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 import Header from './Header';
 import '../css/projectpage.css';
+import Comments from './comments'
 
 const projectLike = 
     {
@@ -296,84 +297,7 @@ class ProblemsOwner extends React.Component{
 
 }
 
-class Comments extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value:"",
-            comments: [],
-            fetched: false
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
 
-    handleChange(event){
-        this.setState({
-            value: event.target.value
-        });
-    }
-
-    handleSubmit(event){
-        event.preventDefault();
-        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
-        const comment = {
-            commentId: tempNum,
-            comment: this.state.value
-        }
-
-        fetch(`http://localhost:5000/comments/add/`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "comment": this.state.value,
-                "projId": this.props.id,
-                "userId": 1  //Moet veranderd worden
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-        this.state.comments.push(comment);
-        this.setState({
-            value: ""
-        });
-    }    
-
-    componentDidMount() {
-        fetch(`http://localhost:5000/comments/${this.props.id}`)
-            .then(res => res.json())
-            .then(res => this.setState({ comments: res, fetched: true }));
-    }
-
-    render() {
-        console.log(this.state.comments);
-        if(this.state.fetched) {
-            const commentsList = this.state.comments.map(comment => (
-                <div className="commentBox" key={comment.commentId}>
-                    <h4><i className="fas fa-user"></i> {}</h4>
-                    <p>{comment.comment}</p>
-                    <Like commentId={comment.commentId}></Like>
-                </div>
-            ))
-            return (
-                <div>
-                    <div>
-                        <h2 className="profileTitle">Comments</h2>
-                    </div>
-                    <form onSubmit={this.handleSubmit} className="profileContainer">
-                    <p><i className="fas fa-user approachComment"></i>
-                    <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
-                    </p>
-                    {commentsList}
-                    </form>
-                </div>
-            )
-        }
-        return(
-            <p>Project comments could not be fetched</p>
-        )
-    };
-}
 
 class Projectpage extends React.Component {
     constructor(props) {

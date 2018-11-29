@@ -4,6 +4,15 @@ const app = express();
 const cors = require('cors')
 app.use(cors());
 
+
+// const path = require('path');
+// app.use(express.static(path.join(__dirname, 'ineedpower/build')));
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
+// });
+//app.listen(9000);
+
+
 //code from https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -337,10 +346,29 @@ connection.connect((error) => {
         });
     });
 
+    
+    app.get('/problemComments/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM problemcomment,user WHERE user.userId = problemcomment.userId AND problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
     //insert new comment in database
     app.post('/comments/add/', (req, res)=>{
 
         let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("comment added");
+        });
+    });
+
+    //Insert new comment in problemcomment table
+    app.post('/problemComments/add/', (req, res)=>{
+
+        let query = connection.query("insert into problemcomment values(null,?,?,?)", [req.body.problemId,req.body.comment,req.body.userId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
             res.send("comment added");
@@ -358,6 +386,14 @@ connection.connect((error) => {
 
 
 //PROBLEMS
+
+    app.get('/problem/:id', (req, res)=>{
+        let query = connection.query("SELECT prob.problemId, prob.problem FROM problem prob WHERE problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
     //Select all problems from a project with the project id
     app.get('/project/projectproblem/:id', (req, res)=>{
@@ -393,6 +429,8 @@ connection.connect((error) => {
             res.send(`Problem with ID ${req.params.id} is deleted`);
         });
     });
+
+
 
 //PARTICIPANTS
 

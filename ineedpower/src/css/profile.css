@@ -96,6 +96,7 @@
     width: 120px;
 }
 
+
 .tags{
     padding: 5px 20px;
     border: 1px solid lightgray;
@@ -194,3 +195,4 @@
 .bio button:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);   
 }
+

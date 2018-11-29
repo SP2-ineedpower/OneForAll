@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip'
 
 class UserLinks extends React.Component {
     constructor(props) {
@@ -37,7 +38,10 @@ class UserLinks extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const tempNum =this.state.links[this.state.links.length-1].userLinkId + 1; //temporary id of the link
+        let tempNum = 1;  //temporary id of the comment
+        if (this.state.links.length > 0) {
+            tempNum = this.state.links[this.state.links.length - 1].userLinkId + 1;
+        }
         let link = {
             userLinkId:tempNum,      
             userId: this.props.userId,
@@ -98,7 +102,8 @@ class UserLinks extends React.Component {
                     <div className="profileTitle">
                         <b>Links</b>
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                            <ReactTooltip effect="solid"/>
+                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick} data-tip="add links your page">
                             </input>
                         </form>
                     </div>
