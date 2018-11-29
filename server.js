@@ -492,7 +492,7 @@ connection.connect((error) => {
     //add a rating to a user
     app.post('/rating/add/', (req, res)=>{
         console.log("test")
-        let query = connection.query("insert into ratedUser values(?,?,?,null)", [req.body.userId, req.body.rateduserId, req.body.score], (err, result)=>{
+        let query = connection.query("insert into ratedUser values(?,?,?,null,?)", [req.body.userId, req.body.rateduserId, req.body.score,req.body.projectId], (err, result)=>{
             if(err) console.log("Error:" + err);
             res.send("rating added");
         });
@@ -508,11 +508,21 @@ connection.connect((error) => {
 
     //select users that are rated by a user with the given ID
     app.get('/rateduser/:projectId/:userId', (req, res)=>{
-        let query = connection.query("select * from ratedUser where projectId= ? AND userId = ?", [req.params.userId,req.params.projectId], (err, result)=>{
+        let query = connection.query("select * from ratedUser where projectId= ? AND ownerId = ?", [req.params.projectId,req.params.userId], (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
     });
+
+    //Get rating of a user in a project
+    app.get('/userRating/:projectId/:userId', (req, res)=>{
+        let query = connection.query("select * from ratedUser where projectId= ? AND rateduserId = ?", [req.params.projectId,req.params.userId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+
 
 
 app.listen('5000', () => console.log("Server started on port 5000"));

@@ -1,5 +1,5 @@
 import React from 'react';
-import Rating from './Rating';
+import RatingUser from './Rating';
 import { NavLink } from 'react-router-dom'
 import '../css/users.css';
 
@@ -61,7 +61,7 @@ class Users extends React.Component {
     rating(id) {
         let rating = "";
             if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-                rating = <Rating userId={id} projectId={this.props.id}></Rating>;
+                rating = <RatingUser userId={id} projectId={this.props.id}></RatingUser>;
             }
         return rating;
     }
