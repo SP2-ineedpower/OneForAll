@@ -498,9 +498,17 @@ connection.connect((error) => {
         });
     });
 
-    //display users and their rating
+    //select users and their rating
     app.get('/Leaderbord/', (req, res)=>{
         let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId >= 1", (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+    //select users that are rated by a user with the given ID
+    app.get('/rateduser/:projectId/:userId', (req, res)=>{
+        let query = connection.query("select * from ratedUser where projectId= ? AND userId = ?", [req.params.userId,req.params.projectId], (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
