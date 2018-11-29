@@ -7,7 +7,7 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
+            users: [], //er zitten participants hierbinnen
             projectId: this.props.id,
             fetched: false
         }
@@ -61,7 +61,7 @@ class Users extends React.Component {
     rating(id) {
         let rating = "";
             if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-                rating = <Rating id={id}></Rating>;
+                rating = <Rating userId={id} projectId={this.props.id}></Rating>;
             }
         return rating;
     }

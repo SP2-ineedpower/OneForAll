@@ -120,8 +120,7 @@ class EditProjectName extends React.Component{
             updated: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.handleSubmit = this.handleSubmit.bind(this);  
     }
     handleChange(event){
         this.setState({
@@ -353,9 +352,9 @@ class Problems extends React.Component{
         if(this.state.fetched) {
             const ProblemList = this.state.problems.map(problem => (
                 <div className="problemBox" key={problem.problemId}>
-                    <form>
+                    <div>
                         <p>{problem.problem} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, problem.problemId)}></i></p>
-                    </form>
+                    </div>
                 </div>
             ))
             return (
@@ -364,12 +363,11 @@ class Problems extends React.Component{
                     <h2 className="profileTitle">Problems</h2>
                     </div>
                     <div>
-                    <form onSubmit={this.handleSubmit} className="profileContainer">
-                   
-                        <p><i className="fas fa-user approachComment"></i>
-                        <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
-                        </p>
-                            {ProblemList}
+                        <form onSubmit={this.handleSubmit} className="profileContainer">
+                            <p><i className="fas fa-user approachComment"></i>
+                                <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
+                            </p>
+                                {ProblemList}
                         </form>
                     </div>
                 </div>
