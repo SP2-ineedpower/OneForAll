@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from './Rating';
 import { NavLink } from 'react-router-dom'
 import '../css/users.css';
 
@@ -18,8 +19,27 @@ class Users extends React.Component {
             .then(res => this.setState({ users: res, fetched: true }));
     }
 
-    onClick() {
-        // hier code implementeren op participant te verwijderen
+    onClick(e,deleteId) {
+        fetch(`http://localhost:5000/participants/delete/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "participantId": deleteId,
+                "projectId":this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        let pos = -1;
+        for (let index = 0; index < this.state.users.length; index++) {
+            if (this.state.users[index].userId === deleteId) {
+                pos = index;
+            }
+        }
+        this.state.users.splice(pos, 1);
+        this.setState({
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,22 +48,33 @@ class Users extends React.Component {
             .then(res => this.setState({ users: res, fetched: true }));
     }
 
+    delete(id) {
+        let delIcon = "";
+        if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
+            delIcon = <i class="fas fa-minus-circle fa-2x del" onClick={this.onClick.bind(this, id)}></i>
+        }
+        return delIcon;
+    }
+
+    rating(id) {
+        let rating = "";
+            if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
+                rating = <Rating userId={id}></Rating>;
+            }
+        return rating;
+    }
+
     render() {
         if (this.state.fetched) {
-            let delIcon = "";
-            if(this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-                delIcon = <i class="fas fa-minus-circle fa-2x del" onClick={this.onClick}></i>
-            }
             const userList = this.state.users.map(user => (
-                <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}>
-                    <div className="participantContainer" >
-                        {delIcon}
-                        <div className="participantIcon">
-                            <i className="fas fa-user-circle fa-4x"></i>
-                        </div>
-                        <p>{user.name}</p>
+                <div className="participantContainer" >
+                    {this.delete(user.userId)}
+                    <div className="participantIcon">
+                        <i className="fas fa-user-circle fa-4x"></i>
                     </div>
-                </NavLink>
+                    <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}><p>{user.name}</p></NavLink>
+                    {this.rating(user.userId)}
+                </div>
             ));
             return (
                 <div>

@@ -7,8 +7,6 @@ import '../css/searchpage.css';
 
 class SearchDisplay extends React.Component {
   render() {
-    console.log(this.props.select);
-
     if (this.props.select === "All") {
       return (
         <div className="searchContainer">
@@ -49,6 +47,7 @@ class SearchDisplay extends React.Component {
   }
 
 }
+
 
 
 class SearchPage extends React.Component {
