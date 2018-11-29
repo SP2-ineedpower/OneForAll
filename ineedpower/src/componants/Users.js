@@ -53,7 +53,7 @@ class Users extends React.Component {
     delete(id) {
         let delIcon = "";
         if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-            delIcon = <i class="fas fa-minus-circle fa-2x del" onClick={this.onClick.bind(this, id)}></i>
+            delIcon = <i className="fas fa-minus-circle fa-2x del" onClick={this.onClick.bind(this, id)}></i>
         }
         return delIcon;
     }
@@ -69,7 +69,7 @@ class Users extends React.Component {
     render() {
         if (this.state.fetched) {
             const userList = this.state.users.map(user => (
-                <div className="participantContainer" >
+                <div className="participantContainer" key={user.participantId} >
                     {this.delete(user.participantId)}
                     <div className="participantIcon">
                         <i className="fas fa-user-circle fa-4x"></i>
