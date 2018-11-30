@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from './Header';
+import '../css/leaderboard.css';
+import { NavLink } from 'react-router-dom'
 
 class DisplayLeaderbord extends React.Component{
     constructor(props) {
@@ -14,15 +16,35 @@ class DisplayLeaderbord extends React.Component{
         fetch(`http://localhost:5000/Leaderbord/`)
             .then(res => res.json())
             .then(res => this.setState({ users: res, fetched: true }));
-            //console.log(this.state.users);
     }
 
     render(){
-        return(
-            <div>
-                <p>test</p>
-            </div>
-        );
+        if(this.state.fetched) {
+            const userList = this.state.users.map((user,index) => (
+                <tr key={user.rateduserId}>
+                    <td>{index+1}</td>
+                    <NavLink to={`/Userpage/#${user.rateduserId}`}>{user.name}</NavLink>
+                    <td>{user.score}</td>
+                </tr>
+            ))
+            return(
+                <div>
+                    <table>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                        {userList}
+                    </table>
+                </div>
+            );
+        } 
+        else {
+            return(
+                <p>Scores could not be fetched</p>
+            );
+        }
     }
 }
 

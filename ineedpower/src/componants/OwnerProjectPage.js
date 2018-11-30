@@ -5,22 +5,6 @@ import Users from './Users';
 import '../css/projectpage.css';
 import Comments from './comments'
 
-const commentLikes = [
-    {
-        likeId:1,
-        commentId:1
-    },{
-        likeId:2,
-        commentId:1
-    },{
-        likeId:3,
-        commentId:1
-    },{
-        likeId:3,
-        commentId:3
-    }
-]
-
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -165,56 +149,6 @@ class Tags extends React.Component {
         return(
             <p>Project tags could not be fetched</p>
         );
-    }
-}
-
-class Like extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            liked : false,
-            commentId: this.props.commentId
-        }
-        this.handleLikeClick = this.handleLikeClick.bind(this);
-    }
-
-    handleLikeClick(e){
-        if (!this.state.liked) {
-            e.target.className="far fa-thumbs-up styleLikeComment likeClicked";
-            const like = {
-                commentId:this.state.commentId
-            }
-            commentLikes.push(like);
-            this.setState({
-                liked:true
-            });
-        } else {
-            e.target.className="far fa-thumbs-up styleLikeComment";
-            this.setState({
-                liked:false
-            });
-            commentLikes.pop();
-        }
-    }
-
-    likes() {
-        let teller = 0;
-        for (let index = 0; index < commentLikes.length; index++) {
-            if(this.state.commentId === commentLikes[index].commentId)
-            {
-                teller ++;
-            }
-        }
-        return teller;
-    }
-
-    render() {
-        return(
-            <div>
-                <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
-                {this.likes()}
-            </div>
-        )
     }
 }
 

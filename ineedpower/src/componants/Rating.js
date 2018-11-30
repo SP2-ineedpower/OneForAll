@@ -51,7 +51,7 @@ class RatingUser extends Component {
    }
    
   render() {
-    if (this.state.fetched && this.state.rating != undefined) {
+    if (this.state.fetched && this.state.rating !== undefined) {
       return (
         <div>
           <Rating maxRating={5} rating={this.state.rating.score} onRate={this.handleRateUpdate} />
