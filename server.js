@@ -199,7 +199,7 @@ connection.connect((error) => {
 
     //Display the name of the owner of a project
     app.get('/projectowner/:id', (req, res)=>{
-        let query = connection.query("SELECT u.name FROM user u, project p WHERE u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT u.name, u.userId FROM user u, project p WHERE u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -537,9 +537,18 @@ connection.connect((error) => {
 //RATINGS
 
     //add a rating to a user
-    app.post('/rating/add/', (req, res)=>{
+    app.post('/rating/insert/', (req, res)=>{
         console.log("test")
-        let query = connection.query("insert into ratedUser values(?,?,?,null,?)", [req.body.userId, req.body.rateduserId, req.body.score,req.body.projectId], (err, result)=>{
+        let query = connection.query("insert into ratedUser values(?,?,null,?)", [req.body.rateduserId, req.body.score,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error:" + err);
+            res.send("rating added");
+        });
+    });
+
+    //update a rating to a user
+    app.post('/rating/update/', (req, res)=>{
+        console.log("test")
+        let query = connection.query("UPDATE ratedUser SET score = ? WHERE rateduserId = ? AND projectId = ?", [req.body.score,req.body.rateduserId,req.body.projectId], (err, result)=>{
             if(err) console.log("Error:" + err);
             res.send("rating added");
         });
@@ -554,8 +563,8 @@ connection.connect((error) => {
     });
 
     //select users that are rated by a user with the given ID
-    app.get('/rateduser/:projectId/:userId', (req, res)=>{
-        let query = connection.query("select * from ratedUser where projectId= ? AND ownerId = ?", [req.params.projectId,req.params.userId], (err, result)=>{
+    app.get('/rateduser/:projectId/', (req, res)=>{
+        let query = connection.query("select * from ratedUser where projectId= ?", [req.params.projectId], (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
