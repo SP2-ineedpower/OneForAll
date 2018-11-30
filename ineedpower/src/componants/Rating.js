@@ -3,13 +3,6 @@ import { Rating } from 'semantic-ui-react'
 
 //code from https://react.semantic-ui.com/modules/rating/
 
-//if maken die kijkt of user al gerate werd, als dat zo is update
-   //else insert a new rating
-
-const actifUser = { //must change later
-  userId: 5
-}
-
 class RatingUser extends Component {
   constructor(props) {
     super(props);
@@ -19,22 +12,38 @@ class RatingUser extends Component {
       }
     }
 
-  handleRate = (e, { rating, maxRating }) => {
-    this.setState({ rating, maxRating });
-    fetch(`http://localhost:5000/rating/add/`, {
-      method: 'POST',
-      body: JSON.stringify({
-          "userId": actifUser.userId,
-          "rateduserId": this.props.userId,
-          "score": rating,
-          "projectId": this.props.projectId
-      }),
-      headers: {
-          "Content-Type": "application/json",
-      }
-    });
-   }
+    handleRateUpdate = (e, { rating, maxRating }) => {
+      this.setState({ rating, maxRating });
+      fetch(`http://localhost:5000/rating/update/`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "score": rating,
+            "rateduserId": this.props.userId,
+            "projectId": this.props.projectId,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+      });
+      window.location.reload();
+     }
 
+     handleRateInsert = (e, { rating, maxRating }) => {
+      this.setState({ rating, maxRating });
+      fetch(`http://localhost:5000/rating/insert/`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "rateduserId": this.props.userId,
+            "score": rating,
+            "projectId": this.props.projectId
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+      });
+      window.location.reload();
+     }
+  
    componentDidMount() {
     fetch(`http://localhost:5000/userRating/${this.props.projectId}/${this.props.userId}`)
     .then(res => res.json())
@@ -45,13 +54,13 @@ class RatingUser extends Component {
     if (this.state.fetched && this.state.rating != undefined) {
       return (
         <div>
-          <Rating maxRating={5} rating={this.state.rating.score} onRate={this.handleRate} />
+          <Rating maxRating={5} rating={this.state.rating.score} onRate={this.handleRateUpdate} />
         </div>
       )
     } else {
       return (
         <div>
-          <Rating maxRating={5} rating={0} onRate={this.handleRate} />
+          <Rating maxRating={5} rating={0} onRate={this.handleRateInsert} />
         </div>
       )
     }

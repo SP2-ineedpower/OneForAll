@@ -59,9 +59,10 @@ class Users extends React.Component {
     }
 
     rating(id) {
+        const ownerId = this.props.ownerId;
         let rating = "";
             if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-                rating = <RatingUser userId={id} projectId={this.props.id}></RatingUser>;
+                rating = <RatingUser userId={id} projectId={this.props.id} ownerId={ownerId}></RatingUser>;
             }
         return rating;
     }
