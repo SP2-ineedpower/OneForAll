@@ -554,14 +554,6 @@ connection.connect((error) => {
         });
     });
 
-    //select users and their rating
-    app.get('/Leaderbord/', (req, res)=>{
-        let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId >= 1", (err, result)=>{
-            if(err) console.log("Error");
-            res.send(result);
-        });
-    });
-
     //select users that are rated by a user with the given ID
     app.get('/rateduser/:projectId/', (req, res)=>{
         let query = connection.query("select * from ratedUser where projectId= ?", [req.params.projectId], (err, result)=>{
@@ -573,6 +565,16 @@ connection.connect((error) => {
     //Get rating of a user in a project
     app.get('/userRating/:projectId/:userId', (req, res)=>{
         let query = connection.query("select * from ratedUser where projectId= ? AND rateduserId = ?", [req.params.projectId,req.params.userId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+//LEADERBOARD
+
+     //select users and their rating
+     app.get('/Leaderbord/', (req, res)=>{
+        let query = connection.query("SELECT u.name, r.rateduserId, AVG(score) AS 'score' FROM ratedUser r, user u WHERE rateduserId >= 1 AND r.rateduserId = u.userId GROUP BY u.userId ORDER BY score DESC;", (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });

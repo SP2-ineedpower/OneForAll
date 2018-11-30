@@ -4,21 +4,6 @@ import Users from './Users';
 import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen
-const commentLikes = [
-    {
-        likeId:1,
-        commentId:1
-    },{
-        likeId:2,
-        commentId:1
-    },{
-        likeId:3,
-        commentId:1
-    },{
-        likeId:3,
-        commentId:3
-    }
-]
 
 class Tags extends React.Component {
     constructor(props) {
@@ -598,56 +583,6 @@ class ProjectLinks extends React.Component {
         } 
 }
 
-class Like extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            liked : false,
-            commentId: this.props.commentId
-        }
-        this.handleLikeClick = this.handleLikeClick.bind(this);
-    }
-
-    handleLikeClick(e){
-        if (!this.state.liked) {
-            e.target.className="far fa-thumbs-up styleLikeComment likeClicked";
-            const like = {
-                commentId:this.state.commentId
-            }
-            commentLikes.push(like);
-            this.setState({
-                liked:true
-            });
-        } else {
-            e.target.className="far fa-thumbs-up styleLikeComment";
-            this.setState({
-                liked:false
-            });
-            commentLikes.pop();
-        }
-    }
-
-    likes() {
-        let teller = 0;
-        for (let index = 0; index < commentLikes.length; index++) {
-            if(this.state.commentId === commentLikes[index].commentId)
-            {
-                teller ++;
-            }
-        }
-        return teller;
-    }
-
-    render() {
-        return(
-            <div>
-                <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
-                {this.likes()}
-            </div>
-        )
-    }
-}
-
 class ProjectComments extends React.Component {
     constructor(props) {
         super(props);
@@ -727,7 +662,6 @@ class ProjectComments extends React.Component {
                 <div className="commentBox" key={comment.commentId}>
                     <h4><i className="fas fa-user"></i> {}</h4>
                     <p>{comment.comment} <i className="fas fa-trash-alt participantDeleteIcon" onClick={this.handleClick.bind(this, comment.commentId)}></i></p>
-                    <Like commentId={comment.commentId}></Like>
                 </div>
             ))
             return (
