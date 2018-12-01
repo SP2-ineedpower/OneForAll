@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import ProjectPopup from './ProjectPopup';
 import '../css/makenewproject.css';
 
 class NewProjectData extends React.Component{
@@ -19,6 +20,7 @@ class NewProjectData extends React.Component{
           description: this.refs.description.value,
           groupsize:this.refs.groupsize.value
         });
+        console.log(this.props.id);
       }
 
     handleClick(event){
@@ -40,6 +42,10 @@ class NewProjectData extends React.Component{
         });
     }
 
+    getNav(id){
+        return(`/Userpage/#${id}`);
+    }
+
     render(){
         return(
             <div className="positionNewProject">
@@ -48,7 +54,7 @@ class NewProjectData extends React.Component{
                     <p>Description: </p>
                     <textarea rows="4" cols="50" placeholder="description project" ref="description" onChange={this.update.bind(this)}></textarea>
                     <p>Groupsize: <input type="text" placeholder="size" ref="groupsize" onChange={this.update.bind(this)}></input></p>
-                    <button className="saveNewProject" onClick={this.handleClick}>Submit</button>
+                    <div onClick={this.handleClick}><ProjectPopup></ProjectPopup></div>
                 </form> 
             </div>
         );
