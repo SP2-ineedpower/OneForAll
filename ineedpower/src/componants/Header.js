@@ -56,14 +56,6 @@ function Headerversion(version) {
                 {profileImg}
             </div>
         );
-    }if (version === "JoinProject") {
-        return(
-            <div className="grid header">
-                {back}
-                <p className="title">Join Project</p>
-                {profileImg}
-            </div>
-        );
     } if (version === "user") {
         return(
             <div className="grid header">
