@@ -1,10 +1,14 @@
 import React from 'react';
 import Header from './Header';
 import Comments from './comments';
+import Popup from './Popup';
 import { NavLink } from 'react-router-dom';
 import '../css/projectpage.css';
 import Users from './Users';    // this displays users 
 
+const actifUser = {
+    userId: 6
+}
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -14,6 +18,7 @@ class ProjectData extends React.Component {
             Owner: {},
             fetched: false
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -22,9 +27,20 @@ class ProjectData extends React.Component {
             .then(res => this.setState({ Owner: res[0], fetched: true }));
     }
 
-    getNav(id) {
-        return `/JoinProject/#${id}`
-    }
+    handleClick(){
+        const userId = actifUser.userId;
+ 
+         fetch(`http://localhost:5000/participantrequest/add/`, {
+             method: 'POST',
+             body: JSON.stringify({
+                 "userId": userId,
+                 "projectId": this.state.project.projectId,
+             }),
+             headers: {
+                 "Content-Type": "application/json",
+             }
+         });
+     }
 
     render() {
         if (this.state.fetched) {
@@ -35,7 +51,7 @@ class ProjectData extends React.Component {
 
                     <div className="paragraafEditProj">
 
-                        <NavLink to={this.getNav(project.projectId)} className="buttonEditProj">JOIN</NavLink>
+                        <div className="stylish" onClick={this.handleClick} ><Popup></Popup></div>
 
                         <p>
                             <span><b>Project name:</b></span>
