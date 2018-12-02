@@ -42,10 +42,6 @@ class NewProjectData extends React.Component{
         });
     }
 
-    getNav(id){
-        return(`/Userpage/#${id}`);
-    }
-
     render(){
         return(
             <div className="positionNewProject">
