@@ -32,9 +32,9 @@ class DisplayLeaderbordUser extends React.Component{
                     <h2 className="centerLeaderbord">Users</h2>
                     <table>
                         <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Score</th>
+                            <th width="33.33%">Rank</th>
+                            <th width="33.33%">Name</th>
+                            <th width="33.33%">Score</th>
                         </tr>
                         {userList}
                     </table>
@@ -69,7 +69,7 @@ class DisplayLeaderbordProject extends React.Component{
             const projectList = this.state.projects.map((project,index) => (
                 <tr key={project.projectId}>
                     <td>{index+1}</td>
-                    <NavLink to={`/DisplayProject/#${project.projectId}`}>{project.name}</NavLink>
+                    <NavLink to={`/ProjectPage/#${project.projectId}`}>{project.name}</NavLink>
                     <td>{project.score}</td>
                 </tr>
             ))
@@ -78,9 +78,9 @@ class DisplayLeaderbordProject extends React.Component{
                     <h2 className="centerLeaderbord">Projects</h2>
                     <table>
                         <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Score</th>
+                            <th width="33.33%">Rank</th>
+                            <th width="33.33%">Name</th>
+                            <th width="33.33%">Score</th>
                         </tr>
                         {projectList}
                     </table>
