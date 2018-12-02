@@ -573,8 +573,16 @@ connection.connect((error) => {
 //LEADERBOARD
 
      //select users and their rating
-     app.get('/Leaderbord/', (req, res)=>{
+     app.get('/LeaderbordUser/', (req, res)=>{
         let query = connection.query("SELECT u.name , ROUND(AVG(score), 1) AS 'score' FROM ratedUser r, user u WHERE rateduserId >= 1 AND r.rateduserId = u.userId GROUP BY u.userId ORDER BY score DESC;", (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+    //select users and their rating
+    app.get('/LeaderbordProject/', (req, res)=>{
+        let query = connection.query("SELECT p.name, p.projectId , COUNT(pl.projectId) AS 'score' FROM project p, projectlike pl WHERE p.projectId >= 1 AND p.projectId = pl.projectId GROUP BY p.projectId ORDER BY COUNT(pl.projectId) DESC;", (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
