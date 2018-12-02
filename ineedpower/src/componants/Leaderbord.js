@@ -3,7 +3,7 @@ import Header from './Header';
 import '../css/leaderboard.css';
 import { NavLink } from 'react-router-dom'
 
-class DisplayLeaderbord extends React.Component{
+class DisplayLeaderbordUser extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -13,7 +13,7 @@ class DisplayLeaderbord extends React.Component{
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/Leaderbord/`)
+        fetch(`http://localhost:5000/LeaderbordUser/`)
             .then(res => res.json())
             .then(res => this.setState({ users: res, fetched: true }));
     }
@@ -29,6 +29,7 @@ class DisplayLeaderbord extends React.Component{
             ))
             return(
                 <div>
+                    <h2 className="centerLeaderbord">Users</h2>
                     <table>
                         <tr>
                             <th>Rank</th>
@@ -48,12 +49,59 @@ class DisplayLeaderbord extends React.Component{
     }
 }
 
+class DisplayLeaderbordProject extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+           projects:[],
+           fetched: false
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/LeaderbordProject/`)
+            .then(res => res.json())
+            .then(res => this.setState({ projects: res, fetched: true }));
+    }
+
+    render(){
+        if(this.state.fetched) {
+            const projectList = this.state.projects.map((project,index) => (
+                <tr key={project.projectId}>
+                    <td>{index+1}</td>
+                    <NavLink to={`/DisplayProject/#${project.projectId}`}>{project.name}</NavLink>
+                    <td>{project.score}</td>
+                </tr>
+            ))
+            return(
+                <div>
+                    <h2 className="centerLeaderbord">Projects</h2>
+                    <table>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                        {projectList}
+                    </table>
+                </div>
+            );
+        } 
+        else {
+            return(
+                <p>Scores could not be fetched</p>
+            );
+        }
+    }
+}
+
 class Leaderbord extends React.Component{
     render(){
         return(
             <div>
                 <Header version="Leaderbord"></Header>
-                <DisplayLeaderbord />
+                <DisplayLeaderbordUser />
+                <DisplayLeaderbordProject />
             </div>
         );
     }
