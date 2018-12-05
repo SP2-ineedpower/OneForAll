@@ -11,7 +11,8 @@ class Users extends React.Component {
             projectId: this.props.id,
             fetched: false
         }
-        this.onClick = this.onClick.bind(this);       
+        this.onClick = this.handleDelete.bind(this);  
+        this.onClick = this.handleAccept.bind(this);      
     }
 
     componentDidMount() {
@@ -20,7 +21,7 @@ class Users extends React.Component {
             .then(res => this.setState({ users: res, fetched: true })); 
     }
 
-    onClick(deleteId,e) {
+    handleDelete(deleteId,e) {
         const projectId = this.state.projectId;
         fetch(`http://localhost:5000/participants/delete/`, {
             method: 'POST',
@@ -44,6 +45,40 @@ class Users extends React.Component {
         });
     }
 
+    handleAccept(participantrequestId,event){
+        event.preventDefault();
+        let posi = -1;
+        for (let index = 0; index < this.state.participantrequest.length; index++) {
+            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+                posi = index;
+            }
+        }
+        const toBecomeParticipant = this.state.participantrequest[posi]
+        fetch(`http://localhost:5000/participants/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": toBecomeParticipant.userId,
+                "projectId": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        //functie die participantrequest gaat delete
+        this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId);
+
+        let pos = -1;
+        for (let index = 0; index < this.state.participantrequest.length; index++) {
+            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+                pos = index;
+            }
+        }
+        this.state.participantrequest.splice(pos, 1);
+        this.setState({
+        });
+    }
+
     componentWillReceiveProps(nextProps) {
         fetch(nextProps.fetch)
             .then(res => res.json())
@@ -53,9 +88,17 @@ class Users extends React.Component {
     delete(id) {
         let delIcon = "";
         if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-            delIcon = <i className="fas fa-minus-circle fa-2x del" onClick={this.onClick.bind(this, id)}></i>
+            delIcon = <i className="fas fa-minus-circle fa-2x del" onClick={this.handleDelete.bind(this, id)}></i>
         }
         return delIcon;
+    }
+
+    accept(id) {
+        let accIcon = "";
+        if (this.props.edit && this.props.request) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
+            accIcon = <i class="fas fa-check-circle fa-2x accept" onClick={this.handleAccept.bind(this, id)}></i>
+        }
+        return accIcon;
     }
 
     rating(id) {
@@ -72,6 +115,7 @@ class Users extends React.Component {
             const userList = this.state.users.map(user => (
                 <div className="participantContainer" key={user.userId} >
                     {this.delete(user.participantId)}
+                    {this.accept(user.participantId)}
                     <div className="participantIcon">
                         <i className="fas fa-user-circle fa-4x"></i>
                     </div>

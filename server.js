@@ -481,7 +481,7 @@ connection.connect((error) => {
 
     //select all participantsrequest for a project with the projectId
     app.get('/participantrequest/:id', (req, res)=>{
-        let query = connection.query("SELECT pa.participantrequestId, pa.userId, u.email FROM participantrequest pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT pa.participantrequestId, pa.userId,u.name, u.email FROM participantrequest pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -499,7 +499,7 @@ connection.connect((error) => {
 
     //delete participantrequest
     app.post('/participantrequest/delete/', (req, res)=>{
-        let query = connection.query("Delete from participantrequest WHERE participantrequestId = ?", [req.body.participantrequestId], (err, result)=>{
+        let query = connection.query("Delete from participantrequest WHERE participantrequestId = ? AND projectId = ?", [req.body.participantrequestId, req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.participantrequestId);
             res.send("participantrequest deleted");
