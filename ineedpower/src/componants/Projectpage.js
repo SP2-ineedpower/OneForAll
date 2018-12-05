@@ -7,7 +7,7 @@ import '../css/projectpage.css';
 import Users from './Users';    // this displays users 
 
 const actifUser = {
-    userId: 6
+    userId: 8
 }
 
 class ProjectData extends React.Component {
@@ -16,6 +16,8 @@ class ProjectData extends React.Component {
         this.state = {
             project: this.props.project,
             Owner: {},
+            participantrequests:{},
+            valid: true,
             fetched: false
         }
         this.handleClick = this.handleClick.bind(this);
@@ -27,19 +29,38 @@ class ProjectData extends React.Component {
             .then(res => this.setState({ Owner: res[0], fetched: true }));
     }
 
+    componentDidMount() {
+        fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res, fetched: true }));
+    }
+
     handleClick(){
-        const userId = actifUser.userId;
- 
-         fetch(`http://localhost:5000/participantrequest/add/`, {
-             method: 'POST',
-             body: JSON.stringify({
-                 "userId": userId,
-                 "projectId": this.state.project.projectId,
-             }),
-             headers: {
-                 "Content-Type": "application/json",
-             }
-         });
+        //const userId = actifUser.userId;
+        let userIds = [];
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            let userId = this.state.participantrequests[index].userId;
+            userIds.push(userId);
+        }
+        //console.log(userIds); oke
+
+        for (let index = 0; index < userIds.length; index++) {
+            if(userIds[index].userId === actifUser.userId){
+                this.state.valid = false;
+            }
+        }
+        if(this.state.valid) {
+            fetch(`http://localhost:5000/participantrequest/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": actifUser.userId,
+                "projectId": this.props.project.projectId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        }
      }
 
     render() {
@@ -240,7 +261,6 @@ class ProjectLinks extends React.Component {
     }
 }
 
-
 class ProjectProblems extends React.Component {
     constructor(props) {
         super(props);
@@ -248,7 +268,6 @@ class ProjectProblems extends React.Component {
             problems: {},
             fetched: false
         };
-
     }
 
     componentDidMount() {
