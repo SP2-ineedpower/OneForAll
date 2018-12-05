@@ -574,7 +574,7 @@ connection.connect((error) => {
 
      //select users and their rating
      app.get('/LeaderbordUser/', (req, res)=>{
-        let query = connection.query("SELECT u.name , ROUND(AVG(score), 1) AS 'score' FROM ratedUser r, user u WHERE rateduserId >= 1 AND r.rateduserId = u.userId GROUP BY u.userId ORDER BY score DESC;", (err, result)=>{
+        let query = connection.query("SELECT u.name,u.userId , ROUND(AVG(score), 1) AS 'score' FROM ratedUser r, user u WHERE rateduserId >= 1 AND r.rateduserId = u.userId GROUP BY u.userId ORDER BY score DESC;", (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });

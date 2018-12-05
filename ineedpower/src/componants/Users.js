@@ -70,12 +70,12 @@ class Users extends React.Component {
     render() {
         if (this.state.fetched) {
             const userList = this.state.users.map(user => (
-                <div className="participantContainer" key={user.participantId} >
+                <div className="participantContainer" key={user.userId} >
                     {this.delete(user.participantId)}
                     <div className="participantIcon">
                         <i className="fas fa-user-circle fa-4x"></i>
                     </div>
-                    <NavLink key={user.participantId} to={`/Userpage/#${user.participantId}`}>{user.name}</NavLink>
+                    <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}>{user.name}</NavLink>
                     {this.rating(user.userId)}
                 </div>
             ));
