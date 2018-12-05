@@ -1,6 +1,6 @@
 .problemPage {
     background-color: rgba(243, 243, 243, 0.596);
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .problem {

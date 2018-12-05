@@ -4,23 +4,6 @@ import { Button, Select, Input } from 'semantic-ui-react'
 //UI FROM https://react.semantic-ui.com/elements/input/#variations-actions
 
 
-// class SearchInput extends React.Component {
-
-
-//     render() {
-//         return (
-//             <form className="searchpageForm" onSubmit={this.handleSubmit}>
-//                 <input type="text" className="searchbar" value={this.state.value} onChange={this.onChange} />
-//                 <select className="searchSelect" value={this.state.select} onChange={this.handleSelect}>
-
-//                 </select>
-//                 <button type="submit">Search</button>
-//             </form>
-//         )
-//     }
-
-// }
-
 
 const options = [
     { key: 'all', text: 'All', value: 'All' },
