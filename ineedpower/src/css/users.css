@@ -23,8 +23,16 @@
     position: absolute;
     right: -11px;
     top: -11px;
-    
 }
 .del:hover{
     color: rgb(129, 2, 2);
+}
+
+.accept{
+    position: absolute;
+    left: -11px;
+    top: -11px;
+}
+.accept:hover{
+    color: rgb(9, 100, 6);
 }

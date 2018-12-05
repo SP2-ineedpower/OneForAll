@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Users from './Users';
+import { NavLink } from 'react-router-dom'
 import '../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen
@@ -368,42 +369,70 @@ class Problems extends React.Component{
 
 }
 
-class ParticipantsRequest extends React.Component{
+class Participantrequest extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            participantrequest: [],
+            participantrequests: [],
+            projectId: this.props.id,
             fetched: false
-        };
-        this.handleClick = this.handleClick.bind(this);
+        }
+        this.onClick = this.handleDelete.bind(this);  
+        this.onClick = this.handleAccept.bind(this);      
     }
 
-    deleteParticipantFromParticipantRequest(participantrequestId){
+    componentDidMount() {
+        fetch(this.props.fetch)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res, fetched: true })); 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        fetch(nextProps.fetch)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res, fetched: true }));
+    }
+
+    handleDelete(deleteId,event) {
+        event.preventDefault();
+        const projectId = this.state.projectId;
         fetch(`http://localhost:5000/participantrequest/delete/`, {
             method: 'POST',
             body: JSON.stringify({
-                "participantrequestId": participantrequestId
+                "participantrequestId": deleteId,
+                "projectId": projectId
             }),
             headers: {
                 "Content-Type": "application/json",
             }
         });
+
+        let pos = -1;
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            if (this.state.participantrequests[index].participantrequestId === deleteId) {
+                pos = index;
+            }
+        }
+        this.state.participantrequests.splice(pos, 1);
+        this.setState({
+        });
     }
 
-    handleClick(participantrequestId,event){
+    handleAccept(acceptId,event){
         event.preventDefault();
+        const projectId = this.state.projectId;
         let posi = -1;
-        for (let index = 0; index < this.state.participantrequest.length; index++) {
-            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            if (this.state.participantrequests[index].participantrequestId === acceptId) {
                 posi = index;
             }
         }
-        const toBecomeParticipant = this.state.participantrequest[posi]
+        const toBecomeParticipant = this.state.participantrequests[posi]
         fetch(`http://localhost:5000/participants/add/`, {
             method: 'POST',
             body: JSON.stringify({
                 "userId": toBecomeParticipant.userId,
-                "projectId": this.props.id
+                "projectId": projectId
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -411,48 +440,75 @@ class ParticipantsRequest extends React.Component{
         });
 
         //functie die participantrequest gaat delete
-        this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId);
+        this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId, projectId);
 
         let pos = -1;
-        for (let index = 0; index < this.state.participantrequest.length; index++) {
-            if (this.state.participantrequest[index].participantrequestId === participantrequestId) {
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            if (this.state.participantrequests[index].participantrequestId === acceptId) {
                 pos = index;
             }
         }
-        this.state.participantrequest.splice(pos, 1);
+        this.state.participantrequests.splice(pos, 1);
         this.setState({
         });
     }
 
-    componentDidMount() {
-        fetch(`http://localhost:5000/participantrequest/${this.props.id}`)
-            .then(res => res.json())
-            .then(res => this.setState({ participantrequest: res, fetched:true }));
+    deleteParticipantFromParticipantRequest(participantrequestId, projectId){
+        fetch(`http://localhost:5000/participantrequest/delete/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "participantrequestId": participantrequestId,
+                "projectId": projectId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
     }
 
-    render(){
-        /*console.log(this.state.participantrequest.userId);
-        console.log(this.props.id);*/
-        const participantrequestList = this.state.participantrequest.map(participantrequest => (
-            <div className="participantBox" key={participantrequest.participantrequestId}>
-                <form>
-                <p className="centerNameParticipant">{participantrequest.email}</p> <i className="fas fa-check-square participantAcceptIcon" onClick={this.handleClick.bind(this, participantrequest.participantrequestId)}></i>
-                </form>
-            </div>
-        ))
-        if(this.state.fetched){
-            return(
+    delete(id) {
+        let delIcon = "";
+        if (this.props.edit) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
+            delIcon = <i className="fas fa-minus-circle fa-2x del" onClick={this.handleDelete.bind(this, id)}></i>
+        }
+        return delIcon;
+    }
+
+    accept(id) {
+        let accIcon = "";
+        if (this.props.edit && this.props.request) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
+            accIcon = <i class="fas fa-check-circle fa-2x accept" onClick={this.handleAccept.bind(this, id)}></i>
+        }
+        return accIcon;
+    }
+
+    render() {
+        if (this.state.fetched) {
+            const requestList = this.state.participantrequests.map(request => (
+                <div className="participantContainer" key={request.userId} >
+                    {this.delete(request.participantrequestId)}
+                    {this.accept(request.participantrequestId)}
+                    <div className="participantIcon">
+                        <i className="fas fa-user-circle fa-4x"></i>
+                    </div>
+                    <NavLink key={request.userId} to={`/Userpage/#${request.userId}`}>{request.name}</NavLink>
+                </div>
+            ));
+            return (
                 <div>
-                    <p className="profileTitle">Participants Request</p>
+                    <div className="profileTitle">
+                        <b>{this.props.title}</b>
+                    </div>
                     <div className="profileContainer">
-                        {participantrequestList}
+                        {requestList}
                     </div>
                 </div>
             );
-        } 
-        return(
-            <p>ParticipantsRequest not found</p>
-        );
+        } else {
+            return (
+                <p></p>
+            );
+        }
     }
 }
 
@@ -712,7 +768,7 @@ class EditProject extends React.Component {
                         <EditGroupsize value={projSize} id={this.state.project.projectId} />
                         <ProjectLinks id={this.state.project.projectId}/>
                         <Users fetch={`http://localhost:5000/project/participants/${projId}`} edit={true} id={projId} />
-                        <ParticipantsRequest id={projId} />
+                        <Participantrequest fetch={`http://localhost:5000/participantrequest/${projId}`} edit={true} id={projId} request={true} title={Participantrequest} />
                         <Problems id={this.state.project.projectId}/>
                         <ProjectComments id={projId} owner={owner}/>
                         <Tags id={projId}/>
