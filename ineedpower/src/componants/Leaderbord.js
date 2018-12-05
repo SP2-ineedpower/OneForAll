@@ -23,7 +23,7 @@ class DisplayLeaderbordUser extends React.Component{
             const userList = this.state.users.map((user,index) => (
                 <tr key={user.rateduserId}>
                     <td>{index+1}</td>
-                    <NavLink to={`/Userpage/#${user.rateduserId}`}>{user.name}</NavLink>
+                    <NavLink to={`/Userpage/#${user.userId}`}>{user.name}</NavLink>
                     <td>{user.score}</td>
                 </tr>
             ))

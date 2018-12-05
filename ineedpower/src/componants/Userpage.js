@@ -27,17 +27,17 @@ class Userpage extends React.Component {
     componentDidMount() {
         fetch(`http://localhost:5000/users/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
-            .then(res => this.setState({ user: res, fetched: true }));
+            .then(res => this.setState({ user: res[0], fetched: true }));
     }
 
     render() {
         if (this.state.fetched) {
-            const id = this.state.user[0].userId;
+            const id = this.state.user.userId;
             return (
                 <div>
                     <Header version="user" />
                     <div className="backgrounduser">
-                    <Userdata user={this.state.user[0]} owner={false}></Userdata>
+                    <Userdata user={this.state.user} owner={false}></Userdata>
                     <UserLinks userId={id} owner={false}></UserLinks>
                     <MyProjects userId={id}></MyProjects>
                     <Competences userId={id} owner={false}></Competences>
