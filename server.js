@@ -4,6 +4,15 @@ const app = express();
 const cors = require('cors')
 app.use(cors());
 
+
+// const path = require('path');
+// app.use(express.static(path.join(__dirname, 'ineedpower/build')));
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
+// });
+//app.listen(9000);
+
+
 //code from https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -65,6 +74,8 @@ connection.connect((error) => {
         });
     });
 
+
+    //Select users by a part of their name
     app.get('/users/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
         let query = connection.query("SELECT DISTINCT u.name,u.userId FROM user u, competence c WHERE u.userId = c.userId and lower(competence) LIKE ? OR  u.userId = c.userId and lower(u.name) LIKE ?", [like,like], (err, result)=>{
@@ -77,7 +88,6 @@ connection.connect((error) => {
 
 //UPDATE USERS
     app.put('/users/:id', (req, res)=>{
-
         var data = {
             bio:req.body.bio,
             subject:req.body.subject,
@@ -158,7 +168,7 @@ connection.connect((error) => {
         });
     });
 
-    //Select a project by his name or owner or name
+    //Select a project by his name or owner or name or tags
     app.get('/displayProjects/search/:search', (req, res)=>{
         const like = `%${req.params.search}%`;
         console.log(like);
@@ -169,9 +179,18 @@ connection.connect((error) => {
         });
     });
 
+    //Select the 8 most popular projects
+    app.get('/displayProjects/liked/:id', (req, res)=>{
+        let query = connection.query("SELECT p.name as 'projectname', u.name, p.projectId FROM project p, projectlike pl,user u where p.projectId=pl.projectId and p.creatorId = u.userId and pl.userId = ?", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
     //Select a group of projects by the owner or participant id
     app.get('/displayProjects/user/:user', (req, res)=>{
-        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ${req.params.user} OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ${req.params.user}`, [req.params.user], (err, results)=>{
+        let query = connection.query(`SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ? OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ?`, [req.params.user,req.params.user], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -180,7 +199,7 @@ connection.connect((error) => {
 
     //Display the name of the owner of a project
     app.get('/projectowner/:id', (req, res)=>{
-        let query = connection.query("SELECT u.name FROM user u, project p WHERE u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT u.name, u.userId FROM user u, project p WHERE u.userId = p.creatorId and p.projectId = ?", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -240,20 +259,41 @@ connection.connect((error) => {
         });
     });
 
-//LINKS
+//PROJECTLINKS
 
-    //Select all UserLinks from the database, based on the userID
-    app.get('/userLinks/:id', (req, res)=>{
-        let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
+     //Select all projectlinks from the database, based on the projectId
+     app.get('/projectlinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM projectlink WHERE projectId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
         });
     });
 
-    //Select all projectlinks from the database, based on the projectId
-    app.get('/projectlinks/:id', (req, res)=>{
-        let query = connection.query("SELECT * FROM projectlink WHERE projectId = ?", [req.params.id], (err, result)=>{
+     //Delete one of the links of a project
+     app.post('/projectlinks/delete/', (req, res)=>{
+        let query = connection.query("delete FROM projectlink WHERE projectLinkId = ? AND projectId = ?", [req.body.projectLinkId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    //Add link in projectlink
+    app.post('/projectlinks/add/', (req, res)=>{
+        let query = connection.query("insert into projectlink values(null,?,?)", [req.body.projectId, req.body.url], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send("link added");
+        });
+    });
+
+
+//LINKS
+
+    //Select all UserLinks from the database, based on the userID
+    app.get('/userLinks/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM userlink WHERE userId = ?", [req.params.id], (err, result)=>{
             if(err) console.log("Error");
             console.log(result);
             res.send(result);
@@ -328,10 +368,28 @@ connection.connect((error) => {
         });
     });
 
+    
+    app.get('/problemComments/:id', (req, res)=>{
+        let query = connection.query("SELECT * FROM problemcomment,user WHERE user.userId = problemcomment.userId AND problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
+
     //insert new comment in database
     app.post('/comments/add/', (req, res)=>{
-
         let query = connection.query("insert into projectcomment values(null,?,CURRENT_TIMESTAMP,?,?)", [req.body.comment,req.body.projId,req.body.userId], (err, result)=>{
+            if(err) console.log("Error");
+            console.log("test: " + req.body.userId);
+            res.send("comment added");
+        });
+    });
+
+    //Insert new comment in problemcomment table
+    app.post('/problemComments/add/', (req, res)=>{
+
+        let query = connection.query("insert into problemcomment values(null,?,?,?)", [req.body.problemId,req.body.comment,req.body.userId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
             res.send("comment added");
@@ -346,9 +404,15 @@ connection.connect((error) => {
         });
     });
 
-
-
 //PROBLEMS
+
+    app.get('/problem/:id', (req, res)=>{
+        let query = connection.query("SELECT prob.problemId, prob.problem FROM problem prob WHERE problemId = ?", [req.params.id], (err, result)=>{
+            if(err) console.log("Error");
+            console.log(result);
+            res.send(result);
+        });
+    });
 
     //Select all problems from a project with the project id
     app.get('/project/projectproblem/:id', (req, res)=>{
@@ -369,8 +433,7 @@ connection.connect((error) => {
 
     //insert problem in database
     app.post('/problems/add/', (req, res)=>{
-
-        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId,req.body.problem], (err, result)=>{
+        let query = connection.query("insert into problem values(null,?,?,0)", [req.body.projId, req.body.problem], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.userId);
             res.send("problem added");
@@ -378,16 +441,18 @@ connection.connect((error) => {
     });
 
     //delete problem in database
-    app.post('/problems/delete/:id', (req, res)=>{
-        let query = connection.query("DELETE FROM problem WHERE problemId = ?", [req.params.id], (err, result)=>{
+    app.post('/problems/delete/', (req, res)=>{
+        let query = connection.query("DELETE FROM problem WHERE problemId = ?", [req.body.problemId], (err, result)=>{
             if(err) console.log("Error");
             res.send(`Problem with ID ${req.params.id} is deleted`);
         });
     });
 
+
+
 //PARTICIPANTS
 
-    //Select participants of a project based on the id of the project
+    //Select all participants of a project based on the id of the project
     app.get('/project/participants/:id', (req, res)=>{
         let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
@@ -405,10 +470,10 @@ connection.connect((error) => {
     });
 
     //delete participant
-    app.post('/participants/delete/:id', (req, res)=>{
-        let query = connection.query("DELETE FROM participants WHERE participantId = ?", [req.params.id], (err, result)=>{
+    app.post('/participants/delete/', (req, res)=>{
+        let query = connection.query("DELETE FROM participant WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
-            res.send(`Participant with ID ${req.params.id} is deleted`);
+            res.send(`Participant with ID ${req.body.participantId} is deleted from project with projectId ${req.body.projectId}`);
         });
     });
 
@@ -416,7 +481,7 @@ connection.connect((error) => {
 
     //select all participantsrequest for a project with the projectId
     app.get('/participantrequest/:id', (req, res)=>{
-        let query = connection.query("SELECT pa.participantrequestId, pa.userId, u.email FROM participantrequest pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+        let query = connection.query("SELECT pa.participantrequestId, pa.userId ,u.name, u.email FROM participantrequest pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
@@ -434,7 +499,7 @@ connection.connect((error) => {
 
     //delete participantrequest
     app.post('/participantrequest/delete/', (req, res)=>{
-        let query = connection.query("Delete from participantrequest WHERE participantrequestId = ?", [req.body.participantrequestId], (err, result)=>{
+        let query = connection.query("Delete from participantrequest WHERE participantrequestId = ? AND projectId = ?", [req.body.participantrequestId, req.body.projectId], (err, result)=>{
             if(err) console.log("Error");
             console.log("test: " + req.body.participantrequestId);
             res.send("participantrequest deleted");
@@ -471,21 +536,59 @@ connection.connect((error) => {
 
 //RATINGS
 
-    //add a rating
-    app.post('/rating/add/', (req, res)=>{
-        let query = connection.query("insert into ratedUser values(?,?,?,null)", [req.body.userId,req.body.rateduserId,req.body.score], (err, result)=>{
-            if(err) console.log("Error");
+    //add a rating to a user
+    app.post('/rating/insert/', (req, res)=>{
+        console.log("test")
+        let query = connection.query("insert into ratedUser values(?,?,null,?)", [req.body.rateduserId, req.body.score,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error:" + err);
             res.send("rating added");
         });
     });
 
-    //display users and their rating
-    app.get('/Leaderbord/', (req, res)=>{
-        let query = connection.query("SELECT u.name r.score FROM user u, ratedUser r WHERE r.userId > 1", (err, result)=>{
+    //update a rating to a user
+    app.post('/rating/update/', (req, res)=>{
+        console.log("test")
+        let query = connection.query("UPDATE ratedUser SET score = ? WHERE rateduserId = ? AND projectId = ?", [req.body.score,req.body.rateduserId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error:" + err);
+            res.send("rating added");
+        });
+    });
+
+    //select users that are rated by a user with the given ID
+    app.get('/rateduser/:projectId/', (req, res)=>{
+        let query = connection.query("select * from ratedUser where projectId= ?", [req.params.projectId], (err, result)=>{
             if(err) console.log("Error");
             res.send(result);
         });
     });
+
+    //Get rating of a user in a project
+    app.get('/userRating/:projectId/:userId', (req, res)=>{
+        let query = connection.query("select * from ratedUser where projectId= ? AND rateduserId = ?", [req.params.projectId,req.params.userId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+//LEADERBOARD
+
+     //select users and their rating
+     app.get('/LeaderbordUser/', (req, res)=>{
+        let query = connection.query("SELECT u.name,u.userId , ROUND(AVG(score), 1) AS 'score' FROM ratedUser r, user u WHERE rateduserId >= 1 AND r.rateduserId = u.userId GROUP BY u.userId ORDER BY score DESC;", (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+    //select users and their rating
+    app.get('/LeaderbordProject/', (req, res)=>{
+        let query = connection.query("SELECT p.name, p.projectId , COUNT(pl.projectId) AS 'score' FROM project p, projectlike pl WHERE p.projectId >= 1 AND p.projectId = pl.projectId GROUP BY p.projectId ORDER BY COUNT(pl.projectId) DESC;", (err, result)=>{
+            if(err) console.log("Error");
+            res.send(result);
+        });
+    });
+
+
 
 
 app.listen('5000', () => console.log("Server started on port 5000"));

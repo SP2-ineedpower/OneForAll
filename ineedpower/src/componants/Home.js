@@ -3,16 +3,13 @@ import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
 import { Redirect } from "react-router-dom";
 
-class PopularProjects extends React.Component {
-  render() {
-    //this querry will change
-    return (
-      <ProjectDisplay
-        title="Popular projects"
-        fetch="http://localhost:5000/displayProjects"
-      />
-    );
-  }
+class PopularProjects extends React.Component { 
+    render() {
+        //this querry will change
+        return (
+            <ProjectDisplay title="Liked projects" fetch="http://localhost:5000/displayProjects/liked/1" />  //replace 1 by current user
+        );
+    }
 }
 
 class CppProjects extends React.Component {

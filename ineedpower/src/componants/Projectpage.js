@@ -1,24 +1,14 @@
 import React from 'react';
 import Header from './Header';
-import {NavLink} from 'react-router-dom'
+import Comments from './comments';
+import Popup from './Popup';
+import { NavLink } from 'react-router-dom';
 import '../css/projectpage.css';
 import Users from './Users';    // this displays users 
 
-const commentLikes = [
-    {
-        likeId: 1,
-        commentId: 1
-    }, {
-        likeId: 2,
-        commentId: 1
-    }, {
-        likeId: 3,
-        commentId: 1
-    }, {
-        likeId: 3,
-        commentId: 3
-    }
-]
+const actifUser = {
+    userId: 8
+}
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -26,8 +16,11 @@ class ProjectData extends React.Component {
         this.state = {
             project: this.props.project,
             Owner: {},
+            participantrequests:{},
+            valid: true,
             fetched: false
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -36,9 +29,39 @@ class ProjectData extends React.Component {
             .then(res => this.setState({ Owner: res[0], fetched: true }));
     }
 
-    getNav(id){
-        return `/JoinProject/#${id}`
+    componentDidMount() {
+        fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res, fetched: true }));
     }
+
+    handleClick(){
+        //const userId = actifUser.userId;
+        let userIds = [];
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            let userId = this.state.participantrequests[index].userId;
+            userIds.push(userId);
+        }
+        //console.log(userIds); oke
+
+        for (let index = 0; index < userIds.length; index++) {
+            if(userIds[index].userId === actifUser.userId){
+                this.state.valid = false;
+            }
+        }
+        if(this.state.valid) {
+            fetch(`http://localhost:5000/participantrequest/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": actifUser.userId,
+                "projectId": this.props.project.projectId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        }
+     }
 
     render() {
         if (this.state.fetched) {
@@ -49,7 +72,7 @@ class ProjectData extends React.Component {
 
                     <div className="paragraafEditProj">
 
-                        <NavLink to={this.getNav(project.projectId)} className="buttonEditProj">JOIN</NavLink>
+                        <div className="stylish" onClick={this.handleClick} ><Popup></Popup></div>
 
                         <p>
                             <span><b>Project name:</b></span>
@@ -87,7 +110,7 @@ class ProjectData extends React.Component {
             return (
                 <div>
                     <div className="rightButton">
-                            <NavLink to="/JoinProject" className="buttonEditProj">JOIN</NavLink>
+                        <NavLink to="/JoinProject" className="buttonEditProj">JOIN</NavLink>
                     </div>
                     <div className="paragraafEditProj">
                         <p><b>Project name:</b></p>
@@ -148,79 +171,30 @@ class Tags extends React.Component {
     }
 }
 
-class CommentLike extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            liked: false,
-            commentId: this.props.commentId
-        }
-        this.handleLikeClick = this.handleLikeClick.bind(this);
-    }
-
-    handleLikeClick(e) {
-        if (!this.state.liked) {
-            e.target.className = "far fa-thumbs-up styleLikeComment likeClicked";
-            const like = {
-                commentId: this.state.commentId
-            }
-            commentLikes.push(like);
-            this.setState({
-                liked: true
-            });
-        } else {
-            e.target.className = "far fa-thumbs-up styleLikeComment";
-            this.setState({
-                liked: false
-            });
-            commentLikes.pop();
-        }
-    }
-
-    likes() {
-        let teller = 0;
-        for (let index = 0; index < commentLikes.length; index++) {
-            if (this.state.commentId === commentLikes[index].commentId) {
-                teller++;
-            }
-        }
-        return teller;
-    }
-
-    render() {
-        return (
-            <div className="ProjectLike">
-                <i className="far fa-thumbs-up styleLikeComment" onClick={this.handleLikeClick}></i>
-                {this.likes()}
-            </div>
-        )
-    }
-}
-
 class ProjectLike extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             likes: [],
-            liked:false,
-            class:"far fa-thumbs-up styleLikeComment"
+            liked: false,
+            class: "far fa-thumbs-up styleLikeComment"
         }
         this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
         fetch(`http://localhost:5000/projectlikes/${this.props.id}`)
-        .then(res => res.json())
-        .then(res => this.setState({ likes: res}, function() {
-            this.state.likes.map(like => {
-                if (like.userId === this.props.user) { 
-                    this.setState({
-                        liked:true,
-                        class: "far fa-thumbs-up styleLikeComment likeClicked"
-                    })
-                }
-            })
-        }));
+            .then(res => res.json())
+            .then(res => this.setState({ likes: res }, function () {
+                this.state.likes.map(like => {
+                    if (like.userId === this.props.user) {
+                        this.setState({
+                            liked: true,
+                            class: "far fa-thumbs-up styleLikeComment likeClicked"
+                        })
+                    }
+                })
+            }));
     }
 
     onClick() {
@@ -287,89 +261,6 @@ class ProjectLinks extends React.Component {
     }
 }
 
-class Comments extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: "",
-            comments: {},
-            fetched: false
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
-    }
-
-    componentDidMount() {
-        fetch(`http://localhost:5000/comments/${this.props.id}`)
-            .then(res => res.json())
-            .then(res => this.setState({ comments: res, fetched: true }));
-    }
-
-    handleChange(event) {
-        this.setState({
-            value: event.target.value
-        });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
-        const comment = {
-            commentId: tempNum,
-            comment: this.state.value
-        }
-
-        fetch(`http://localhost:5000/comments/add/`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "comment": this.state.value,
-                "projId": this.props.id,
-                "userId": 1  //Moet veranderd worden
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-        this.state.comments.push(comment);
-        this.setState({
-            value: ""
-        });
-    }
-
-    render() {
-        if (this.state.fetched) {
-            const commentsList = this.state.comments.map(comment => (
-                <div className="commentBox" key={comment.commentId}>
-                    <h4><i className="fas fa-user"></i> {comment.name}</h4>
-                    <p>{comment.comment}</p>
-                    <CommentLike commentId={comment.commentId}></CommentLike>
-                </div>
-            ))
-            return (
-                <form onSubmit={this.handleSubmit}>
-                    <h2 className="profileTitle">Comments</h2>
-                    <div className="profileContainer">
-                        <p><i className="fas fa-user approachComment"></i>
-                            <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
-                        </p>
-                        {commentsList}
-                    </div>
-                </form>);
-        } else {
-            return (
-                <form onSubmit={this.handleSubmit}>
-                    <h2 className="titleComments">Comments</h2>
-                    <p><i className="fas fa-user approachComment"></i>
-                        <input id="commentInput" className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
-                    </p>
-                </form>
-            );
-        }
-
-    };
-}
-
 class ProjectProblems extends React.Component {
     constructor(props) {
         super(props);
@@ -377,7 +268,6 @@ class ProjectProblems extends React.Component {
             problems: {},
             fetched: false
         };
-
     }
 
     componentDidMount() {
@@ -390,10 +280,12 @@ class ProjectProblems extends React.Component {
         if (this.state.fetched) {
 
             const ProblemList = this.state.problems.map(problem => (
-                <div className="problemBox" key={problem.problemId}>
-                    <p>{problem.problem}</p>
+                <NavLink key={problem.problemId} to={`/problem/#${problem.problemId}`}>
+                    <div className="problemBox">
+                        <p>{problem.problem}</p>
+                    </div>
+                </NavLink>
 
-                </div>
             ))
             return (
 
@@ -437,11 +329,11 @@ class Projectpage extends React.Component {
                 <div>
                     <Header version="project" />
                     <ProjectData project={this.state.project} user={1 /*needs to change in the future*/} />
-                    <Users fetch={`http://localhost:5000/project/participants/${id}`} title="Participants"/>
+                    <Users fetch={`http://localhost:5000/project/participants/${id}`} title="Participants" />
                     <ProjectLinks id={id} />
                     <Tags id={id} />
                     <ProjectProblems id={id} />
-                    <Comments id={id} user={1 /*needs to change in the future*/}/>
+                    <Comments id={id} user={1 /*needs to change in the future*/} />
                 </div>
             );
         }

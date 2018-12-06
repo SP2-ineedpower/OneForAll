@@ -1,4 +1,3 @@
-
 .buttonEditProj{
     font-weight: 100;
     display:inline-block;
@@ -64,6 +63,15 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     padding-right: 20px;
 }
 
+.stylish{
+    background-color: white;
+    color:lightgrey;
+}
+.stylish{
+    background-color: white;
+    color:lightgrey;
+}
+
 .titleComments{
     /*margin: 0px 80px;*/
     padding-bottom: 10px;
@@ -92,6 +100,7 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     border-radius: 4px;
     padding:5px 20px;
     margin-bottom: 20px;
+    background-color: white;
    /* margin-left:80px;
     margin-right:80px;  */  
 }

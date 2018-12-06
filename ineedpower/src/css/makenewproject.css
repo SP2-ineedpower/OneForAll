@@ -1,4 +1,4 @@
-.positionNewProject{
+/*.positionNewProject{
     margin-left: 100px;
     font-size: 1.2em;
 }
@@ -29,4 +29,105 @@
 }
 .displayNone{
     display: none;
+}*/
+
+.newProject{
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    background-color: rgba(243, 243, 243, 0.596);
+    color: #707070;
+    min-height: 100vh;
+    padding-top: 60px;
 }
+
+.newProject .container{
+    font-size: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    background-color: white;
+    padding: 30px 50px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.432);
+    border-radius: 10px;
+}
+
+.container h2{
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.container input{
+    border: none;
+    border-bottom: 1px solid rgb(165, 165, 165);
+}
+
+.container textarea{
+    margin-top: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.pNameInput {
+    width: 150px;
+}
+
+.pParticipantsInput{
+    width: 40px;
+}
+
+.container p{
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.pSave{
+    background-color: #1F8429;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.center{
+    text-align: center;
+}
+
+.popButton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* animation of confirm symbol from : https://codepen.io/deepsurface/pen/XzWayo */
+
+@keyframes scale {
+    0% {
+      transform: scale3d(0.5, 0.5, 1);
+      opacity: 0;
+    }
+    70% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+      opactiy: 100;
+    }
+  }
+  .checkmark {
+    width: 50px;
+    margin: auto;
+    display: flex;
+    transform: scale3d(0.5, 0.5, 1);
+    animation: opacity 0.5s, scale 1s ease-in-out 0s forwards;
+  }
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  .checkmark--check {
+    stroke: #FFF;
+    stroke-width: 25;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: stroke 1s cubic-bezier(0.650, 0.000, 0.450, 1.000) 1s forwards;
+  }

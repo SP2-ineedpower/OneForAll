@@ -36,7 +36,10 @@ class Competences extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const tempNum =this.state.competences[this.state.competences.length-1].competenceId + 1; //temporary id of the link
+        let tempNum = 1;  //temporary id of the comment
+        if (this.state.competences.length > 0) {
+            tempNum = this.state.competences[this.state.competences.length - 1].competenceId + 1;
+        }
         let tag = {
             tagId: tempNum,
             competence: this.state.value
