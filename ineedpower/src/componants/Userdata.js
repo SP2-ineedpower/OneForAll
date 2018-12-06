@@ -132,6 +132,9 @@ class Userdata extends React.Component {
             return (
                 <div className="grid-userdata">
                     <div className="padding">
+                        <p className="profileTitle">
+                            <b>Personal Data</b>
+                        </p>
                         <div>
                             <p className="profile">
                                 <b>Name: </b>
@@ -163,6 +166,9 @@ class Userdata extends React.Component {
             return (
                 <div className="grid-userdata">
                     <div className="padding">
+                        <p className="profileTitle">
+                            <b>Personal Data</b>
+                        </p>
                         <p className="profile">
                             <b>Name: </b>
                             <span>{this.state.User.name}</span>

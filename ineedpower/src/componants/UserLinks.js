@@ -5,17 +5,18 @@ class UserLinks extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
+            class: 'profileContainer',
             place: '+',
             value: '',
             links: {},
-            fetched: false
+            fetched: false,
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this)
+        this.hide = this.hide.bind(this);
 
     }
 
@@ -31,7 +32,7 @@ class UserLinks extends React.Component {
 
     handleClick() {
         this.setState({
-            class: 'input',
+            class: 'profileContainer input',
             place: ''
         })
     }
@@ -87,7 +88,7 @@ class UserLinks extends React.Component {
     showLinks() {
         if (this.state.fetched) {
             const linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.userLinkId)}>delete</button></div>
+                <div className="profilePageLink" key={link.userLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.userLinkId)}>delete</button></div>
             ))
             return linksList;
         } else {
@@ -95,20 +96,28 @@ class UserLinks extends React.Component {
         }
     }
 
+    hide(){
+        if(this.state.class === 'hide profileContainer'){
+            this.setState({class:"profileContainer"});
+        } else{
+            this.setState({class: 'hide profileContainer'});
+        }
+    }
+
     render() {
         if (this.props.owner) {
             return (
-                <div>
-                    <div className="profileTitle">
+                <div className="projectRowWrapper">
+                    <div className="profileTitle" onClick={this.hide}>
                         <b>Links</b>
+                    </div>
+                    <div className={this.state.class}>
+                        {this.showLinks()}
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <ReactTooltip effect="solid"/>
                             <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick} data-tip="add links your page">
                             </input>
                         </form>
-                    </div>
-                    <div className="profileContainer">
-                        {this.showLinks()}
                     </div>
                 </div>
             );
@@ -116,10 +125,10 @@ class UserLinks extends React.Component {
             let linksList = {};
             if (this.state.fetched) {
                 linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.userLinkId}><a href={link.url}>{link.url}</a></div>
+                <div className="profilePageLink" key={link.userLinkId}><a href={link.url}>{link.url}</a></div>
                 ))
                 return (
-                    <div>
+                    <div className="projectRowWrapper">
                         <div className="profileTitle">
                             <b>Links</b>
                         </div>

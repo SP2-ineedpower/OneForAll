@@ -1,6 +1,19 @@
-body,html {
-    font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 0;
-  }
+@font-face{
+  font-family: "Circular-Bold";
+  src: url(fonts/CircularStd-Bold.otf);
+}
+
+@font-face{
+  font-family: "Circular";
+  src: url(fonts/CircularStd-Book.otf);
+}
+
+body, html {
+  font-family: "Circular-Bold", sans-serif;
+}
+
+p{
+  font-family: "Circular", sans-serif;
+}
 
 
