@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 
 class PopularProjects extends React.Component { 
     render() {
