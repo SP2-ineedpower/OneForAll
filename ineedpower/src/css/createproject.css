@@ -1,7 +1,8 @@
-.centerProjectdata p{
+.centerProjectdata {
     font-size: 1.5em;
-    padding-top: 15px;
+    padding-top: 20px;
     margin-bottom: 20px;
+    margin-left: 17px;
 }
 .centerProjectdata .tags:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
@@ -54,7 +55,7 @@
     margin-top: -25px;
     border: 1px solid lightgray;
     outline: none;
-    webkit-transition: width 1s;
+    -webkit-transition: width 1s;
     transition: width 1s;
 }
 
@@ -87,4 +88,50 @@
     margin-bottom: 10px;
     border-radius: 5px;
     text-align: center;
+}
+.marginInputParticipant{
+    margin-top: 20px;
+    margin-left: 10px;
+    padding:5px 10px 5px 50px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.participantBox{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 160px;
+    height:30px;
+    text-align: center;
+    padding: 2px 30px 2px 5px;
+    margin-left: 40px;
+    margin-top:15px;
+    margin-bottom: 7px;
+}
+.userIconEditParticipant{
+    float:left;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+}
+.participantDeleteIcon{
+    padding:0px;
+    margin: 0px;
+    display: block;
+    float: right;
+}
+.participantDeleteIcon:hover{
+    color:#cc0000;
+}
+.participantAcceptIcon{
+    padding:0px;
+    margin: 0px;
+    display: block;
+    float: right;
+}
+.participantAcceptIcon:hover{
+    color: green;
+}
+.centerNameParticipant{
+    margin-right: 25px;
+    margin-top: 5px;
 }

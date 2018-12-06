@@ -1,41 +1,18 @@
 import React from 'react';
 import Header from './Header';
-import Projects from './Projects';
+import ProjectDisplay from './projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
 import '../css/profile.css';
 
 class MyProjects extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            fetched: false
-        }
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:5000/userprojects/')
-            .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched: true }, () => console.log('projects fetched', res)));
-    }
-
     render() {
-        if (this.state.fetched) {
-            return (
-                <div>
-                    <p className="profileTitle"><b>Projects</b></p>
-                    <div className="profileContainer">
-                        <Projects projs={this.state.projects} ></Projects>
-                    </div>
-                </div>
-            );
-        } else {
-            return <p>projects can't be fetched</p>
-        }
+        const fetch = `http://localhost:5000/displayProjects/user/${this.props.userId}`
+        return (
+            <ProjectDisplay title="Projects" fetch={fetch}/>
+        );
     }
-
 }
 
 
@@ -49,9 +26,9 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/users')
+        fetch('http://localhost:5000/users/1')
             .then(res => res.json())
-            .then(res => this.setState({ user: res.data, fetched: true }, () => console.log('user fetched', res)));
+            .then(res => this.setState({ user: res, fetched: true }));
     }
 
     render() {
@@ -60,14 +37,20 @@ class Profile extends React.Component {
             return (
                 <div>
                     <Header version="user"></Header>
+                    <div className="backgroundprofile">
                     <Userdata user={this.state.user[0]} owner={true}></Userdata>
                     <UserLinks userId={id} owner={true}></UserLinks>
                     <MyProjects userId={id}></MyProjects>
                     <Competences userId={id} owner={true}></Competences>
+                    </div>
                 </div>
             );
         } else {
-            return <p></p>;
+            return (
+                <div className="background">
+                <p></p>
+                </div>
+            );
         }
 
     }

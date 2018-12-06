@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "predeploy": "npm run build",
+    "deploy": "ineedpower -d build"
   },
   "repository": {
     "type": "git",
@@ -16,8 +18,9 @@
   "bugs": {
     "url": "https://github.com/SP2-ineedpower/OneForAll/issues"
   },
-  "homepage": "https://github.com/SP2-ineedpower/OneForAll#readme",
+  "homepage": "https://sp2-ineedpower.github.io/OneForAll/",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "mysql": "^2.16.0"

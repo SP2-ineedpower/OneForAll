@@ -2,20 +2,78 @@ import React from 'react';
 import pencil from '../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
 
-function Button(props) {
-    if (props.active) {
+class Button extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+    getNav(id){
+        return `/MakeNewProject/#${id}`
+    }
+    render() {
         return (
-            <NavLink to="/createproject"> <button className="projbutton">Make new project</button></NavLink>
+            <NavLink to={this.getNav(this.props.id)} className="projbutton">Make new project</NavLink>
         );
     }
 }
 
-
-class InputProfile extends React.Component {
+class StudyField extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
+            value: this.props.value,
+            updated: false
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.submit();
+    }
+
+    submit() {
+        const subject = this.state.value;
+        fetch(`http://localhost:5000/user/studies`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "studies": subject,
+                "id": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ value: nextProps.value });
+    }
+
+    render() {
+        return (
+            <form className="profileInput" onSubmit={this.handleSubmit} onBlur={this.submit}>
+                <label>
+                    <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
+                    <img src={pencil} alt="edit button" className="pencil" />
+                </label>
+            </form>
+        );
+    }
+
+}
+
+class Bio extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
             value: this.props.value,
             updated: false
         }
@@ -29,14 +87,17 @@ class InputProfile extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // let link = {
-        //     linkId: 4,
-        //     link: this.state.value
-        // }
-        // links.push(link);
-        this.setState({
-            value: ''
+        fetch(`http://localhost:5000/user/bio`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "bio": this.state.value,
+                "id": this.props.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
         });
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,35 +105,17 @@ class InputProfile extends React.Component {
     }
 
     render() {
-        if (this.props.textarea === "true") {
-            return (
-                <form>
-                    <label>
-                        <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea"></textarea>
-                    </label>
-                </form>
-            );
-        }
-        if (this.props.type === "text") {
-            return (
-                <form className="profileInput">
-                    <label>
-                        <input value={this.state.value} onChange={this.handleChange} type={this.props.type} className="textinput"></input>
-                        <img src={pencil} alt="edit button" className="pencil" />
-                    </label>
-                </form>
-            );
-        }
         return (
-            <form className="profileInput">
+            <form onSubmit={this.handleSubmit} className="bio">
                 <label>
-                    <input value={this.state.value} onChange={this.handleChange} type="text"></input>
-                    <img src={pencil} alt="edit button" className="pencil" />
+                    <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea" name="bio"></textarea>
+                    <button type="submit">save</button>
                 </label>
             </form>
         );
     }
 }
+
 
 
 class Userdata extends React.Component {
@@ -83,14 +126,13 @@ class Userdata extends React.Component {
         }
     }
 
-
     render() {
         const usr = this.state.User;
-        console.log(this.props.owner);
         if (this.props.owner) {
             return (
                 <div className="grid-userdata">
                     <div className="padding">
+                        <div>
                             <p className="profile">
                                 <b>Name: </b>
                                 <span>{this.state.User.name}</span>
@@ -100,59 +142,51 @@ class Userdata extends React.Component {
                                 <b>Email: </b>
                                 <span>{this.state.User.email}</span>
                             </p>
-                        <div className="profile">
-                            <b>Age: </b>
-                            <InputProfile value={usr.age} type="number"></InputProfile>
+        
+                            <div className="profile">
+                                <b>Field of study: </b>
+                                <StudyField value={usr.subject} id={usr.userId} type="text"></StudyField>
+                            </div>
 
-                        </div>
-
-                        <div className="profile">
-                            <b>Field of study: </b>
-                            <InputProfile value={usr.subject} type="text"></InputProfile>
-                        </div>
-
-                        <div className="profile">
-                            <b>Bio: </b>
-                            <InputProfile value={usr.bio} textarea="true"></InputProfile>
+                            <div className="profile">
+                                <b>Bio: </b>
+                                <Bio value={usr.bio} textarea="true" id={usr.userId}></Bio>
+                            </div>
                         </div>
                     </div>
                     <div id="wrapper">
-                        <Button active={true} />
+                        <Button id={usr.userId} active={true} />
                     </div>
                 </div>
             );
         } else {
-            // return (
-            //     <div className="grid-userdata">
-            //         <div className="padding">
+            return (
+                <div className="grid-userdata">
+                    <div className="padding">
+                        <p className="profile">
+                            <b>Name: </b>
+                            <span>{this.state.User.name}</span>
+                        </p>
 
-            //             <p className="profile">
-            //                 <b>Name: </b>
-            //                 <span>{this.state.User.name}</span>
-            //             </p>
+                        <p className="profile">
+                            <b>Email: </b>
+                            <span>{this.state.User.email}</span>
+                        </p>
 
-            //             <p className="profile">
-            //                 <b>Email: </b>
-            //                 <span>{this.state.User.email}</span>
-            //             </p>
+                        <div className="profile">
+                            <b>Field of study: </b>
+                            <span>{usr.subject}</span>
+                        </div>
 
-            //             <div className="profile">
-            //                 <b>Age: </b>
-            //                 <span>{usr.age}</span>
-            //             </div>
-
-            //             <div className="profile">
-            //                 <b>Field of study: </b>
-            //                 <span>{usr.subject}</span>
-            //             </div>
-
-            //             <div className="profile">
-            //                 <b>Bio: </b>
-            //                 <span>{usr.bio}</span>
-            //             </div>
-            //         </div>
-            //     </div>
-            // );
+                        <div className="profile">
+                            <b>Bio: </b>
+                            <span>{usr.bio}</span>
+                        </div>
+                    </div>
+                    <div id="wrapper">
+                    </div>
+                </div>
+            );
         }
 
     }

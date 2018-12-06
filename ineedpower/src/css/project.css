@@ -1,6 +1,6 @@
 .projectback{
     width: 190px;
-    height: 140px;
+    height: 160px;
     display: inline-block;
     float: left;
     margin-right: 50px;
@@ -12,7 +12,6 @@
 
 .projectback:hover{
     box-shadow: 1px 1px 10px rgb(0, 0, 0);
-    
 }
 
 .projectback p{
@@ -29,7 +28,9 @@
     
 }
 
-
+.searchContainer, .projectContainer {
+    padding-top: 50px;
+}
 
 /*gradients for project backgrounds: gradients found on https://www.eggradients.com/ */
 
@@ -71,4 +72,55 @@
 .soda{
     background-color: #fbb034;
     background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}
+
+.homeless{
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%);
+}
+
+.battery{
+    background-color: #fc5296;
+    background-image: linear-gradient(315deg, #fc5296 0%, #f67062 74%); 
+}
+
+.login{
+    background-color: #4dccc6;
+    background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+}
+
+.kennedy{
+    background-color: #3bb78f;
+    background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+}
+
+.chance{
+    background-color: #ee8e6b;
+    background-image: linear-gradient(315deg, #ee8e6b 0%, #ef6da0 74%);
+}
+
+.duck{
+    background-color: #17f9f2;
+    background-image: linear-gradient(315deg, #17f9f2 0%, #b0f9a9 74%);
+}
+
+.organic{
+    background-color: #feae96;
+    background-image: linear-gradient(315deg, #feae96 0%, #fe0944 74%);
+}
+
+.warm{
+    background-color: #ef5734;
+    background-image: linear-gradient(315deg, #ef5734 0%, #ffcc2f 74%);
+}
+
+.dragon{
+    background-color: #4dccc6;
+    background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+
+}
+
+.red{
+    background-color: #990000;
+    background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
 }

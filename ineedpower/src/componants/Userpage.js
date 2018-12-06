@@ -1,55 +1,52 @@
 import React from 'react';
 import Header from './Header';
-import Projects from './Projects';
-import Userdata from './Profile';
+import ProjectDisplay from './projectsDisplay';
+import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
 
 
 class MyProjects extends React.Component {
+    render() {
+        const fetch = `http://localhost:5000/displayProjects/user/${this.props.userId}`
+        return (
+            <ProjectDisplay title="Projects" fetch={fetch}/>
+        );
+    }
+}
+
+class Userpage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            projects: [],
+            user: {},
             fetched: false
         }
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/userProjects')
+        fetch(`http://localhost:5000/users/${this.props.location.hash.substr(1)}`)
             .then(res => res.json())
-            .then(res => this.setState({ projects: res.data, fetched:true }, () => console.log('projects fetched', res)));
+            .then(res => this.setState({ user: res[0], fetched: true }));
     }
 
     render() {
         if (this.state.fetched) {
+            const id = this.state.user.userId;
             return (
                 <div>
-                    <p className="profileTitle"><b>Projects</b></p>
-                    <div className="profileContainer">
-                        <Projects projs={this.state.projects} ></Projects>
+                    <Header version="user" />
+                    <div className="backgrounduser">
+                    <Userdata user={this.state.user} owner={false}></Userdata>
+                    <UserLinks userId={id} owner={false}></UserLinks>
+                    <MyProjects userId={id}></MyProjects>
+                    <Competences userId={id} owner={false}></Competences>
                     </div>
                 </div>
             );
         } else {
-           return <p>projects can't be fetched</p>
+            return <p></p>;
         }
-    }
-}
-
-
-
-class Userpage extends React.Component {
-    render() {
-        return (
-            <div>
-                <Header version="user" />
-                <Userdata owner="false"></Userdata>
-                <UserLinks owner="false"></UserLinks>
-                <MyProjects></MyProjects>
-                <Competences owner="false"></Competences>
-            </div>
-        );
     }
 }
 

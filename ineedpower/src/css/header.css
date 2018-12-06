@@ -1,6 +1,10 @@
+
+
 .header{
     padding: 15px;
     box-shadow: 1px 1px 10px rgba(34, 34, 34, 0.815);
+    position: relative;
+    z-index: 1;
 }
 
 p{

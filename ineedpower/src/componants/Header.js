@@ -17,8 +17,8 @@ class Search extends React.Component {
     }
   
     handleSubmit(event) {
-        console.log(this.state.value);
         event.preventDefault();
+        console.log(this.state.value);
     }
   
     render() {
@@ -26,7 +26,7 @@ class Search extends React.Component {
         <form onSubmit={this.handleSubmit} className="searchform">
           <label>
             <input type="text" placeholder="Search" className="search"  value={this.state.value} onChange={this.handleChange} />
-            <button><i className="fas fa-search"></i></button>
+            <NavLink to={`/Search/#${this.state.value}`}><button><i className="fas fa-search"></i></button></NavLink>
             </label>
         </form>
       );
@@ -45,6 +45,14 @@ function Headerversion(version) {
             <div className="grid header">
                 {back}
                 <p className="title">Project Title</p>
+                {profileImg}
+            </div>
+        );
+    }if (version === "newproject") {
+        return(
+            <div className="grid header">
+                {back}
+                <p className="title">New Project</p>
                 {profileImg}
             </div>
         );
@@ -67,8 +75,24 @@ function Headerversion(version) {
     } if (version === "newProject") {
         return(
             <div className="grid header">
-                <NavLink to="/profile"><p className="back">Back to profile</p></NavLink>
+                {back}
                 <p className="title">Edit project</p>
+                {profileImg}
+            </div>
+        );
+    } if (version ==="search") {
+        return(
+            <div className="grid header">
+            {back}
+            <p className="title">Search</p>
+            {profileImg}
+        </div>
+        );
+    } if (version === "Leaderbord") {
+        return(
+            <div className="grid header">
+                {back}
+                <p className="title">Leaderboard</p>
                 {profileImg}
             </div>
         );

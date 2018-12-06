@@ -9,8 +9,11 @@
     "react-router-dom": "^4.3.1",
     "react-sanitized-html": "^2.0.0",
     "react-scripts": "2.0.5",
-    "react-x-editable": "0.0.10-beta",
-    "sanitize-html": "^1.19.1"
+    "react-tooltip": "^3.9.0",
+    "react-x-editable": "^1.0.1",
+    "sanitize-html": "^1.19.1",
+    "semantic-ui-react": "^0.83.0",
+    "serve": "^10.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,9 +24,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-
   "proxy": "http://localhost:5000",
-  
   "browserslist": [
     ">0.2%",
     "not dead",
