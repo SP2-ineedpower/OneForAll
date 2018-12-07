@@ -6,11 +6,6 @@ import {NavLink} from 'react-router-dom'
 //code from https://react.semantic-ui.com/addons/transitionable-portal/#types-portal
 
 export default class ProjectPopup extends React.Component {
-  
-  /*constructor(props) {
-    super(props);
-
-  }*/
 
   render() {
     return (

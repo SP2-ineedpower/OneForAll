@@ -375,8 +375,6 @@ class Participantrequest extends React.Component {
         this.state = {
             participantrequests: [],
             projectId: this.props.id,
-            aantal: "",
-            exceededAmount:"",
             fetched: false
         }
         this.onClick = this.handleDelete.bind(this);
@@ -387,7 +385,6 @@ class Participantrequest extends React.Component {
         fetch(this.props.fetch)
             .then(res => res.json())
             .then(res => this.setState({ participantrequests: res, fetched: true }));
-            this.aantalLeden();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -434,12 +431,6 @@ class Participantrequest extends React.Component {
         });
     }
 
-    aantalLeden() {
-        fetch(`http://localhost:5000/project/amount/participants/${this.props.id}`)
-            .then(res => res.json())
-            .then(res => this.setState({ aantal: res}));
-    }
-
     handleAccept(acceptId, event) {
         event.preventDefault();
 
@@ -452,17 +443,6 @@ class Participantrequest extends React.Component {
         }
         const toBecomeParticipant = this.state.participantrequests[posi];
 
-        console.log("aantal " + this.state.aantal);
-
-        this.setState({
-            exceededAmount: this.state.aantal + 1
-          });
-
-          console.log("exceeded amount " + this.state.exceededAmount);
-
-        if (this.props.size < this.state.exceededAmount) {
-            console.log("te veel participants aanwezig binnen project.");
-        } else {
             fetch(`http://localhost:5000/participants/add/`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -487,7 +467,6 @@ class Participantrequest extends React.Component {
             this.setState({
             });
         }
-    }
 
     delete(id) {
         let delIcon = "";
