@@ -603,6 +603,7 @@ app.post("/problems/delete/", (req, res) => {
 
 //PARTICIPANTS
 
+
 //Select all participants of a project based on the id of the project
 app.get("/project/participants/:id", (req, res) => {
   let query = connection.query(
