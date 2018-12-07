@@ -461,6 +461,15 @@ connection.connect((error) => {
         });
     });
 
+    //select the amount of participants in a project
+    app.get('/project/amount/participants/:id', (req, res)=>{
+        let query = connection.query("SELECT COUNT(projectId) AS 'aantal' FROM participant WHERE projectId = ?;", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
     //insert participant
     app.post('/participants/add/', (req, res)=>{
         let query = connection.query("Insert into participant values(null,?,?,0,0)", [req.body.userId,req.body.projectId], (err, result)=>{
