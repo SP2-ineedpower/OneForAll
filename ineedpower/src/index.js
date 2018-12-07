@@ -1,21 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./index.css";
+//import "./index.php";
 
+import Home from "./componants/Home";
+import Userpage from "./componants/Userpage";
+import Projectpage from "./componants/Projectpage";
+import OwnerProjectPage from "./componants/OwnerProjectPage";
+import Errorpage from "./componants/Error";
+import Profile from "./componants/Profile";
+import EditProject from "./componants/CreateProject";
+import SearchPage from "./componants/SearchPage";
+import NewProject from "./componants/MakeNewProject";
+import Leaderbord from "./componants/Leaderbord";
+import ProblemPage from "./componants/Problempage";
 
-import Home from './componants/Home';
-import Userpage from './componants/Userpage';
-import Projectpage from './componants/Projectpage';
-import OwnerProjectPage from './componants/OwnerProjectPage';
-import Errorpage from './componants/Error';
-import Profile from './componants/Profile';
-import EditProject from './componants/CreateProject';
-import SearchPage from './componants/SearchPage';
-import NewProject from './componants/MakeNewProject';
-import Leaderbord from './componants/Leaderbord';
-import ProblemPage from './componants/Problempage';
-
+//import Login from "./componants/Login";
 
 class Application extends React.Component {
   render() {
@@ -40,10 +41,5 @@ class Application extends React.Component {
     );
   }
 }
-
-
-
-ReactDOM.render(
-  <Application />,
-  document.getElementById('root')
-);
+//<Route path="/Login" component={Login} />
+ReactDOM.render(<Application />, document.getElementById("root"));
