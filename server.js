@@ -448,15 +448,7 @@ connection.connect((error) => {
         });
     });
 
-    //search a problem by a word that appears in it
-    app.get('/problemSearch/:search', (req, res)=>{
-        const like = `%${req.params.search}%`;
-        let query = connection.query("SELECT * FROM problem WHERE problem.problem like ? ", [like], (err, results) => {
-            if(err) console.log("Error");
-            console.log(results);
-            res.send(results);
-        });
-    });
+
 
 //PARTICIPANTS
 
