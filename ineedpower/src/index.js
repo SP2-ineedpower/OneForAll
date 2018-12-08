@@ -15,8 +15,9 @@ import SearchPage from "./componants/SearchPage";
 import NewProject from "./componants/MakeNewProject";
 import Leaderbord from "./componants/Leaderbord";
 import ProblemPage from "./componants/Problempage";
-
 //import Login from "./componants/Login";
+
+require("dotenv").config();
 
 class Application extends React.Component {
   render() {

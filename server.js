@@ -3,7 +3,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 app.use(cors());
-
+require("dotenv").config();
+require("dotenv/config");
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, 'ineedpower/build')));
 // app.get('/', function(req, res) {
@@ -17,10 +18,10 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const connection = mysql.createConnection({
-  host: "dt5.ehb.be",
-  user: "1819SP2_oneforall",
-  password: "NjGkqLQ",
-  database: "1819SP2_oneforall"
+  host: process.env.REACT_APP_HOST,
+  user: process.env.REACT_APP_USER,
+  password: process.env.REACT_APP_PASSWORD,
+  database: process.env.REACT_APP_DATABASE
 });
 
 connection.connect(error => {
