@@ -552,15 +552,7 @@ app.get("/problem/:id", (req, res) => {
   );
 });
 
-    //search a problem by a word that appears in it
-    app.get('/problemSearch/:search', (req, res)=>{
-        const like = `%${req.params.search}%`;
-        let query = connection.query("SELECT * FROM problem WHERE problem.problem like ? ", [like], (err, results) => {
-            if(err) console.log("Error");
-            console.log(results);
-            res.send(results);
-        });
-    });
+
 
 //Select all problems from a project with the project id
 app.get("/project/projectproblem/:id", (req, res) => {
