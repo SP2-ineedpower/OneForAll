@@ -5,12 +5,16 @@ const cors = require("cors");
 app.use(cors());
 require("dotenv").config();
 require("dotenv/config");
+
+
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, 'ineedpower/build')));
 // app.get('/', function(req, res) {
 //   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
 // });
 //app.listen(9000);
+
+
 
 //code from https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
 var bodyParser = require("body-parser");
@@ -603,6 +607,21 @@ app.post("/problems/delete/", (req, res) => {
     }
   );
 });
+
+app.get("/problems/search/:search", (req, res) => {
+  const like = `%${req.params.search}%`;
+  let query = connection.query(
+    "SELECT * from problem where problem LIKE ?",
+    [like],
+    (err, result) => {
+      if (err) console.log("Error");
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
+
+
 
 //PARTICIPANTS
 
