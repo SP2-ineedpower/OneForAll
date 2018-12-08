@@ -10,7 +10,9 @@ class Signup extends React.Component {
         this.state = {
             email: "",
             password: "",
+            Redirect:false
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -19,9 +21,15 @@ class Signup extends React.Component {
         //checking if the data is vallid
         //if the data is valid create a session 
         sessionStorage.setItem("userData", "LoggedIn");
+        this.setState({
+            Redirect:true
+        })
     }
 
     render() {
+        if (this.state.Redirect) {
+            return <Redirect to= "/"></Redirect>;
+        }
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
