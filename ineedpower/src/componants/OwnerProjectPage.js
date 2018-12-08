@@ -236,8 +236,6 @@ class ProblemsOwner extends React.Component{
 
 }
 
-
-
 class Projectpage extends React.Component {
     constructor(props) {
         super(props)
