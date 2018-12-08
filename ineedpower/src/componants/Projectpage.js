@@ -46,9 +46,7 @@ class ProjectData extends React.Component {
 
         for (let index = 0; index < userIds.length; index++) {
             if(userIds[index].userId === actifUser.userId){
-                this.setState({
-                    valid: false
-                  });
+                this.state.valid = false;
             }
         }
         if(this.state.valid) {
