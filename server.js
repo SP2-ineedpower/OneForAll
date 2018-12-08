@@ -551,6 +551,16 @@ app.get("/problem/:id", (req, res) => {
   );
 });
 
+    //search a problem by a word that appears in it
+    app.get('/problemSearch/:search', (req, res)=>{
+        const like = `%${req.params.search}%`;
+        let query = connection.query("SELECT * FROM problem WHERE problem.problem like ? ", [like], (err, results) => {
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
+
 //Select all problems from a project with the project id
 app.get("/project/projectproblem/:id", (req, res) => {
   let query = connection.query(
@@ -646,6 +656,7 @@ app.post("/participants/delete/", (req, res) => {
 });
 
 //PARTICIPANTS REQUEST (PARTICIPANTS IN WACHTRIJ)
+
 
 //select all participantsrequest for a project with the projectId
 app.get("/participantrequest/:id", (req, res) => {
