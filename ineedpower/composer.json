@@ -1,0 +1,5 @@
+{
+  "require": {
+    "smtech/oauth2-canvaslms": "^1.0"
+  }
+}
