@@ -3,6 +3,7 @@ import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
 import { Redirect } from "react-router-dom";
 
+
 class LikedProjects extends React.Component { 
     render() {
         //this querry will change
