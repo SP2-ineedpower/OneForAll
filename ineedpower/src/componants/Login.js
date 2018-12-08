@@ -1,77 +1,84 @@
 import React from "react";
-import { APIData } from "./APIData";
 import { Redirect } from "react-router-dom";
-/*
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "", //empty because post data gets bound
-      password: "",
-      redirect: false
-    };
-    this.login = this.login.bind(this); //use this anywhere (login)
-    this.onChange = this.onChange.bind(this);
-  }
+import NewAccount from "./NewAccount";
+import GoogleLogin from "./GoogleLogin";
 
-  login() {
-    if (this.state.username && this.state.password) {
-      APIData("login", this.state).then(result => {
-        let responseJSON = result;
-        if (responseJSON.userData) {
-          sessionStorage.setItem("userData", responseJSON);
-          this.setState({ redirect: true });
-        } else {
-          console.log("login error");
+
+class Signup extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: "",
+            password: "",
         }
-      });
-    }
-  }
 
-  onChange(element) {
-    this.setState({ [element.target.name]: element.target.value }); //while typing, to change the values of username and password.
-  }
-
-  render() {
-    //login data has been requested and validated
-    if (this.state.redirect) {
-      return <Redirect to={"/"} />;
     }
 
-    //if userdata was already filled in for session, redirect to homepage
-    if (sessionStorage.getItem("userData")) {
-      return <Redirect to={"/"} />;
+    handleSubmit(e) {
+        e.preventDefault();
+        //checking if the data is vallid
+        //if the data is valid create a session 
+        sessionStorage.setItem("userData", "LoggedIn");
     }
 
-    return (
-      <div className="Login">
-        <h2>Login page</h2>
-        <label>Username</label>
-        <input
-          type="text"
-          name="username"
-          placeholder="Ehb student account"
-          onChange={this.onChange}
-        />
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="email" placeholder="email" />
+                    <input type="password" placeholder="password"/>
+                    <button type="submit">Log in</button>
+                </form>
+            </div>
+        );
+    }
+}
 
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={this.onChange}
-        />
 
-        <input
-          type="submit"
-          value="login"
-          className="button"
-          onClick={this.login}
-        />
-      </div>
-    );
-  }
+class Login extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            version: "default"  //shows the 3 different login options (signUp,NewAccount button and google button) , google is not a priority
+        }
+        this.handleNewAccount = this.handleNewAccount.bind(this);
+    }
+
+    handleNewAccount() {
+        this.setState({
+            version: "newAccount"
+        });
+    }
+
+    handleGoogle() {
+        this.setState({
+            version: "google"
+        });
+    }
+
+    render() {
+        if (this.state.version === "default") {
+            return (
+                <div>
+                    <Signup></Signup>
+                    <button onClick={this.handleNewAccount}>Create Account</button>
+                    {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
+                </div>
+            );
+        }
+        if (this.state.version === "newAccount") {
+            return (
+                <NewAccount></NewAccount>
+            );
+        }
+        if (this.state.version === "google") {
+            return (
+                <GoogleLogin></GoogleLogin>
+            );
+        } else {
+            return <h1>an error occured</h1>;
+        }
+    }
 }
 
 export default Login;
-*/
