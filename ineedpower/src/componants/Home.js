@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
-//import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-class PopularProjects extends React.Component { 
+class LikedProjects extends React.Component { 
     render() {
         //this querry will change
         return (
@@ -68,7 +68,7 @@ class ReactProjects extends React.Component {
 }
 
 class Home extends React.Component {
-  /*
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -93,28 +93,23 @@ class Home extends React.Component {
     //when logged out, set to true so the redirect (in render) will bring to login
     this.setState({ redirect: true });
   }
-  */
+  
   render() {
-    /*
+    
     if (this.state.redirect) {
       return <Redirect to={"/Login"} />;
     }
-    */
+    
     return (
       <div>
         <Header version="home" />
         <div className="projectContainer">
-          <PopularProjects />
+          <LikedProjects />
           <CppProjects />
           <JavaProjects />
           <WebProjects />
           <AngularProjects />
           <ReactProjects />
-          /*{" "}
-          <button type="button" onClick={this.logout}>
-            Logout
-          </button>{" "}
-          */
         </div>
       </div>
     );

@@ -369,6 +369,7 @@ class Problems extends React.Component {
 
 }
 
+
 class Participantrequest extends React.Component {
     constructor(props) {
         super(props);
@@ -377,6 +378,7 @@ class Participantrequest extends React.Component {
             projectId: this.props.id,
             fetched: false
         }
+
         this.onClick = this.handleDelete.bind(this);
         this.onClick = this.handleAccept.bind(this);
     }
@@ -408,6 +410,7 @@ class Participantrequest extends React.Component {
             }
         });
 
+
         let pos = -1;
         for (let index = 0; index < this.state.participantrequests.length; index++) {
             if (this.state.participantrequests[index].participantrequestId === deleteId) {
@@ -431,7 +434,6 @@ class Participantrequest extends React.Component {
             }
         });
     }
-
     handleAccept(acceptId, event) {
         event.preventDefault();
 
@@ -486,7 +488,6 @@ class Participantrequest extends React.Component {
     }
 
     render() {
-    
         if (this.state.fetched) {
             const requestList = this.state.participantrequests.map(request => (
                 <div className="participantContainer" key={request.userId} >
@@ -772,6 +773,7 @@ class EditProject extends React.Component {
                         <EditProjectName value={projName} id={this.state.project.projectId} />
                         <EditDescription value={projDesc} id={this.state.project.projectId} />
                         <EditGroupsize value={projSize} id={this.state.project.projectId} />
+
                         <ProjectLinks id={this.state.project.projectId} />
                         <Users fetch={`http://localhost:5000/project/participants/${projId}`} edit={true} id={projId} title={title} />
                         <Participantrequest fetch={`http://localhost:5000/participantrequest/${projId}`} edit={true} id={projId} request={true} size={projSize} title={titel} />

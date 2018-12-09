@@ -15,8 +15,9 @@ import SearchPage from "./componants/SearchPage";
 import NewProject from "./componants/MakeNewProject";
 import Leaderbord from "./componants/Leaderbord";
 import ProblemPage from "./componants/Problempage";
+import Login from "./componants/Login";
 
-//import Login from "./componants/Login";
+require("dotenv").config();
 
 class Application extends React.Component {
   render() {
@@ -34,6 +35,7 @@ class Application extends React.Component {
             <Route path="/Search" component={SearchPage} />
             <Route path="/Leaderbord" component={Leaderbord} />
             <Route path="/Problem" component={ProblemPage} />
+            <Route path="/Login" component={Login} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>
@@ -41,5 +43,5 @@ class Application extends React.Component {
     );
   }
 }
-//<Route path="/Login" component={Login} />
+
 ReactDOM.render(<Application />, document.getElementById("root"));
