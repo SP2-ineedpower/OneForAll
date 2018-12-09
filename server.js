@@ -38,6 +38,16 @@ connection.connect(error => {
 
 //USERS
 
+//insert a new user
+app.post("/user/create", (req, res) => {
+  let query = connection.query("insert into user values(null,?,?,?,?,?,?,?)",[req.body.name, req.body.email, req.body.password, req.body.experience, req.body.bio, req.body.subject, req.body.type],
+    (err, result) => {
+      if (err) console.log("Error");
+    }
+  );
+});
+
+
 //Select all users from the database
 app.get("/users", (req, res) => {
   let sqlCommand = "SELECT * FROM user";

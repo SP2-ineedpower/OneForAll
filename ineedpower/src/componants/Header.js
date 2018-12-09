@@ -34,6 +34,8 @@ class Search extends React.Component {
   }
 //END SEARCH BAR
 
+
+//code from stack overflow https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
 class BackButton extends React.Component {
     static contextTypes = {
       router: () => null, // replace with PropTypes.object if you use them
