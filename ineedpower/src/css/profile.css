@@ -196,3 +196,8 @@
     box-shadow: 1px 1px 6px rgb(117, 117, 117);   
 }
 
+
+.green {
+    background-color: rgb(55, 179, 55) !important;
+    color: white;
+}
