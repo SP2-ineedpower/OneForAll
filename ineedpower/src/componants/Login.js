@@ -36,7 +36,7 @@ class Signup extends React.Component {
         //checking if the data is vallid
         //if the data is valid create a session 
 
-        const email=this.state.email;
+        /*const email=this.state.email;
         const password=this.state.password;
 
         for(let index=0;index<this.state.users.length;index++){
@@ -45,7 +45,26 @@ class Signup extends React.Component {
                     exist:true
                 })
             }
-        }
+        }*/
+
+        /*fetch(`http://localhost:5000/find/user`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "email": this.state.email,
+                "password": this.state.password
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        this.props.changeVersion();*/
+
+            var bcrypt = require('bcryptjs');
+            bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash("B4c0/\/", salt, function(err, hash) {
+                // Store hash in your password DB.
+            });
+        });
         
         if(this.state.exist) {
             sessionStorage.setItem("userData", "LoggedIn");

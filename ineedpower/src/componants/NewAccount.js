@@ -138,10 +138,10 @@ class NewAccount extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <AccountInput type={"text"} placeholder={"Firstname"} update={this.update} />
                     <AccountInput type={"text"} placeholder={"Lastname"} update={this.update} />
-                    <AccountInput type={"password"} placeholder={"password"} update={this.update} />
-                    <AccountInput type={"password"} placeholder={"CheckPassword"} update={this.update} />
                     <AccountInput type={"email"} placeholder={"email"} update={this.update} />
                     <AccountInput type={"email"} placeholder={"CheckEmail"} update={this.update} />
+                    <AccountInput type={"password"} placeholder={"password"} update={this.update} />
+                    <AccountInput type={"password"} placeholder={"CheckPassword"} update={this.update} />
                     <button>Create account</button>
                 </form>
             </div>
