@@ -34,16 +34,33 @@ class Search extends React.Component {
   }
 //END SEARCH BAR
 
+class BackButton extends React.Component {
+    static contextTypes = {
+      router: () => null, // replace with PropTypes.object if you use them
+    }
+  
+    render() {
+      return (
+        <button
+          className="back"
+          onClick={this.context.router.history.goBack}>
+            Back
+        </button>
+      )
+    }
+  }
+
 //SELECTING THE ACTIVE HEADER
 function Headerversion(version) {
+    
 
-    const back = <div className="back"><NavLink to="/">Back to projects</NavLink></div>
+    const back = <div ><NavLink to="/" className="back">Back to projects</NavLink></div>
     const profileImg = <NavLink to="/Profile" className="profileImg"><i className="fas fa-user fa-3x"></i></NavLink>
 
     if (version === "project") {
         return(
             <div className="grid header">
-                {back}
+                <BackButton></BackButton>
                 <p className="title">Project Title</p>
                 {profileImg}
             </div>
@@ -101,6 +118,7 @@ function Headerversion(version) {
 
 class Header extends React.Component {
     render() {
+        
         const headerV = Headerversion(this.props.version)
         return (
             <div>

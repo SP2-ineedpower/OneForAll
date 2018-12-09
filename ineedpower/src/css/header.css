@@ -13,10 +13,10 @@ p{
 
 .back{
     font-size: 1.5em;
-    margin-left: 10px;
+    margin-left: 40px;
     margin-top: 10px;
     font-weight: 700;
-    
+    text-align: left;
 }
 
 .title{
