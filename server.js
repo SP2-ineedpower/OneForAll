@@ -448,22 +448,24 @@ connection.connect((error) => {
         });
     });
 
-
+//Select all participants of a project based on the id of the project
+app.get("/project/participants/:id", (req, res) => {
+  let query = connection.query(
+    "SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId",
+    [req.params.id],
+    (err, results) => {
+      if (err) console.log("Error");
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
 
 //PARTICIPANTS
 
     //Select all participants of a project based on the id of the project
     app.get('/project/participants/:id', (req, res)=>{
         let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
-            if(err) console.log("Error");
-            console.log(results);
-            res.send(results);
-        });
-    });
-
-    //select the amount of participants in a project
-    app.get('/project/amount/participants/:id', (req, res)=>{
-        let query = connection.query("SELECT COUNT(projectId) AS 'aantal' FROM participant WHERE projectId = ?;", [req.params.id], (err, results)=>{
             if(err) console.log("Error");
             console.log(results);
             res.send(results);
