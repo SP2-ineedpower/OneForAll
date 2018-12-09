@@ -384,6 +384,7 @@ class Participantrequest extends React.Component {
     }
 
     componentDidMount() {
+        //test
         fetch(this.props.fetch)
             .then(res => res.json())
             .then(res => this.setState({ participantrequests: res, fetched: true }));
