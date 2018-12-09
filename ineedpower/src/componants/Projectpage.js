@@ -27,13 +27,11 @@ class ProjectData extends React.Component {
         fetch(`http://localhost:5000/project/owner/${this.props.project.projectId}`)
             .then(res => res.json())
             .then(res => this.setState({ Owner: res[0], fetched: true }));
+            fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res}));
     }
 
-    componentDidMount() {
-        fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
-            .then(res => res.json())
-            .then(res => this.setState({ participantrequests: res, fetched: true }));
-    }
 
     handleClick(){
         //const userId = actifUser.userId;
@@ -67,6 +65,7 @@ class ProjectData extends React.Component {
 
     render() {
         if (this.state.fetched) {
+            console.log(this.state.Owner);
             const project = this.props.project;
             project.creationDate = project.creationDate.slice(0, 10);
             return (

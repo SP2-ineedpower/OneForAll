@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
 import { Redirect } from "react-router-dom";
+import {NavLink} from 'react-router-dom'
+
 
 class LikedProjects extends React.Component { 
     render() {
@@ -104,6 +106,7 @@ class Home extends React.Component {
       <div>
         <Header version="home" />
         <div className="projectContainer">
+          <NavLink to="/Leaderbord"><button className="leaderboardButton">Leaderboard</button></NavLink>
           <LikedProjects />
           <CppProjects />
           <JavaProjects />
