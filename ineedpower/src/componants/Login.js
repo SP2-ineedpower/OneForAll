@@ -9,19 +9,27 @@ class Signup extends React.Component {
         this.state = {
             email: "",
             password: "",
-            users: {},
+            user: {},
             fetched:false,
-            exist:false,
+            exist:{},
+            existing:false,
             Redirect:false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
-    componentDidMount() {
-        fetch(`http://localhost:5000/users`)
+    findUser(email) {
+        console.log("DE EMAIL IN DE FUNCTIE " + email);
+        fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
-            .then(res => this.setState({ users: res, fetched: true }));
+            .then(res => this.setState({ user: res, fetched: true }));
+    }
+
+    authenticate(){
+        fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
+            .then(res => res.json())
+            .then(res => this.setState({ exist: res, existing: true }));
     }
 
     update(e) {
@@ -35,43 +43,28 @@ class Signup extends React.Component {
         e.preventDefault();
         //checking if the data is vallid
         //if the data is valid create a session 
+        //this.props.changeVersion();
 
-        /*const email=this.state.email;
-        const password=this.state.password;
+        const email = this.state.email
 
-        for(let index=0;index<this.state.users.length;index++){
-            if(email === this.state.users[index].email && password === this.state.password) {
-                this.setState({
-                    exist:true
-                })
-            }
-        }*/
+        this.findUser(email);
 
-        /*fetch(`http://localhost:5000/find/user`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "email": this.state.email,
-                "password": this.state.password
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-        this.props.changeVersion();*/
-
-            var bcrypt = require('bcryptjs');
-            bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash("B4c0/\/", salt, function(err, hash) {
-                // Store hash in your password DB.
-            });
-        });
+        console.log(this.state.user);
         
-        if(this.state.exist) {
+        if(this.state.fetched){
+            console.log("---------------------FOUND-------------------------");
+            this.authenticate();
+        }
+        else{
+            console.log("USER NIET GEVONDEN");
+        }
+        
+        /*if(this.state.exist) {
             sessionStorage.setItem("userData", "LoggedIn");
             this.setState({
                 Redirect:true
             })
-        }
+        }*/
     }
 
     render() {

@@ -5,6 +5,8 @@ const cors = require("cors");
 app.use(cors());
 require("dotenv").config();
 require("dotenv/config");
+const bcrypt = require("bcryptjs");
+let salt = bcrypt.genSaltSync(10);
 
 
 const path = require('path');
@@ -40,11 +42,13 @@ connection.connect(error => {
 
 //insert a new user
 app.post("/user/create", (req, res) => {
-    let query = connection.query("insert into user values(null,?,?,?,?,?,?,?)",[req.body.name, req.body.email, hash, req.body.experience, req.body.bio, req.body.subject, req.body.type],
+  bcrypt.hash(req.body.password, salt, function(err, hash) {
+    let query = connection.query("insert into user values(null,?,?,?,?,?,?,?)",[req.body.name, req.body.email, hash , req.body.experience, req.body.bio, req.body.subject, req.body.type],
    (err, result) => {
       if (err) console.log("Error");
     }
   );
+  });
 });
 
 //Select all users from the database
@@ -56,6 +60,29 @@ app.get("/users", (req, res) => {
     res.send(results);
   });
 });
+
+//select a specific user with its email
+app.get("/login/user/:email", (req, res) => {
+    let query = connection.query("SELECT * FROM user WHERE email = ?",[req.params.email],(err, result) => {
+      if (err) console.log("Error");
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
+
+//Autheticate a user with his email
+app.get("/authenticate/:password/:hashedPassword", (req, res) => {
+  bcrypt.compare(req.params.password, req.params.hashedPassword, function (err, result) {
+    if (result == true) {
+        res.send("hash match");
+        res.redirect('/home');
+    } else {
+     res.send('Incorrect password');
+     res.redirect('/');
+    }
+  });
+ });
 
 //Select a specific user from the database, based on the ID
 app.get("/users/:id", (req, res) => {
