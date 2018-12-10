@@ -9,27 +9,28 @@ class Signup extends React.Component {
         this.state = {
             email: "",
             password: "",
-            user: {},
-            fetched:false,
-            exist:{},
-            existing:false,
-            Redirect:false
+            user: {
+                userId:-1
+            },
+            fetched: false,
+            Redirect: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
     findUser(email) {
-        console.log("DE EMAIL IN DE FUNCTIE " + email);
+        //console.log("DE EMAIL IN DE FUNCTIE " + email);
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
-            .then(res => this.setState({ user: res, fetched: true }));
+            .then(res => this.setState({ user: res[0], fetched: true }));
     }
 
-    authenticate(){
+    authenticate() {
+        //console.log("test");
         fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
             .then(res => res.json())
-            .then(res => this.setState({ exist: res, existing: true }));
+            .then(res => this.setState({ Redirect: res.result }, console.log(res)));
+
     }
 
     update(e) {
@@ -41,41 +42,24 @@ class Signup extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        //checking if the data is vallid
-        //if the data is valid create a session 
-        //this.props.changeVersion();
-
-        const email = this.state.email
-
-        this.findUser(email);
-
-        console.log(this.state.user);
-        
-        if(this.state.fetched){
-            console.log("---------------------FOUND-------------------------");
-            this.authenticate();
-        }
-        else{
-            console.log("USER NIET GEVONDEN");
-        }
-        
-        /*if(this.state.exist) {
-            sessionStorage.setItem("userData", "LoggedIn");
-            this.setState({
-                Redirect:true
-            })
-        }*/
+        this.findUser(this.state.email);
     }
 
     render() {
-        if (this.state.Redirect) {
-            return <Redirect to= "/"></Redirect>;
+       
+        if (this.state.user.userId > 0 && this.state.Redirect === false) {
+            this.authenticate()
+        }
+
+        if (this.state.Redirect && this.state.password != undefined) {
+            sessionStorage.setItem("userData", "ingelogd");
+            return <Redirect to="/"></Redirect>;
         }
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <input type="email" placeholder="email" ref="email" onChange={this.update.bind(this)} />
-                    <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)}/>
+                    <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)} />
                     <button type="submit">Log in</button>
                 </form>
             </div>
@@ -102,7 +86,7 @@ class Login extends React.Component {
 
     changeVersion() {
         this.setState({
-            version:"default"
+            version: "default"
         });
     }
 
