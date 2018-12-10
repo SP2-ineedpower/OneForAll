@@ -23,7 +23,7 @@ class Application extends React.Component {
   render() {
     return (
       <div>
-        <BrowserRouter>
+        <BrowserRouter basename="/INeedPower/">
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/Userpage" component={Userpage} />

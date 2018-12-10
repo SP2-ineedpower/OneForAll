@@ -9,12 +9,12 @@ const bcrypt = require("bcryptjs");
 let salt = bcrypt.genSaltSync(10);
 
 
-// const path = require('path');
-// app.use(express.static(path.join(__dirname, 'ineedpower/build')));
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
-// });
-//app.listen(9000);
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'ineedpower/build')));
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
+});
+app.listen(9000);
 
 
 
