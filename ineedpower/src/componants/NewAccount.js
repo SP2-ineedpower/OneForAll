@@ -103,10 +103,10 @@ class NewAccount extends React.Component {
     }
 
     sendToDatabase() {
-        console.log("insert");
+        
         const name = this.state.Firstname + " " + this.state.Lastname;
         const email = this.state.Email;
-        const password = this.state.Password;
+        let password = this.state.Password;
         const experience = 0;
         const bio = "New User";
         const subject = "Unknown";
