@@ -2,6 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import NewAccount from "./NewAccount";
 import GoogleLogin from "./GoogleLogin";
+import logo from '../pictures/ineedpowerlogo_v002.gif';
+import '../css/login.css';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -9,11 +11,11 @@ class Signup extends React.Component {
         this.state = {
             email: "",
             password: "",
-            user: {},
-            fetched:false,
-            exist:{},
-            existing:false,
-            Redirect:false
+            user: {
+                userId:-1
+            },
+            fetched: false,
+            Redirect: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -21,13 +23,15 @@ class Signup extends React.Component {
     findUser(email) {
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
-            .then(res => this.setState({ user: res, fetched: true }));
+            .then(res => this.setState({ user: res[0], fetched: true }));
     }
 
-    authenticate(){
+    authenticate() {
+        //console.log("test");
         fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
             .then(res => res.json())
-            .then(res => this.setState({ exist: res, existing: true }));
+            .then(res => this.setState({ Redirect: res.result }, console.log(res)));
+
     }
 
     update(e) {
@@ -61,18 +65,27 @@ class Signup extends React.Component {
                 Redirect:true
             })
         }*/
+
+        this.findUser(this.state.email);
+
     }
 
     render() {
-        if (this.state.Redirect) {
-            return <Redirect to= "/"></Redirect>;
+       
+        if (this.state.user.userId > 0 && this.state.Redirect === false) {
+            this.authenticate()
+        }
+
+        if (this.state.Redirect && this.state.password != undefined) {
+            sessionStorage.setItem("userData", "ingelogd");
+            return <Redirect to="/"></Redirect>;
         }
         return (
-            <div>
+            <div className="signup">
                 <form onSubmit={this.handleSubmit}>
                     <input type="email" placeholder="email" ref="email" onChange={this.update.bind(this)} />
-                    <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)}/>
-                    <button type="submit">Log in</button>
+                    <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)} />
+                    <button type="submit" className="loginButton">Log in</button>
                 </form>
             </div>
         );
@@ -98,7 +111,7 @@ class Login extends React.Component {
 
     changeVersion() {
         this.setState({
-            version:"default"
+            version: "default"
         });
     }
 
@@ -111,10 +124,13 @@ class Login extends React.Component {
     render() {
         if (this.state.version === "default") {
             return (
-                <div>
+                <div className="loginMain">
+                    <div className="loginContainer">
+                    <img src={logo} className="loginLogo"></img>
                     <Signup></Signup>
-                    <button onClick={this.handleNewAccount}>Create Account</button>
+                    <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
                     {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
+                    </div>
                 </div>
             );
         }
