@@ -11,7 +11,7 @@ let salt = bcrypt.genSaltSync(10);
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'ineedpower/build')));
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, "ineedpower/build", 'index.html'));
 });
 app.listen(9000);
@@ -42,12 +42,12 @@ connection.connect(error => {
 
 //insert a new user
 app.post("/user/create", (req, res) => {
-  bcrypt.hash(req.body.password, salt, function (err, hash) {
-    let query = connection.query("insert into user values(null,?,?,?,?,?,?,?)", [req.body.name, req.body.email, hash, req.body.experience, req.body.bio, req.body.subject, req.body.type],
-      (err, result) => {
-        if (err) console.log("Error");
-      }
-    );
+  bcrypt.hash(req.body.password, salt, function(err, hash) {
+    let query = connection.query("insert into user values(null,?,?,?,?,?,?,?)",[req.body.name, req.body.email, hash , req.body.experience, req.body.bio, req.body.subject, req.body.type],
+   (err, result) => {
+      if (err) console.log("Error");
+    }
+  );
   });
 });
 
@@ -63,21 +63,26 @@ app.get("/users", (req, res) => {
 
 //select a specific user with its email
 app.get("/login/user/:email", (req, res) => {
-  let query = connection.query("SELECT * FROM user WHERE email = ?", [req.params.email], (err, result) => {
-    if (err) console.log("Error");
-    console.log(result);
-    res.send(result);
-  }
+    let query = connection.query("SELECT * FROM user WHERE email = ?",[req.params.email],(err, result) => {
+      if (err) console.log("Error");
+      console.log(result);
+      res.send(result);
+    }
   );
 });
 
 //Autheticate a user with his email
 app.get("/authenticate/:password/:hashedPassword", (req, res) => {
   bcrypt.compare(req.params.password, req.params.hashedPassword, function (err, result) {
-    console.log("result: " + result);
-    res.send({ result: result });
+    if (result == true) {
+        res.send("hash match");
+        res.redirect('/home');
+    } else {
+     res.send('Incorrect password');
+     res.redirect('/');
+    }
   });
-});
+ });
 
 //Select a specific user from the database, based on the ID
 app.get("/users/:id", (req, res) => {
@@ -668,30 +673,30 @@ app.get("/problems/search/:search", (req, res) => {
 
 //PARTICIPANTS
 
-//Select all participants of a project based on the id of the project
-app.get('/project/participants/:id', (req, res) => {
-  let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results) => {
-    if (err) console.log("Error");
-    console.log(results);
-    res.send(results);
-  });
-});
+   //Select all participants of a project based on the id of the project
+    app.get('/project/participants/:id', (req, res)=>{
+        let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results)=>{
+            if(err) console.log("Error");
+            console.log(results);
+            res.send(results);
+        });
+    });
 
-//insert participant
-app.post('/participants/add/', (req, res) => {
-  let query = connection.query("Insert into participant values(null,?,?,0,0)", [req.body.userId, req.body.projectId], (err, result) => {
-    if (err) console.log("Error");
-    res.send(`Participant with ID ${req.params.id} is added`);
-  });
-});
+    //insert participant
+    app.post('/participants/add/', (req, res)=>{
+        let query = connection.query("Insert into participant values(null,?,?,0,0)", [req.body.userId,req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Participant with ID ${req.params.id} is added`);
+        });
+    });
 
-//delete participant
-app.post('/participants/delete/', (req, res) => {
-  let query = connection.query("DELETE FROM participant WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result) => {
-    if (err) console.log("Error");
-    res.send(`Participant with ID ${req.body.participantId} is deleted from project with projectId ${req.body.projectId}`);
-  });
-});
+    //delete participant
+    app.post('/participants/delete/', (req, res)=>{
+        let query = connection.query("DELETE FROM participant WHERE participantId = ? AND projectId = ?", [req.body.participantId, req.body.projectId], (err, result)=>{
+            if(err) console.log("Error");
+            res.send(`Participant with ID ${req.body.participantId} is deleted from project with projectId ${req.body.projectId}`);
+        });
+    });
 
 
 //Select all participants of a project based on the id of the project
@@ -728,7 +733,7 @@ app.post("/participants/delete/", (req, res) => {
       if (err) console.log("Error");
       res.send(
         `Participant with ID ${
-        req.body.participantId
+          req.body.participantId
         } is deleted from project with projectId ${req.body.projectId}`
       );
     }
@@ -894,5 +899,5 @@ app.get("/LeaderbordProject/", (req, res) => {
   );
 });
 
-
+    
 app.listen("5000", () => console.log("Server started on port 5000"));
