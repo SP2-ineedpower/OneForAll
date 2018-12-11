@@ -21,7 +21,6 @@ class Signup extends React.Component {
     }
 
     findUser(email) {
-        //console.log("DE EMAIL IN DE FUNCTIE " + email);
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
             .then(res => this.setState({ user: res[0], fetched: true }));
@@ -44,7 +43,31 @@ class Signup extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        //checking if the data is vallid
+        //if the data is valid create a session 
+        //this.props.changeVersion();
+
+        const email = this.state.email
+
+        this.findUser(email);
+        
+        if(this.state.fetched){
+            console.log("---------------------FOUND-------------------------");
+            this.authenticate();
+        }
+        else{
+            console.log("USER NIET GEVONDEN");
+        }
+        
+        /*if(this.state.exist) {
+            sessionStorage.setItem("userData", "LoggedIn");
+            this.setState({
+                Redirect:true
+            })
+        }*/
+
         this.findUser(this.state.email);
+
     }
 
     render() {
