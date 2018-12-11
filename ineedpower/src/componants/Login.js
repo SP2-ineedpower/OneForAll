@@ -2,8 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import NewAccount from "./NewAccount";
 import GoogleLogin from "./GoogleLogin";
-import logo from '../pictures/ineedpowerlogo_v002.gif';
-import '../css/login.css';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -81,11 +79,11 @@ class Signup extends React.Component {
             return <Redirect to="/"></Redirect>;
         }
         return (
-            <div className="signup">
+            <div>
                 <form onSubmit={this.handleSubmit}>
                     <input type="email" placeholder="email" ref="email" onChange={this.update.bind(this)} />
                     <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)} />
-                    <button type="submit" className="loginButton">Log in</button>
+                    <button type="submit">Log in</button>
                 </form>
             </div>
         );
@@ -124,13 +122,10 @@ class Login extends React.Component {
     render() {
         if (this.state.version === "default") {
             return (
-                <div className="loginMain">
-                    <div className="loginContainer">
-                    <img src={logo} className="loginLogo"></img>
+                <div>
                     <Signup></Signup>
-                    <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
+                    <button onClick={this.handleNewAccount}>Create Account</button>
                     {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
-                    </div>
                 </div>
             );
         }
