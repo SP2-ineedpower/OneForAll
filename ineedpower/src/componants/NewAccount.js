@@ -145,7 +145,6 @@ class NewAccount extends React.Component {
             </div>
         );
     }
-
 }
 
 export default NewAccount;
