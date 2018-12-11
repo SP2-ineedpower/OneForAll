@@ -16,11 +16,9 @@ class Signup extends React.Component {
             Redirect:false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
     findUser(email) {
-        console.log("DE EMAIL IN DE FUNCTIE " + email);
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
             .then(res => this.setState({ user: res, fetched: true }));
@@ -48,8 +46,6 @@ class Signup extends React.Component {
         const email = this.state.email
 
         this.findUser(email);
-
-        console.log(this.state.user);
         
         if(this.state.fetched){
             console.log("---------------------FOUND-------------------------");

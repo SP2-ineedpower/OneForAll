@@ -773,7 +773,6 @@ class EditProject extends React.Component {
                         <EditProjectName value={projName} id={this.state.project.projectId} />
                         <EditDescription value={projDesc} id={this.state.project.projectId} />
                         <EditGroupsize value={projSize} id={this.state.project.projectId} />
-
                         <ProjectLinks id={this.state.project.projectId} />
                         <Users fetch={`http://localhost:5000/project/participants/${projId}`} edit={true} id={projId} title={title} />
                         <Participantrequest fetch={`http://localhost:5000/participantrequest/${projId}`} edit={true} id={projId} request={true} size={projSize} title={titel} />
