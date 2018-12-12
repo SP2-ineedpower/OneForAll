@@ -11,11 +11,10 @@ class Signup extends React.Component {
         this.state = {
             email: "",
             password: "",
-            user: {
-                userId:-1
-            },
-            fetched: false,
-            Redirect: false
+            user: {},
+            found: false,
+            Redirect: false,
+            wrongEmail:false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -23,7 +22,9 @@ class Signup extends React.Component {
     findUser(email) {
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
-            .then(res => this.setState({ user: res[0], fetched: true }));
+            .then(res => this.setState({ user: res[0] , found:true}))
+            .catch(error => this.setState({wrongEmail :true}));
+        
     }
 
     authenticate() {
@@ -31,7 +32,6 @@ class Signup extends React.Component {
         fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
             .then(res => res.json())
             .then(res => this.setState({ Redirect: res.result }, console.log(res)));
-
     }
 
     update(e) {
@@ -43,43 +43,42 @@ class Signup extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        //checking if the data is vallid
-        //if the data is valid create a session 
-        //this.props.changeVersion();
-
-        const email = this.state.email
-
-        this.findUser(email);
-        
-        if(this.state.fetched){
-            console.log("---------------------FOUND-------------------------");
-            this.authenticate();
-        }
-        else{
-            console.log("USER NIET GEVONDEN");
-        }
-        
-        /*if(this.state.exist) {
-            sessionStorage.setItem("userData", "LoggedIn");
-            this.setState({
-                Redirect:true
-            })
-        }*/
-
         this.findUser(this.state.email);
+    }
 
+    setJWT() {
+        let token
+        console.log("name: "+ this.state.user.name)
+        fetch(`http://localhost:5000/authenticate/token`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "username": this.state.user.name,   // the "" around the key are important
+            "email": this.state.user.email,
+            "userId":this.state.user.userId,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+        })
+        .then(res => res.json())
+        .then(data => token = data)
+        .then(() => localStorage.setItem("userToken",JSON.stringify(token)));
     }
 
     render() {
-       
-        if (this.state.user.userId > 0 && this.state.Redirect === false) {
-            this.authenticate()
+        if (this.state.found && !this.state.Redirect) {
+            console.log("found");
+            this.authenticate();
+        }
+        
+    
+        if (this.state.Redirect) {
+            console.log("login");
+            this.setJWT();
+            return <Redirect to="/"></Redirect>
         }
 
-        if (this.state.Redirect && this.state.password !== undefined) {
-            sessionStorage.setItem("userData", "ingelogd");
-            return <Redirect to="/"></Redirect>;
-        }
+
         return (
             <div className="signup">
                 <form onSubmit={this.handleSubmit}>
@@ -126,7 +125,7 @@ class Login extends React.Component {
             return (
                 <div className="loginMain">
                     <div className="loginContainer">
-                    <img src={logo} className="loginLogo"></img>
+                    <img src={logo} className="loginLogo" alt=""></img>
                     <Signup></Signup>
                     <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
                     {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
@@ -138,7 +137,7 @@ class Login extends React.Component {
             return (
                 <div className="loginMain">
                     <div className="loginContainer">
-                        <img src={logo} className="loginLogo"></img>
+                        <img src={logo} className="loginLogo" alt=""></img>
                         <NewAccount changeVersion={this.changeVersion}></NewAccount>
                     </div>
                 </div>

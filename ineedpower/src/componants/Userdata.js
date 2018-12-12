@@ -9,11 +9,11 @@ class Button extends React.Component {
         }
     }
     getNav(id){
-        return `/MakeNewProject/#${id}`
+        return `/MakeNewProject/`
     }
     render() {
         return (
-            <NavLink to={this.getNav(this.props.id)} className="projbutton">Make new project</NavLink>
+            <NavLink to={this.getNav()} className="projbutton">Make new project</NavLink>
         );
     }
 }

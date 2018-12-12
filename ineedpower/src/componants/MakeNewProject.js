@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import ProjectPopup from './ProjectPopup';
+import GetActiveUser from './GetActiveUser';
 import '../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
@@ -75,7 +76,8 @@ class NewProject extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/users/${this.props.location.hash.substr(1)}`)
+        const user = GetActiveUser();
+        fetch(`http://localhost:5000/users/${user.userId}`)
             .then(res => res.json())
             .then(res => this.setState({ user: res[0], fetched: true }));
     }
