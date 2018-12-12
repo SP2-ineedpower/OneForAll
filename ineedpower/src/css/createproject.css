@@ -87,7 +87,7 @@
 }
 
 .projectName input{
-    border: 1px solid lightgray;
+    border: 2px solid #CECECE;
     padding: 10px 50px 10px 50px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -97,11 +97,11 @@
     margin-top: 20px;
     margin-left: 10px;
     padding:5px 10px 5px 50px;
-    border: 1px solid lightgrey;
+    border: 1px solid #CECECE;
     border-radius: 5px;
 }
 .participantBox{
-    border: 1px solid lightgray;
+    border: 1px solid #CECECE;
     border-radius: 5px;
     width: 160px;
     height:30px;

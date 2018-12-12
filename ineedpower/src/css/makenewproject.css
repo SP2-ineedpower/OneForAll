@@ -62,13 +62,14 @@
 
 .container input{
     border: none;
-    border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid #CECECE;
 }
 
 .container textarea{
     margin-top: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+    border-color: #CECECE;
 }
 
 .pNameInput {
