@@ -4,6 +4,7 @@ import ProjectDisplay from './projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
+import GetActiveUser from './GetActiveUser';
 import '../css/profile.css';
 
 class MyProjects extends React.Component {
@@ -26,7 +27,8 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/users/1')  // replace 1 by current user
+        const user = GetActiveUser();
+        fetch(`http://localhost:5000/users/${user.userId}`)  // replace 1 by current user
             .then(res => res.json())
             .then(res => this.setState({ user: res, fetched: true }));
     }

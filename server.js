@@ -2,6 +2,8 @@ const mysql = require("mysql");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const jsonwebtoken = require('jsonwebtoken')
+const jwt = require('express-jwt')
 app.use(cors());
 require("dotenv").config();
 require("dotenv/config");
@@ -40,6 +42,43 @@ connection.connect(error => {
 
 //USERS
 
+//Tokens
+// code from https://medium.com/@maison.moa/using-jwt-json-web-tokens-to-authorize-users-and-protect-api-routes-3e04a1453c3e
+// https://github.com/dcalsky/jwt-express-react/blob/master/server/routes/user.js
+app.post("/authenticate/token/", (req, res) => {
+  const token = jsonwebtoken.sign({
+    username: req.body.username,
+    email: req.body.email,
+    userId:req.body.userId // default is normal
+  }, process.env.TOKEN_PASS, { // get secret from config
+    expiresIn: '1d' // expires in 1 day
+  })
+  res.json({
+    username: req.body.username,
+    token: token,
+    email: req.body.email
+  })
+});
+
+/*app.post("/authenticate/getUser",(req, res) => {
+  //console.log("hello");
+  const token = req.body.token;
+  //res.send({test:"test"});
+  jsonwebtoken.verify(token,process.env.TOKEN_PASS), (err, authorizedData) => {
+    if(err){
+        //If error send Forbidden (403)
+        console.log('ERROR: Could not connect to the protected route');
+        res.sendStatus(403);
+    } else {
+        //If token is successfully verified, we can send the autorized data 
+        res.json({
+            authorizedData
+        });
+        console.log('SUCCESS');
+    }
+  }
+});*/
+
 //insert a new user
 app.post("/user/create", (req, res) => {
   bcrypt.hash(req.body.password, salt, function (err, hash) {
@@ -56,7 +95,7 @@ app.get("/users", (req, res) => {
   let sqlCommand = "SELECT * FROM user";
   let query = connection.query(sqlCommand, (err, results) => {
     if (err) console.log("Error");
-    console.log(results);
+    //console.log(results);
     res.send(results);
   });
 });
@@ -65,8 +104,11 @@ app.get("/users", (req, res) => {
 app.get("/login/user/:email", (req, res) => {
   let query = connection.query("SELECT * FROM user WHERE email = ?", [req.params.email], (err, result) => {
     if (err) console.log("Error");
-    console.log(result);
-    res.send(result);
+    if (result.length > 0) {
+      res.send(result);
+    } else {
+      res.send(err);
+    }
   }
   );
 });
@@ -74,7 +116,7 @@ app.get("/login/user/:email", (req, res) => {
 //Autheticate a user with his email
 app.get("/authenticate/:password/:hashedPassword", (req, res) => {
   bcrypt.compare(req.params.password, req.params.hashedPassword, function (err, result) {
-    console.log("result: " + result);
+    //console.log("result: " + result);
     res.send({ result: result });
   });
 });
@@ -86,7 +128,7 @@ app.get("/users/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+     // console.log(result);
       res.send(result);
     }
   );
@@ -111,7 +153,7 @@ app.get("/users/competence/:competence", (req, res) => {
     [req.params.competence],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+     // console.log(result);
       res.send(result);
     }
   );
@@ -125,7 +167,7 @@ app.get("/users/search/:search", (req, res) => {
     [like, like],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -215,7 +257,7 @@ app.get("/displayProjects", (req, res) => {
     "SELECT DISTINCT p.name as 'projectname', u.name, p.projectId FROM project p,projecttag t,user u WHERE p.projectId = t.projectId and p.creatorId = u.userId";
   let query = connection.query(sqlCommand, (err, results) => {
     if (err) console.log("Error");
-    console.log(results);
+  //  console.log(results);
     res.send(results);
   });
 });
@@ -227,7 +269,7 @@ app.get("/displayProject/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -240,7 +282,7 @@ app.get("/displayProjects/tag/:tag", (req, res) => {
     [req.params.tag],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -255,7 +297,7 @@ app.get("/displayProjects/search/:search", (req, res) => {
     [like, like, req.params.search],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -268,7 +310,7 @@ app.get("/displayProjects/liked/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -281,7 +323,7 @@ app.get("/displayProjects/user/:user", (req, res) => {
     [req.params.user, req.params.user],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -294,7 +336,7 @@ app.get("/projectowner/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -307,7 +349,7 @@ app.get("/project/owner/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -381,7 +423,7 @@ app.get("/projectlinks/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -394,7 +436,7 @@ app.post("/projectlinks/delete/", (req, res) => {
     [req.body.projectLinkId, req.body.projectId],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -407,7 +449,7 @@ app.post("/projectlinks/add/", (req, res) => {
     [req.body.projectId, req.body.url],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send("link added");
     }
   );
@@ -422,7 +464,7 @@ app.get("/userLinks/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -435,7 +477,7 @@ app.get("/userLinks/delete/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -448,7 +490,7 @@ app.post("/userLinks/add/", (req, res) => {
     [req.body.id, req.body.url],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send("link added");
     }
   );
@@ -463,7 +505,7 @@ app.get("/userCompetences/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -476,7 +518,7 @@ app.get("/userCompetences/add/:id/:tag", (req, res) => {
     [req.params.id, req.params.tag],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -489,7 +531,7 @@ app.get("/userCompetences/delete/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -502,7 +544,7 @@ app.get("/projecttags/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -517,7 +559,7 @@ app.get("/comments/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -529,7 +571,7 @@ app.get("/problemComments/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -542,7 +584,7 @@ app.post("/comments/add/", (req, res) => {
     [req.body.comment, req.body.projId, req.body.userId],
     (err, result) => {
       if (err) console.log("Error");
-      console.log("test: " + req.body.userId);
+    //  console.log("test: " + req.body.userId);
       res.send("comment added");
     }
   );
@@ -555,7 +597,7 @@ app.post("/problemComments/add/", (req, res) => {
     [req.body.problemId, req.body.comment, req.body.userId],
     (err, result) => {
       if (err) console.log("Error");
-      console.log("test: " + req.body.userId);
+    //  console.log("test: " + req.body.userId);
       res.send("comment added");
     }
   );
@@ -581,7 +623,7 @@ app.get("/problem/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -595,7 +637,7 @@ app.get("/project/participants/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     });
 });
@@ -608,7 +650,7 @@ app.get("/project/projectproblem/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -620,7 +662,7 @@ app.get("/project/projectproblem/tag/:tag", (req, res) => {
     [req.params.tag],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -633,7 +675,7 @@ app.post("/problems/add/", (req, res) => {
     [req.body.projId, req.body.problem],
     (err, result) => {
       if (err) console.log("Error");
-      console.log("test: " + req.body.userId);
+    //  console.log("test: " + req.body.userId);
       res.send("problem added");
     }
   );
@@ -658,7 +700,7 @@ app.get("/problems/search/:search", (req, res) => {
     [like],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -672,7 +714,7 @@ app.get("/problems/search/:search", (req, res) => {
 app.get('/project/participants/:id', (req, res) => {
   let query = connection.query("SELECT pa.participantId, u.userId, u.name FROM participant pa, project p, user u WHERE p.projectId = ? AND p.projectId = pa.projectId AND u.userId = pa.userId", [req.params.id], (err, results) => {
     if (err) console.log("Error");
-    console.log(results);
+  //  console.log(results);
     res.send(results);
   });
 });
@@ -701,7 +743,7 @@ app.get("/project/participants/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -746,7 +788,7 @@ app.get("/participantrequest/:id", (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) console.log("Error");
-      console.log(results);
+    //  console.log(results);
       res.send(results);
     }
   );
@@ -759,7 +801,7 @@ app.post("/participantrequest/add/", (req, res) => {
     [req.body.userId, req.body.projectId],
     (err, result) => {
       if (err) console.log("Error");
-      console.log("test: " + req.body.userId);
+    //  console.log("test: " + req.body.userId);
       res.send("participantrequest added");
     }
   );
@@ -772,7 +814,7 @@ app.post("/participantrequest/delete/", (req, res) => {
     [req.body.participantrequestId, req.body.projectId],
     (err, result) => {
       if (err) console.log("Error");
-      console.log("test: " + req.body.participantrequestId);
+    //  console.log("test: " + req.body.participantrequestId);
       res.send("participantrequest deleted");
     }
   );
@@ -787,7 +829,7 @@ app.get("/projectlikes/:id", (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
@@ -800,7 +842,7 @@ app.get("/projectlike/add/:proj/:user", (req, res) => {
     [req.params.proj, req.params.user],
     (err, result) => {
       if (err) console.log("Error");
-      console.log(result);
+    //  console.log(result);
       res.send(result);
     }
   );
