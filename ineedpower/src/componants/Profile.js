@@ -26,7 +26,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/users/1')
+        fetch('http://localhost:5000/users/1')  // replace 1 by current user
             .then(res => res.json())
             .then(res => this.setState({ user: res, fetched: true }));
     }
