@@ -6,7 +6,7 @@ class UserLinks extends React.Component {
         super(props)
         this.state = {
             class: 'profileContainer',
-            place: '+',
+            place: 'Add a link.',
             value: '',
             links: {},
             fetched: false,
@@ -66,8 +66,8 @@ class UserLinks extends React.Component {
 
     handleBlur() {
         this.setState({
-            class: '',
-            place: '+',
+            class: 'profileContainer',
+            place: 'Add a link.',
             value: ''
         });
     }
@@ -115,7 +115,7 @@ class UserLinks extends React.Component {
                         {this.showLinks()}
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <ReactTooltip effect="solid"/>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick} data-tip="add links your page">
+                            <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick} data-tip="add links your page">
                             </input>
                         </form>
                     </div>

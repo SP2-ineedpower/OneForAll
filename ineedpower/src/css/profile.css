@@ -104,6 +104,19 @@
     transition: width 1s;
 }
 
+.profileContainer form input{
+    margin-left: 10px;
+    border: none;
+    border-bottom: 2px solid #CECECE;
+    color: #CECECE;
+    width: 300px;
+}
+
+.profileContainer form input::placeholder{
+    color: #CECECE;
+    font-weight: bold;
+}
+
 .profileTitle input:hover::placeholder{
     color: rgb(55, 172, 55);
 }
