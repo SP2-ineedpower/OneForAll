@@ -108,9 +108,9 @@ class UserLinks extends React.Component {
         if (this.props.owner) {
             return (
                 <div className="projectRowWrapper">
-                    <div className="profileTitle" onClick={this.hide}>
+                    <p className="profileTitle" onClick={this.hide}>
                         <b>Links</b>
-                    </div>
+                    </p>
                     <div className={this.state.class}>
                         {this.showLinks()}
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>

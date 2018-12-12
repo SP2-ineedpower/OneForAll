@@ -86,14 +86,14 @@ class Competences extends React.Component {
         }
         if (this.props.owner) {
             return (
-                <div>
-                    <div className="profileTitle">
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
                         <b>Competences</b>
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
                             </input>
                         </form>
-                    </div>
+                    </p>
                     <div className="profileContainer">
                         {competenceList}
                     </div>
