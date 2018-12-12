@@ -12,6 +12,10 @@ body, html {
   font-family: "Circular-Bold", sans-serif;
 }
 
+input, textarea{
+  font-family: "Circular", sans-serif;
+}
+
 p{
   font-family: "Circular", sans-serif;
 }

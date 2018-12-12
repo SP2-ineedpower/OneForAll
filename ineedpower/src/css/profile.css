@@ -112,8 +112,9 @@
     margin-left: 10px;
     border: none;
     border-bottom: 2px solid #CECECE;
-    color: #CECECE;
+    color: #595A5A;
     width: 300px;
+    font-family: "Circular";
 }
 
 .profileContainer form input::placeholder{
@@ -155,31 +156,28 @@
 
 
 .tags{
-    padding: 5px 20px;
-    border: 1px solid lightgray;
+    padding: 5px 5px 5px 20px;
+    border: 1px solid #CECECE;
     margin-right: 20px;
     margin-bottom: 20px;
     display:inline-block;
     border-radius: 20px;
     font-weight: bold;
+    color: #595A5A;
 }
 
-.tags:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
-}
 
 .tags button{
-    border: solid 1px lightgray;
-    border-radius: 10px;
     padding: 5px 8px;
     margin-left: 20px;
     font-weight: bold;
     outline: none;
+    color: #CECECE;
 }
 
 .tags button:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
     color: rgb(209, 0, 0);
+    cursor: pointer;
 }
 
 .profileLink, .profileLink a{
@@ -233,12 +231,12 @@
     background-color: #fff;
     border-color: #CECECE;
     font-family: "Circular";
-    color: #CECECE;
+    color: #595A5A;
 }
 
 .profiletextarea:focus{
     outline: none;
-    color: #595A5A;
+    color: #CECECE;
 }
 
 .profileInput .textinput{
