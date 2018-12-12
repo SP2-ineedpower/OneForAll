@@ -1,4 +1,5 @@
 import React from "react";
+import '../css/login.css';
 
 
 class AccountInput extends React.Component {
@@ -23,7 +24,7 @@ class AccountInput extends React.Component {
     }
 
     render() {
-        return <input type={this.props.type} placeholder={this.props.placeholder} onChange={this.update} onBlur={this.handleSubmit}></input>
+        return <input type={this.props.type} placeholder={this.props.placeholder} required onChange={this.update} onBlur={this.handleSubmit}></input>
     }
 }
 
@@ -40,10 +41,9 @@ class NewAccount extends React.Component {
             valid: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.update = this.update.bind(this);
     }
-
-
 
     update(toUpdate, value) {
         switch (toUpdate) {
@@ -57,7 +57,7 @@ class NewAccount extends React.Component {
                     Lastname: value
                 })
                 break;
-            case "password":
+            case "Password":
                 this.setState({
                     Password: value
                 })
@@ -67,7 +67,7 @@ class NewAccount extends React.Component {
                     CheckPassword: value
                 })
                 break;
-            case "email":
+            case "Email":
                 this.setState({
                     Email: value
                 })
@@ -80,12 +80,6 @@ class NewAccount extends React.Component {
             default:
                 break;
         }
-        /* console.log(this.state.Firstname);
-         console.log(this.state.Lastname);
-         console.log(this.state.Email);
-         console.log(this.state.CheckEmail);
-         console.log(this.state.Password);
-         console.log(this.state.CheckPassword);*/
     }
 
     handleSubmit(e) {
@@ -131,23 +125,26 @@ class NewAccount extends React.Component {
 
     }
 
+    onClick() {
+        this.props.changeVersion();
+    }
+
     render() {
         return (
             <div>
-                <h2>Make new profile</h2>
                 <form onSubmit={this.handleSubmit}>
                     <AccountInput type={"text"} placeholder={"Firstname"} update={this.update} />
                     <AccountInput type={"text"} placeholder={"Lastname"} update={this.update} />
-                    <AccountInput type={"email"} placeholder={"email"} update={this.update} />
+                    <AccountInput type={"email"} placeholder={"Email"} update={this.update} />
                     <AccountInput type={"email"} placeholder={"CheckEmail"} update={this.update} />
-                    <AccountInput type={"password"} placeholder={"password"} update={this.update} />
+                    <AccountInput type={"password"} placeholder={"Password"} update={this.update} />
                     <AccountInput type={"password"} placeholder={"CheckPassword"} update={this.update} />
-                    <button>Create account</button>
+                    <button className="loginButton" onClick={this.onClick}>Back to login</button>
+                    <button className="newAccountButton">Create account</button>
                 </form>
             </div>
         );
     }
-
 }
 
 export default NewAccount;

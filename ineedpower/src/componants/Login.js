@@ -83,8 +83,8 @@ class Signup extends React.Component {
         return (
             <div className="signup">
                 <form onSubmit={this.handleSubmit}>
-                    <input type="email" placeholder="email" ref="email" onChange={this.update.bind(this)} />
-                    <input type="password" placeholder="password" ref="password" onChange={this.update.bind(this)} />
+                    <input type="email" placeholder="email" ref="email" required onChange={this.update.bind(this)} />
+                    <input type="password" placeholder="password" ref="password" required onChange={this.update.bind(this)} />
                     <button type="submit" className="loginButton">Log in</button>
                 </form>
             </div>
@@ -136,7 +136,12 @@ class Login extends React.Component {
         }
         if (this.state.version === "newAccount") {
             return (
-                <NewAccount changeVersion={this.changeVersion}></NewAccount>
+                <div className="loginMain">
+                    <div className="loginContainer">
+                        <img src={logo} className="loginLogo"></img>
+                        <NewAccount changeVersion={this.changeVersion}></NewAccount>
+                    </div>
+                </div>
             );
         }
         if (this.state.version === "google") {
