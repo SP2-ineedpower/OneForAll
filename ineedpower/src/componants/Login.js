@@ -76,7 +76,7 @@ class Signup extends React.Component {
             this.authenticate()
         }
 
-        if (this.state.Redirect && this.state.password != undefined) {
+        if (this.state.Redirect && this.state.password !== undefined) {
             sessionStorage.setItem("userData", "ingelogd");
             return <Redirect to="/"></Redirect>;
         }
