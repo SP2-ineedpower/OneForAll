@@ -124,10 +124,10 @@ class Users extends React.Component {
                 </div>
             ));
             return (
-                <div>
-                    <div className="profileTitle">
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
                         <b>{this.props.title}</b>
-                    </div>
+                    </p>
                     <div className="profileContainer">
                         {userList}
                     </div>

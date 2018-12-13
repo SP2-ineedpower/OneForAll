@@ -139,6 +139,7 @@
 .profilePageLink a{
     color: #CECECE;
     text-decoration: underline;
+    font-size: 16px;
 }
 
 .profilePageLink a:hover{
