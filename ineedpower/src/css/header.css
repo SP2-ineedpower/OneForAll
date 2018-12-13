@@ -1,10 +1,19 @@
-
+/*
+    COLORS
+    LIGHT GREY: #CECECE
+    MEDIUM GREY: #7F7F7F
+    DARK GREY: #595A5A
+*/
 
 .header{
-    padding: 15px;
-    box-shadow: 1px 1px 10px rgba(34, 34, 34, 0.815);
+    padding: 20px;
     position: relative;
     z-index: 1;
+}
+
+.headerLogo{
+    align-self: center;
+    width: 100%;
 }
 
 p{
@@ -13,10 +22,8 @@ p{
 
 .back{
     font-size: 1.5em;
-    margin-left: 40px;
-    margin-top: 10px;
     font-weight: 700;
-    text-align: left;
+    margin: 15px 0;
 }
 
 .title{
@@ -28,19 +35,19 @@ p{
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    padding: 2% 7%;
 }
 
 .searchform{
     margin-top: 5px;
     width: 180px;
     padding: 5px;
-    border-radius: 5px;
-    margin-left: 15%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.123);
+    border-radius: none;
+    border-bottom: 1px solid #CECECE;
 }
 
 .fas{
-    color:  rgb(63, 63, 63);
+    color:  #CECECE;
 }
 
 .search{
@@ -51,21 +58,19 @@ p{
 
 input:focus{
     outline: none;
-}
-
-.searchform:hover{
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.363);
+    color: #CECECE;
 }
 
 .search::placeholder{
     font-weight: bold;
-    color: rgb(63, 63, 63);
+    color: #CECECE;
 }
 
-.profileImg{
-    text-align: right;
-    margin-right: 50px;
+.profileLink{
+    color: #7F7F7F;
+    text-align: end;
 }
+
 
 button{
     border: none;

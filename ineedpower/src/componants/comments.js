@@ -99,8 +99,8 @@ class Comments extends React.Component {
                 ))
             }
             return (
-                <form onSubmit={this.handleSubmit}>
-                    <h2 className="profileTitle">Comments</h2>
+                <form className="projectRowWrapper" onSubmit={this.handleSubmit}>
+                    <p className="profileTitle">Comments</p>
                     <div className="profileContainer">
                         <p><i className="fas fa-user approachComment"></i>
                             <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>

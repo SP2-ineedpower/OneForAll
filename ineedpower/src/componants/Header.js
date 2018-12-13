@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 import '../css/header.css';
+import logo from '../pictures/ineedpowerlogo-svg.svg'
 
 //SEARCH BAR
 class Search extends React.Component {
@@ -56,8 +57,9 @@ class BackButton extends React.Component {
 function Headerversion(version) {
     
 
-    const back = <div ><NavLink to="/" className="back">Back to projects</NavLink></div>
-    const profileImg = <NavLink to="/Profile" className="profileImg"><i className="fas fa-user fa-3x"></i></NavLink>
+    const back = <div className="back"><NavLink to="/">Back to projects</NavLink></div>
+    const profileImg = <NavLink to="/Profile" className="profileLink"><div>Your Profile</div></NavLink>
+    const headerImg = <img className="headerLogo" src={logo} width="50" height="50"/>
 
     if (version === "project") {
         return(
@@ -87,7 +89,7 @@ function Headerversion(version) {
         return(
             <div className="grid header">
                 <Search/>
-                <p className="title">Projects</p>
+                {headerImg}
                 {profileImg}
             </div>
         );

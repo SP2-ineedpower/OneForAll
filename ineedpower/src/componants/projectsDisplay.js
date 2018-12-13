@@ -8,8 +8,10 @@ class ProjectDisplay extends React.Component {
         this.state = {
             projects: [],
             fetched: false,
-            update:''
+            update:'',
+            class: 'profileContainer'
         }
+        this.hide = this.hide.bind(this);
     }
 
     fetchData(dataFetch) {
@@ -26,20 +28,28 @@ class ProjectDisplay extends React.Component {
         //console.log(nextProps.fetch);
         this.fetchData(nextProps.fetch);
     }
+
+    hide(){
+        if(this.state.class === 'hide profileContainer'){
+            this.setState({class:"profileContainer"});
+        } else{
+            this.setState({class: 'hide profileContainer'});
+        }
+    }
     
     render() {
         if (this.state.fetched) {
             return (
-                <div>
-                    <p className="profileTitle"><b>{this.props.title}</b></p>
-                    <div className="profileContainer">
+                <div className="projectRowWrapper">
+                    <p className="profileTitle" onClick={this.hide}><b>{this.props.title}</b></p>
+                    <div className={this.state.class}>
                         <Projects projs={this.state.projects} />
                     </div>
                 </div>
             );
         } else {
             return (
-                <div>
+                <div className="projectRowWrapper">
                 <p className="profileTitle"><b>{this.props.title}</b></p>
                 <div className="profileContainer">
                 </div>
