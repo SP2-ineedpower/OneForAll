@@ -1,6 +1,5 @@
 .problemPage {
-    background-color: rgba(243, 243, 243, 0.596);
-    min-height: 100vh;
+        min-height: 100vh;
 }
 
 .problem {
@@ -12,7 +11,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.158);
+    border: 2px solid #CECECE;
+    border-radius: 4px;
+    font-weight: bold;
 }
 
 .problemPage form{

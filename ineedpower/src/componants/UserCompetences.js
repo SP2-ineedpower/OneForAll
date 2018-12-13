@@ -5,7 +5,7 @@ class Competences extends React.Component {
         super(props)
         this.state = {
             class: '',
-            place: '+',
+            place: 'Add a competence to your profile.',
             value: '',
             competences: {},
             fetched: false
@@ -30,7 +30,7 @@ class Competences extends React.Component {
     handleClick() {
         this.setState({
             class: 'input',
-            place: ''
+            place: 'Add a competence to your profile.'
         })
     }
 
@@ -54,7 +54,7 @@ class Competences extends React.Component {
     handleBlur() {
         this.setState({
             class: '',
-            place: '+',
+            place: 'Add a competence to your profile.',
             value: ''
         });
     }
@@ -72,6 +72,7 @@ class Competences extends React.Component {
         });
     }
 
+
     render() {
         let competenceList = ''
         if (this.props.owner && this.state.fetched) {
@@ -86,16 +87,16 @@ class Competences extends React.Component {
         }
         if (this.props.owner) {
             return (
-                <div>
-                    <div className="profileTitle">
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
                         <b>Competences</b>
-                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
-                            </input>
-                        </form>
-                    </div>
+                    </p>
                     <div className="profileContainer">
                         {competenceList}
+                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
+                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        </input>
+                    </form>
                     </div>
                 </div>
             );

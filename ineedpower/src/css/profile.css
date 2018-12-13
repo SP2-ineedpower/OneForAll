@@ -1,6 +1,5 @@
 .backgroundprofile
 {
-    background-image: url(../pictures/userbackground.svg);
     background-position: right top;
     background-repeat: no-repeat;
     background-size: 65%;
@@ -19,19 +18,27 @@
 }
 
 .grid-userdata {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-}
-.padding{
-    margin-left: 100px;
-    padding: 50px 0px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 7% 0 7%;
+    border-bottom: 1px solid #CECECE;
 }
 
+.padding{
+    padding: 10px 0;
+}
+
+.padding .profileTitle{
+    margin: 0;
+}
 
 .profile{
     font-size: 1.3em;
     padding: 20px 0px;
+}
+
+.profile b{
+    color: #CECECE;
 }
 
 #wrapper{
@@ -45,26 +52,46 @@
     background-color: white;
     font-size: 1.8em;
     padding: 20px 40px;
-    border-radius: 10px;
-    border: solid 1px rgb(185, 185, 185);
-    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.61);
-    margin-top: -50px;
+    border-radius: 100px;
+    border: solid 2px #CECECE;
+    margin-bottom: 20px;
 }
 
 .projbutton:hover{
-    box-shadow: 1px 1px 25px rgb(0, 0, 0);
+    border-color: green;
 }
 
 .profileTitle{
     font-size: 2em;
-    margin: 0px 100px 20px 100px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid lightgray;
+    margin: 0px 7% 0px 7%;
+    color: #595A5A;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
 }
 
-.profileContainer{
-    padding: 30px 100px;
+.profileTitle:hover{
+    cursor: pointer;
+}
+
+.flexIt{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     overflow: auto;
+    flex-flow: row wrap;
+}
+
+.flexIt a{
+    margin: 5px 20px 20px 0;
+}
+
+.projectRowWrapper{
+    border-bottom: 1px solid #CECECE;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .profileTitle input{
@@ -81,48 +108,77 @@
     transition: width 1s;
 }
 
+.profileContainer form input{
+    margin-left: 10px;
+    border: none;
+    border-bottom: 2px solid #CECECE;
+    color: #595A5A;
+    width: 300px;
+    font-family: "Circular";
+}
+
+.profileContainer form input::placeholder{
+    color: #CECECE;
+    font-weight: bold;
+}
+
 .profileTitle input:hover::placeholder{
     color: rgb(55, 172, 55);
 }
 
 .profileTitle input:hover,.profileTitle input:focus{
-    border: 1px solid rgb(84, 196, 84);
-    box-shadow: 1px 1px 10px rgba(117, 117, 117, 0.397);
+
 }
 
-.profileTitle .input{
-    font-size: 0.6em;
-    padding: 5px 15px;
-    width: 120px;
+
+
+.profilePageLink{
+    margin: 20px 0 20px 10px;
+}
+
+.profilePageLink a{
+    color: #CECECE;
+    text-decoration: underline;
+    font-size: 16px;
+}
+
+.profilePageLink a:hover{
+    color: #595A5A;
+}
+
+.profilePageLink button{
+    color: #595A5A;
+    font-family: "Circular-Bold";
+}
+
+.profilePageLink button:hover{
+    cursor: pointer;
 }
 
 
 .tags{
-    padding: 5px 20px;
-    border: 1px solid lightgray;
+    padding: 5px 5px 5px 20px;
+    border: 1px solid #CECECE;
     margin-right: 20px;
     margin-bottom: 20px;
     display:inline-block;
     border-radius: 20px;
     font-weight: bold;
+    color: #595A5A;
 }
 
-.tags:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
-}
 
 .tags button{
-    border: solid 1px lightgray;
-    border-radius: 10px;
     padding: 5px 8px;
     margin-left: 20px;
     font-weight: bold;
     outline: none;
+    color: #CECECE;
 }
 
 .tags button:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
     color: rgb(209, 0, 0);
+    cursor: pointer;
 }
 
 .profileLink, .profileLink a{
@@ -173,31 +229,33 @@
     height: 100px;
     padding: 10px;
     margin-top: 20px;
-    background-color: rgb(240, 240, 240)
+    background-color: #fff;
+    border-color: #CECECE;
+    font-family: "Circular";
+    color: #595A5A;
+}
+
+.profiletextarea:focus{
+    outline: none;
+    color: #CECECE;
 }
 
 .profileInput .textinput{
-    width: 200px;
+    width: 250px;
+    font-family: "Circular";
+    border-bottom: 2px solid #CECECE;
+    border-radius: 0;
 }
 
-.profileInput:hover, .profileInput:focus{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);
-}
 
 .bio button{
-    border-radius: 5px;
-    background-color: rgb(240, 240, 240);
+    border-radius: 40px;
     margin-top: 10px;
     padding: 10px 20px;
-    border: 1px solid rgb(169, 169, 169);
+    border: 2px solid #CECECE;
 }
 
 .bio button:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117);   
-}
-
-
-.green {
-    background-color: rgb(55, 179, 55) !important;
-    color: white;
+    cursor: pointer;
+    border-color: green;
 }

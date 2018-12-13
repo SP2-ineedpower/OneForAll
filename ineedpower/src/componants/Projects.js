@@ -117,9 +117,9 @@ class Projects extends React.Component {
         const listProjects = this.props.projs.map(project => (
             <NavLink to={this.getNav(project)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
-                <p>{project.projectname}</p>
-                <ProjectOwner id={project.projectId}/>
-                <ProjectTags id={project.projectId}/>
+                    <p>{project.projectname}</p>
+                    <ProjectOwner id={project.projectId}/>
+                    <ProjectTags id={project.projectId}/>
                 </div>
             </div></NavLink>
         ))
@@ -128,7 +128,7 @@ class Projects extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="flexIt">
                 {this.displayprojects()}
             </div>
         );

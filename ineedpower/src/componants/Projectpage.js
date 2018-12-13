@@ -68,65 +68,71 @@ class ProjectData extends React.Component {
             const project = this.props.project;
             project.creationDate = project.creationDate.slice(0, 10);
             return (
-                <div>
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
+                        <b>Project Details</b>
+                    </p>
+                    <div className="profileContainer">
 
-                    <div className="paragraafEditProj">
-
-                        <div className="stylish" onClick={this.handleClick} ><Popup></Popup></div>
-
-                        <p>
-                            <span><b>Project name:</b></span>
+                        <p className="profile">
+                            <span><b>Project name: </b></span>
                             <span>{project.name}</span>
                         </p>
 
-                        <div>
-                            <span><b>Likes:</b></span>
+                        <div className="profile">
+                            <span><b>Likes: </b></span>
                             <span className="fitIn"><ProjectLike id={this.props.project.projectId} user={this.props.user}></ProjectLike></span>
                         </div>
 
-                        <p>
-                            <span><b>Owner:</b></span>
+                        <p className="profile">
+                            <span><b>Owner: </b></span>
                             <span>{this.state.Owner.name}</span>
                         </p>
 
-                        <p>
-                            <span><b>Creation Date:</b></span>
+                        <p className="profile">
+                            <span><b>Creation Date: </b></span>
                             <span>{project.creationDate}</span>
                         </p>
 
-                        <p>
-                            <span><b>Description:</b></span>
+                        <p className="profile">
+                            <span><b>Description: </b></span>
                             <span>{project.description}</span>
                         </p>
 
-                        <p>
-                            <span><b>Groupsize:</b></span>
+                        <p className="profile">
+                            <span><b>Groupsize: </b></span>
                             <span>{project.groupsize}</span>
                         </p>
+
+                        <div className="stylish" onClick={this.handleClick} ><Popup></Popup></div>
                     </div>
                 </div>
             )
         } else {
             return (
-                <div>
-                    <div className="rightButton">
-                        <NavLink to="/JoinProject" className="buttonEditProj">JOIN</NavLink>
-                    </div>
-                    <div className="paragraafEditProj">
-                        <p><b>Project name:</b></p>
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
+                        <b>Project Details</b>
+                    </p>
+                    <div className="profileContainer">
+                        <p className="profile"><b>Project name: </b></p>
 
-                        <div>
-                            <p><b>Likes:</b></p>
+                        <div className="profile">
+                            <p><b>Likes: </b></p>
                             <span className="fitIn"></span>
                         </div>
 
-                        <p><b>Owner:</b></p>
+                        <p className="profile"><b>Owner: </b></p>
 
-                        <p><b>Creation Date:</b></p>
+                        <p className="profile"><b>Creation Date: </b></p>
 
-                        <p><b>Description:</b></p>
+                        <p className="profile"><b>Description: </b></p>
 
-                        <p><b>Groupsize:</b></p>
+                        <p className="profile"><b>Groupsize: </b></p>
+
+                        <div className="rightButton">
+                            <NavLink to="/JoinProject" className="buttonEditProj">JOIN</NavLink>
+                        </div>
                     </div>
                 </div>
             );
@@ -154,15 +160,15 @@ class Tags extends React.Component {
         let competenceList = "";
         if (this.state.fetched) {
             competenceList = this.state.tags.map(tag => (
-                <div className="tags" key={tag.tagId}><span>{tag.tag}</span></div>
+                <div className="project-page-tags" key={tag.tagId}><span>{tag.tag}</span></div>
             ))
         }
 
         return (
-            <div>
-                <div className="profileTitle">
+            <div className="projectRowWrapper">
+                <p className="profileTitle">
                     <b>Tags</b>
-                </div>
+                </p>
                 <div className="profileContainer">
                     {competenceList}
                 </div>
@@ -245,11 +251,11 @@ class ProjectLinks extends React.Component {
         let linksList = "";
         if (this.state.fetched) {
             linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a></div>
+                <div className="profilePageLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a></div>
             ))
         }
         return (
-            <div>
+            <div className="projectRowWrapper">
                 <div className="profileTitle">
                     <b>Links</b>
                 </div>
@@ -289,8 +295,8 @@ class ProjectProblems extends React.Component {
             ))
             return (
 
-                <div>
-                    <h2 className="profileTitle">Problems</h2>
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">Problems</p>
                     <div className="profileContainer">
                         {ProblemList}
                     </div>

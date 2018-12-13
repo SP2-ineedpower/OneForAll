@@ -24,7 +24,7 @@ class Problem extends React.Component {
         if (this.state.fetched) {
             return (
                 <div className="problem">
-                    <p>{this.state.problem.problem}</p>
+                    <h3>{this.state.problem.problem}</h3>
                 </div>
             );
         }

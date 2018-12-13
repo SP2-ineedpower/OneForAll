@@ -32,7 +32,7 @@
 }*/
 
 .newProject{
-    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Circular";
     background-color: rgba(243, 243, 243, 0.596);
     color: #707070;
     min-height: 100vh;
@@ -51,6 +51,10 @@
     border-radius: 10px;
 }
 
+.newProject .container textarea{
+    width: 100%;
+}
+
 .container h2{
     text-align: center;
     margin-bottom: 50px;
@@ -58,13 +62,14 @@
 
 .container input{
     border: none;
-    border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid #CECECE;
 }
 
 .container textarea{
     margin-top: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+    border-color: #CECECE;
 }
 
 .pNameInput {
