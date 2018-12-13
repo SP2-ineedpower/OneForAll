@@ -6,6 +6,7 @@ import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
 
 
+
 class MyProjects extends React.Component {
     render() {
         const fetch = `http://localhost:5000/displayProjects/user/${this.props.userId}`

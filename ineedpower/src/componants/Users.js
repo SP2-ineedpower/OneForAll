@@ -116,10 +116,11 @@ class Users extends React.Component {
                 <div className="participantContainer" key={user.userId} >
                     {this.delete(user.participantId)}
                     {this.accept(user.participantId)}
+                    <NavLink to={`/Userpage/#${user.userId}`}>
                     <div className="participantIcon">
                         <i className="fas fa-user-circle fa-4x"></i>
                     </div>
-                    <NavLink key={user.userId} to={`/Userpage/#${user.userId}`}>{user.name}</NavLink>
+                    {user.name}</NavLink>
                     {this.rating(user.userId)}
                 </div>
             ));

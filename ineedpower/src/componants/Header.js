@@ -35,8 +35,27 @@ class Search extends React.Component {
   }
 //END SEARCH BAR
 
+
+//code from stack overflow https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
+class BackButton extends React.Component {
+    static contextTypes = {
+      router: () => null, // replace with PropTypes.object if you use them
+    }
+  
+    render() {
+      return (
+        <button
+          className="back"
+          onClick={this.context.router.history.goBack}>
+            Back
+        </button>
+      )
+    }
+  }
+
 //SELECTING THE ACTIVE HEADER
 function Headerversion(version) {
+    
 
     const back = <div className="back"><NavLink to="/">Back to projects</NavLink></div>
     const profileImg = <NavLink to="/Profile" className="profileLink"><div>Your Profile</div></NavLink>
@@ -45,7 +64,7 @@ function Headerversion(version) {
     if (version === "project") {
         return(
             <div className="grid header">
-                {back}
+                <BackButton></BackButton>
                 <p className="title">Project Title</p>
                 {profileImg}
             </div>
@@ -103,6 +122,7 @@ function Headerversion(version) {
 
 class Header extends React.Component {
     render() {
+        
         const headerV = Headerversion(this.props.version)
         return (
             <div>

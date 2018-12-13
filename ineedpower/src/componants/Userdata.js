@@ -9,11 +9,11 @@ class Button extends React.Component {
         }
     }
     getNav(id){
-        return `/MakeNewProject/#${id}`
+        return `/MakeNewProject/`
     }
     render() {
         return (
-            <NavLink to={this.getNav(this.props.id)} className="projbutton">Make new project</NavLink>
+            <NavLink to={this.getNav()} className="projbutton">Make new project</NavLink>
         );
     }
 }
@@ -75,7 +75,8 @@ class Bio extends React.Component {
         super(props)
         this.state = {
             value: this.props.value,
-            updated: false
+            updated: false,
+            class:""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -97,6 +98,9 @@ class Bio extends React.Component {
                 "Content-Type": "application/json",
             }
         });
+        this.setState({
+            class:"green"
+        })
 
     }
 
@@ -109,7 +113,7 @@ class Bio extends React.Component {
             <form onSubmit={this.handleSubmit} className="bio">
                 <label>
                     <textarea value={this.state.value} onChange={this.handleChange} className="profiletextarea" name="bio"></textarea>
-                    <button type="submit">save</button>
+                    <button type="submit" className={this.state.class}>save</button>
                 </label>
             </form>
         );

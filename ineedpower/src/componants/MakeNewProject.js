@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import ProjectPopup from './ProjectPopup';
+import GetActiveUser from './GetActiveUser';
 import '../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
@@ -11,7 +12,7 @@ class NewProjectData extends React.Component {
             description: '',
             groupsize: '',
         }
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     update(e) {
@@ -23,7 +24,7 @@ class NewProjectData extends React.Component {
         console.log(this.props.id);
     }
 
-    handleClick(event) {
+    handleSubmit(event) {
         event.preventDefault();
         const name = this.state.name;
         const description = this.state.description;
@@ -49,14 +50,14 @@ class NewProjectData extends React.Component {
             <div className="newProject">
                 <div className="container">
                     <h2>Creating Project</h2>
-                    <form>
-                        <div><span>Project name:</span> <input className="pNameInput" type="text" ref="name" onChange={this.update.bind(this)}></input></div><br />
+                    <form onSubmit={this.handleSubmit}>
+                        <div><span>Project name:</span> <input className="pNameInput" type="text" ref="name" onChange={this.update.bind(this)} required></input></div><br />
                         <span>Description: </span><br />
-                        <textarea rows="4" cols="40" ref="description" onChange={this.update.bind(this)}></textarea><br />
-                        <div><span>Amount of participants:</span> <input className="pParticipantsInput" type="text" ref="groupsize" onChange={this.update.bind(this)}></input></div><br />
+                        <textarea rows="4" cols="40" ref="description" onChange={this.update.bind(this)} required></textarea><br />
+                        <div><span>Amount of participants:</span> <input className="pParticipantsInput" type="text" ref="groupsize" onChange={this.update.bind(this)} required></input></div><br />
                         <p>links, tags, participants and eventual problems can be added via the edit project
                         button that will appear on the page of your project.</p>
-                        <button onClick={this.handleClick} className="pSave">Save</button>
+                        <button className="pSave" type="submit">Save</button>
                     </form>
                 </div>
             </div>
@@ -75,7 +76,8 @@ class NewProject extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/users/${this.props.location.hash.substr(1)}`)
+        const user = GetActiveUser();
+        fetch(`http://localhost:5000/users/${user.userId}`)
             .then(res => res.json())
             .then(res => this.setState({ user: res[0], fetched: true }));
     }

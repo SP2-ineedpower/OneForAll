@@ -4,11 +4,10 @@ import Comments from './comments';
 import Popup from './Popup';
 import { NavLink } from 'react-router-dom';
 import '../css/projectpage.css';
+import GetActiveUser from './GetActiveUser';
 import Users from './Users';    // this displays users 
 
-const actifUser = {
-    userId: 8
-}
+
 
 class ProjectData extends React.Component {
     constructor(props) {
@@ -27,16 +26,14 @@ class ProjectData extends React.Component {
         fetch(`http://localhost:5000/project/owner/${this.props.project.projectId}`)
             .then(res => res.json())
             .then(res => this.setState({ Owner: res[0], fetched: true }));
+            fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
+            .then(res => res.json())
+            .then(res => this.setState({ participantrequests: res}));
     }
 
-    componentDidMount() {
-        fetch(`http://localhost:5000/participantrequest/${this.props.project.projectId}`)
-            .then(res => res.json())
-            .then(res => this.setState({ participantrequests: res, fetched: true }));
-    }
 
     handleClick(){
-        //const userId = actifUser.userId;
+        const user = GetActiveUser();
         let userIds = [];
         for (let index = 0; index < this.state.participantrequests.length; index++) {
             let userId = this.state.participantrequests[index].userId;
@@ -45,15 +42,17 @@ class ProjectData extends React.Component {
         //console.log(userIds); oke
 
         for (let index = 0; index < userIds.length; index++) {
-            if(userIds[index].userId === actifUser.userId){
-                this.state.valid = false;
+            if(userIds[index].userId === user.userId){
+                this.setState({
+                    valid: false
+                  });
             }
         }
         if(this.state.valid) {
             fetch(`http://localhost:5000/participantrequest/add/`, {
             method: 'POST',
             body: JSON.stringify({
-                "userId": actifUser.userId,
+                "userId": user.userId,
                 "projectId": this.props.project.projectId
             }),
             headers: {
@@ -65,6 +64,7 @@ class ProjectData extends React.Component {
 
     render() {
         if (this.state.fetched) {
+            console.log(this.state.Owner);
             const project = this.props.project;
             project.creationDate = project.creationDate.slice(0, 10);
             return (
@@ -331,15 +331,16 @@ class Projectpage extends React.Component {
     render() {
         if (this.state.fetched) {
             const id = this.state.project.projectId;
+            const user = GetActiveUser();
             return (
                 <div>
                     <Header version="project" />
-                    <ProjectData project={this.state.project} user={1 /*needs to change in the future*/} />
+                    <ProjectData project={this.state.project} user={user.userId} />
                     <Users fetch={`http://localhost:5000/project/participants/${id}`} title="Participants" />
                     <ProjectLinks id={id} />
                     <Tags id={id} />
                     <ProjectProblems id={id} />
-                    <Comments id={id} user={1 /*needs to change in the future*/} />
+                    <Comments id={id} user={user.userId} />
                 </div>
             );
         }
