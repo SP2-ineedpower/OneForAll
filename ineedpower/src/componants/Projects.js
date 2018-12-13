@@ -109,13 +109,13 @@ class ProjectOwner extends React.Component {
 class Projects extends React.Component {
     
     
-    getNav(id){
-        return `/Projectpage/#${id}`
+    getNav(project){
+        return `/Projectpage/#${project.projectId}`
     }
 
     displayprojects() {
         const listProjects = this.props.projs.map(project => (
-            <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
+            <NavLink to={this.getNav(project)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
                 <p>{project.projectname}</p>
                 <ProjectOwner id={project.projectId}/>
