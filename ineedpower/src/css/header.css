@@ -34,9 +34,10 @@ p{
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 4fr 1fr 1fr;
     padding: 2% 7%;
 }
+    
 
 .searchform{
     margin-top: 5px;
@@ -71,6 +72,13 @@ input:focus{
     text-align: end;
 }
 
+.profileLink p{
+    font-weight: bold;
+}
+
+.profileLink p:hover{
+    text-decoration: underline;
+}
 
 button{
     border: none;

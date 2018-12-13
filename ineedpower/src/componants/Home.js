@@ -108,7 +108,7 @@ class Home extends React.Component {
       <div>
         <Header version="home" />
         <div className="projectContainer">
-          <NavLink to="/Leaderbord"><button className="leaderboardButton">Leaderboard</button></NavLink>
+          
           <LikedProjects />
           <CppProjects />
           <JavaProjects />
