@@ -114,9 +114,10 @@ app.get("/login/user/:email", (req, res) => {
 });
 
 //Autheticate a user with his email
-app.get("/authenticate/:password/:hashedPassword", (req, res) => {
-  bcrypt.compare(req.params.password, req.params.hashedPassword, function (err, result) {
-    //console.log("result: " + result);
+app.post("/authenticate/", (req, res) => {
+  console.log("kjqhdjqhdkj");
+  bcrypt.compare(req.body.password, req.body.userPassword, function (err, result) {
+    console.log("result: " + result);
     res.send({ result: result });
   });
 });

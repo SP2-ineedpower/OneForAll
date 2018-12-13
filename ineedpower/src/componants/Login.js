@@ -29,9 +29,21 @@ class Signup extends React.Component {
 
     authenticate() {
         //console.log("test");
-        fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
+        fetch(`http://localhost:5000/authenticate/`, {
+        method: 'POST',
+        body: JSON.stringify({
+            "password": this.state.password,   // the "" around the key are important
+            "userPassword": this.state.user.password,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+        })
+        .then(res => res.json())
+        .then(res => this.setState({ Redirect: res.result }, console.log(res)));
+        /*fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
             .then(res => res.json())
-            .then(res => this.setState({ Redirect: res.result }, console.log(res)));
+            .then(res => this.setState({ Redirect: res.result }, console.log(res)));*/
     }
 
     update(e) {
