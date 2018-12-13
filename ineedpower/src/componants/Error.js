@@ -1,9 +1,11 @@
 import React from 'react';
+import { Redirect } from "react-router-dom";
+
 
 class Errorpage extends React.Component {
     render() {
         return (
-            <h1>This is the error page, this route does not exist</h1>
+            <Redirect to="/"></Redirect>
         );
     }
 }

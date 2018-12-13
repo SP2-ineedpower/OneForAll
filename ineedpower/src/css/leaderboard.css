@@ -16,3 +16,16 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+.leaderboardButton{
+    margin: 0px 100px 50px 100px;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px rgb(146, 146, 146);
+    padding: 10px 20px;
+    float: right;
+}
+
+.leaderboardButton:hover {
+    box-shadow: 1px 1px 10px rgb(82, 82, 82);
+}
