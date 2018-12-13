@@ -82,7 +82,9 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
+    console.log(localStorage.getItem("userToken"));
     if (!localStorage.getItem("userToken")) {
+      console.log("yuqsgshdqgdgjshdsq");
       this.setState({ redirect: true });
     }
   }
