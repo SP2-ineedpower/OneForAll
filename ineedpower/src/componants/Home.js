@@ -2,15 +2,14 @@ import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
 import { Redirect } from "react-router-dom";
-import GetActiveUser from './GetActiveUser';
+
 
 
 class LikedProjects extends React.Component { 
     render() {
-        //this querry will change
-        const user = GetActiveUser();
+        
         return (
-            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${user.userId}`} />  //replace 1 by current user
+            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${this.props.user.userId}`} />  //replace 1 by current user
         );
     }
 }
@@ -80,12 +79,6 @@ class Home extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-  componentWillMount() {
-    if (!localStorage.getItem("userToken")) {
-      this.setState({ redirect: true });
-    }
-  }
-
   logout() {
     //userdata set to empty
     sessionStorage.setItem("userToken", "");
@@ -98,15 +91,15 @@ class Home extends React.Component {
   render() {
     
     if (this.state.redirect) {
-      return <Redirect to={"/Login"} />;
+      return <Redirect to={"/"} />;
     }
-    console.log(this.props);
+
     return (
       <div>
         <Header version="home" />
         <div className="projectContainer">
           
-          <LikedProjects />
+          <LikedProjects user={this.props.activeUser} />
           <CppProjects />
           <JavaProjects />
           <WebProjects />

@@ -16,16 +16,16 @@ import NewProject from "./componants/MakeNewProject";
 import Leaderbord from "./componants/Leaderbord";
 import ProblemPage from "./componants/Problempage";
 import Login from "./componants/Login";
-
 require("dotenv").config();
 
 class Application extends React.Component {
-  constructor(props) {
+ constructor(props) {
     super(props);
     this.state = {
       user:{},
       logged:false,
     }
+    this.setUser = this.setUser.bind(this);
   }
 
   setUser(user) {
@@ -33,29 +33,29 @@ class Application extends React.Component {
       user:user,
       logged:true
     })
+    console.log(user);
   }
 
 
+  // the active user is sent by prop to all the components that need it
   render() {
     return (
-      <div>
         <BrowserRouter>
           <Switch>
-            <Route path="/" render={(props) => <Home {...props}user={this.state.user} />}/>
-            <Route path="/Userpage" component={Userpage} />
-            <Route path="/Projectpage" component={Projectpage} />
-            <Route path="/OwnerProjectPage" component={OwnerProjectPage} />
-            <Route path="/Profile" component={Profile} />
-            <Route path="/CreateProject" component={EditProject} />
-            <Route path="/MakeNewProject" component={NewProject} />
+            <Route  path="/Home" render={(props) => <Home {...props} activeUser={this.state.user} />} />
+            <Route path="/Userpage" render={(props) => <Userpage {...props} activeUser={this.state.user} />}/>
+            <Route path="/Projectpage" render={(props) => <Projectpage {...props} activeUser={this.state.user} />} />
+            <Route path="/OwnerProjectPage" render={(props) => <OwnerProjectPage {...props} activeUser={this.state.user} />} />
+            <Route path="/Profile" render={(props) => <Profile {...props} activeUser={this.state.user} />} />
+            <Route path="/CreateProject" render={(props) => <EditProject {...props} activeUser={this.state.user} />} />
+            <Route path="/MakeNewProject" render={(props) => <NewProject {...props} activeUser={this.state.user} />} />
             <Route path="/Search" component={SearchPage} />
             <Route path="/Leaderbord" component={Leaderbord} />
-            <Route path="/Problem" component={ProblemPage} />
-            <Route path="/Login" component={Login} />
+            <Route path="/Problem" render={(props) => <ProblemPage {...props} activeUser={this.state.user} />} />
+            <Route exact path="/" render={(props) => <Login {...props} setUser= {this.setUser} />} />
             <Route component={Errorpage} />
           </Switch>
         </BrowserRouter>
-      </div>
     );
   }
 }

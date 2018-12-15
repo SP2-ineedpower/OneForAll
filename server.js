@@ -115,9 +115,7 @@ app.get("/login/user/:email", (req, res) => {
 
 //Autheticate a user with his email
 app.post("/authenticate/", (req, res) => {
-  console.log("kjqhdjqhdkj");
   bcrypt.compare(req.body.password, req.body.userPassword, function (err, result) {
-    console.log("result: " + result);
     res.send({ result: result });
   });
 });
@@ -324,7 +322,7 @@ app.get("/displayProjects/user/:user", (req, res) => {
     [req.params.user, req.params.user],
     (err, results) => {
       if (err) console.log("Error");
-    //  console.log(results);
+     console.log(results);
       res.send(results);
     }
   );
