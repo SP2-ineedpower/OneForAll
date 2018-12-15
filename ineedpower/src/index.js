@@ -20,12 +20,28 @@ import Login from "./componants/Login";
 require("dotenv").config();
 
 class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user:{},
+      logged:false,
+    }
+  }
+
+  setUser(user) {
+    this.setState({
+      user:user,
+      logged:true
+    })
+  }
+
+
   render() {
     return (
       <div>
-        <BrowserRouter basename="/INeedPower/">
+        <BrowserRouter>
           <Switch>
-            <Route path="/" component={Home} exact />
+            <Route path="/" render={(props) => <Home {...props}user={this.state.user} />}/>
             <Route path="/Userpage" component={Userpage} />
             <Route path="/Projectpage" component={Projectpage} />
             <Route path="/OwnerProjectPage" component={OwnerProjectPage} />

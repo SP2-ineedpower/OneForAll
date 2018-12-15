@@ -59,7 +59,7 @@ function Headerversion(version) {
 
     const back = <div className="back"><NavLink to="/">Back to projects</NavLink></div>
     const profileImg = <NavLink to="/Profile" className="profileLink"><p>Your Profile</p></NavLink>
-    const headerImg = <img className="headerLogo" src={logo} width="50" height="50"/>
+    const headerImg = <img className="headerLogo" src={logo} width="50" height="50" alt=""/>
     const leaderboard = <NavLink className="profileLink" to="/Leaderbord"><p>Leaderboard</p></NavLink>
 
     if (version === "project") {
