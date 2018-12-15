@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./Header";
-import ProjectDisplay from "./projectsDisplay";
-import Users from "./Users"
+import Header from "../others/Header";
+import ProjectDisplay from "../projects/projectsDisplay";
+import Users from "../user/Users"
 import SearchInput from "./SearchInput";
 import {NavLink} from 'react-router-dom'
-import '../css/searchpage.css';
+import '../../css/searchpage.css';
 
 
 class SearchProblem extends React.Component {

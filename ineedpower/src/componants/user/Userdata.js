@@ -1,5 +1,5 @@
 import React from 'react';
-import pencil from '../pictures/pencil.svg';
+import pencil from '../../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
 
 class Button extends React.Component {

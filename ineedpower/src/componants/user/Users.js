@@ -1,7 +1,7 @@
 import React from 'react';
-import RatingUser from './Rating';
+import RatingUser from '../others/Rating';
 import { NavLink } from 'react-router-dom'
-import '../css/users.css';
+import '../../css/users.css';
 
 class Users extends React.Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-import '../css/header.css';
-import logo from '../pictures/ineedpowerlogo-svg.svg'
+import '../../css/header.css';
+import logo from '../../pictures/ineedpowerlogo-svg.svg'
 
 //SEARCH BAR
 class Search extends React.Component {

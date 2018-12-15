@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Header";
-import ProjectDisplay from "./projectsDisplay";
-import checkLogin from "./checkLogin";
+import Header from "./others/Header";
+import ProjectDisplay from "./projects/projectsDisplay";
+import checkLogin from "./login/checkLogin";
 import { Redirect } from "react-router-dom";
 
 
@@ -9,7 +9,7 @@ class LikedProjects extends React.Component {
     render() {
         
         return (
-            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${this.props.user.userId}`} />  //replace 1 by current user
+            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${this.props.user.userId}`} user={this.props.user}/>
         );
     }
 }
@@ -20,6 +20,7 @@ class CppProjects extends React.Component {
       <ProjectDisplay
         title="C++"
         fetch="http://localhost:5000/displayProjects/tag/cpp"
+        user={this.props.user}
       />
     );
   }
@@ -31,6 +32,7 @@ class JavaProjects extends React.Component {
       <ProjectDisplay
         title="Java"
         fetch="http://localhost:5000/displayProjects/tag/java"
+        user={this.props.user}
       />
     );
   }
@@ -42,6 +44,7 @@ class WebProjects extends React.Component {
       <ProjectDisplay
         title="Websites"
         fetch="http://localhost:5000/displayProjects/tag/website"
+        user={this.props.user}
       />
     );
   }
@@ -53,6 +56,7 @@ class AngularProjects extends React.Component {
       <ProjectDisplay
         title="Angular"
         fetch="http://localhost:5000/displayProjects/tag/angular"
+        user={this.props.user}
       />
     );
   }
@@ -64,6 +68,7 @@ class ReactProjects extends React.Component {
       <ProjectDisplay
         title="React"
         fetch="http://localhost:5000/displayProjects/tag/react"
+        user={this.props.user}
       />
     );
   }
@@ -100,11 +105,11 @@ class Home extends React.Component {
         <div className="projectContainer">
           
           <LikedProjects user={this.props.activeUser} />
-          <CppProjects />
-          <JavaProjects />
-          <WebProjects />
-          <AngularProjects />
-          <ReactProjects />
+          <CppProjects user={this.props.activeUser}/>
+          <JavaProjects user={this.props.activeUser}/>
+          <WebProjects user={this.props.activeUser}/>
+          <AngularProjects user={this.props.activeUser}/>
+          <ReactProjects user={this.props.activeUser}/>
         </div>
       </div>
     );

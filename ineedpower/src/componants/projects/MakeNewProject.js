@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../others/Header';
 import ProjectPopup from './ProjectPopup';
-import checkLogin from "./checkLogin";
+import checkLogin from "../login/checkLogin";
 import { Redirect } from "react-router-dom";
-import '../css/makenewproject.css';
+import '../../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
     constructor(props) {

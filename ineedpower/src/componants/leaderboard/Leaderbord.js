@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header';
-import '../css/leaderboard.css';
+import Header from '../others/Header';
+import '../../css/leaderboard.css';
 import { NavLink } from 'react-router-dom'
 
 class DisplayLeaderbordUser extends React.Component {
