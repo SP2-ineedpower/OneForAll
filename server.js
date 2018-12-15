@@ -318,7 +318,7 @@ app.get("/displayProjects/liked/:id", (req, res) => {
 //Select a group of projects by the owner or participant id
 app.get("/displayProjects/user/:user", (req, res) => {
   let query = connection.query(
-    `SELECT DISTINCT p.projectId, p.name as 'projectname' from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ? OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ?`,
+    `SELECT DISTINCT p.projectId, p.name as 'projectname',p.creatorId from project p , user u, participant part WHERE p.creatorId = u.userId AND u.userId = ? OR part.projectId = p.projectId AND u.userId = part.userId AND part.userId = ?`,
     [req.params.user, req.params.user],
     (err, results) => {
       if (err) console.log("Error");

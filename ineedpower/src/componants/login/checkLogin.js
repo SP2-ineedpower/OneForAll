@@ -1,5 +1,3 @@
-//import React from "react";
-
 
 function checkLogin(user) {
         for(var key in user) {

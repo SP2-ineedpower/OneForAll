@@ -1,5 +1,5 @@
 import React from "react";
-import { APIData } from "./APIData";
+import { APIData } from "../APIData";
 import { Redirect } from "react-router-dom";
 
 

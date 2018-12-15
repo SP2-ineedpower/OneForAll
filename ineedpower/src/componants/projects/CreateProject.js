@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from './Header';
-import Users from './Users';
+import Header from '../others/Header';
+import Users from '../user/Users';
 import { NavLink } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-import checkLogin from "./checkLogin";
-import '../css/createproject.css';
+import checkLogin from "../login/checkLogin";
+import '../../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen
 

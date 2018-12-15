@@ -15,7 +15,7 @@ class ProjectDisplay extends React.Component {
     }
 
     fetchData(dataFetch) {
-        fetch(dataFetch)  // must change later
+        fetch(dataFetch)
             .then(res => res.json())
             .then(res => this.setState({ projects: res, fetched: true }));
     }
@@ -43,7 +43,7 @@ class ProjectDisplay extends React.Component {
                 <div className="projectRowWrapper">
                     <p className="profileTitle" onClick={this.hide}><b>{this.props.title}</b></p>
                     <div className={this.state.class}>
-                        <Projects projs={this.state.projects} />
+                        <Projects projs={this.state.projects} user={this.props.user}/>
                     </div>
                 </div>
             );

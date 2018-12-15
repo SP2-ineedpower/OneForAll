@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../others/Header';
 import { Redirect } from "react-router-dom";
-import '../css/problem.css';
-import Comments from './comments';
-import checkLogin from "./checkLogin";
+import '../../css/problem.css';
+import Comments from '../comments/comments';
+import checkLogin from "../login/checkLogin";
 
 
 class Problem extends React.Component {

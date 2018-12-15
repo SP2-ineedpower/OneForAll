@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-import '../css/project.css';
+import '../../css/project.css';
 
 
 //generates a random class to generate a random background gradient
@@ -108,9 +108,13 @@ class ProjectOwner extends React.Component {
 
 class Projects extends React.Component {
     
-    
     getNav(project){
-        return `/Projectpage/#${project.projectId}`
+        console.log("userId: " + this.props.user.userId + "\nproject: " + project);
+        if (this.props.user.userId === project.creatorId) {
+            console.log("owner");
+            return  `/OwnerProjectPage/#${project.projectId}`;
+        }
+        return `/Projectpage/#${project.projectId}`;
     }
 
     displayprojects() {

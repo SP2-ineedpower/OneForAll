@@ -1,18 +1,18 @@
 import React from 'react';
 import { Redirect } from "react-router-dom";
-import Header from './Header';
-import ProjectDisplay from './projectsDisplay';
+import Header from '../others/Header';
+import ProjectDisplay from '../projects/projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
-import checkLogin from "./checkLogin";
+import checkLogin from "../login/checkLogin";
 
 
 class MyProjects extends React.Component {
     render() {
-        const fetch = `http://localhost:5000/displayProjects/user/${this.props.userId}`
+        const fetch = `http://localhost:5000/displayProjects/user/${this.props.user.id}`
         return (
-            <ProjectDisplay title="Projects" fetch={fetch}/>
+            <ProjectDisplay title="Projects" fetch={fetch} user={this.props.user}/>
         );
     }
 }
@@ -41,10 +41,10 @@ class Userpage extends React.Component {
             return (
                 <div>
                     <Header version="user" />
-                    <div className="backgrounduser">
+                    <div>
                     <Userdata user={this.state.user} owner={false}></Userdata>
                     <UserLinks userId={id} owner={false}></UserLinks>
-                    <MyProjects userId={id}></MyProjects>
+                    <MyProjects user={this.props.activeUser}></MyProjects>
                     <Competences userId={id} owner={false}></Competences>
                     </div>
                 </div>

@@ -2,8 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import NewAccount from "./NewAccount";
 import GoogleLogin from "./GoogleLogin";
-import logo from '../pictures/ineedpowerlogo_v002.gif';
-import '../css/login.css';
+import logo from '../../pictures/ineedpowerlogo_v002.gif';
+import '../../css/login.css';
 
 class Signup extends React.Component {
     constructor(props) {
