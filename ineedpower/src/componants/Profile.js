@@ -4,7 +4,9 @@ import ProjectDisplay from './projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
+import { Redirect } from "react-router-dom";
 import '../css/profile.css';
+import checkLogin from './checkLogin';
 
 class MyProjects extends React.Component {
     render() {
@@ -32,6 +34,9 @@ class Profile extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.fetched) {
             const id = this.state.user.userId;
             return (
@@ -46,7 +51,6 @@ class Profile extends React.Component {
                 </div>
             );
         } else return <p></p>;
-
     }
 }
 

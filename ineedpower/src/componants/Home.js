@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
+import checkLogin from "./checkLogin";
 import { Redirect } from "react-router-dom";
-
 
 
 class LikedProjects extends React.Component { 
@@ -89,9 +89,9 @@ class Home extends React.Component {
   }
   
   render() {
-    
-    if (this.state.redirect) {
-      return <Redirect to={"/"} />;
+
+    if (checkLogin(this.props.activeUser) || this.state.redirect) {
+      return <Redirect to="/" />;
     }
 
     return (

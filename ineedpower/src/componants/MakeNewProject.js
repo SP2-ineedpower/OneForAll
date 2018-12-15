@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import ProjectPopup from './ProjectPopup';
+import checkLogin from "./checkLogin";
 import '../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
@@ -88,6 +89,9 @@ class NewProject extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.saved) {
             return (
                 <div>

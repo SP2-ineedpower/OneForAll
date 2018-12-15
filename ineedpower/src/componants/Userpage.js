@@ -4,7 +4,7 @@ import ProjectDisplay from './projectsDisplay';
 import Userdata from './Userdata';
 import UserLinks from './UserLinks';
 import Competences from './UserCompetences';
-
+import checkLogin from "./checkLogin";
 
 
 class MyProjects extends React.Component {
@@ -32,6 +32,9 @@ class Userpage extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.fetched) {
             const id = this.state.user.userId;
             return (
