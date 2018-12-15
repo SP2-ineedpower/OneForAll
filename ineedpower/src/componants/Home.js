@@ -2,7 +2,6 @@ import React from "react";
 import Header from "./Header";
 import ProjectDisplay from "./projectsDisplay";
 import { Redirect } from "react-router-dom";
-import {NavLink} from 'react-router-dom';
 import GetActiveUser from './GetActiveUser';
 
 
@@ -82,9 +81,7 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    console.log(localStorage.getItem("userToken"));
     if (!localStorage.getItem("userToken")) {
-      console.log("yuqsgshdqgdgjshdsq");
       this.setState({ redirect: true });
     }
   }
@@ -103,7 +100,7 @@ class Home extends React.Component {
     if (this.state.redirect) {
       return <Redirect to={"/Login"} />;
     }
-    
+    console.log(this.props);
     return (
       <div>
         <Header version="home" />
