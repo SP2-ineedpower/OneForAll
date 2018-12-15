@@ -3,9 +3,9 @@ import Header from './Header';
 import Comments from './comments';
 import Popup from './Popup';
 import { NavLink } from 'react-router-dom';
+import checkLogin from "./checkLogin";
 import '../css/projectpage.css';
 import Users from './Users';    // this displays users 
-
 
 
 class ProjectData extends React.Component {
@@ -190,7 +190,7 @@ class ProjectLike extends React.Component {
     componentDidMount() {
         fetch(`http://localhost:5000/projectlikes/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ likes: res }, function () {
+            .then(res => this.setState({ likes: res },() => function () {
                 this.state.likes.map(like => {
                     if (like.userId === this.props.user) {
                         this.setState({
@@ -328,6 +328,9 @@ class Projectpage extends React.Component {
 
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.fetched) {
             const id = this.state.project.projectId;
             const user = this.props.activeUser;

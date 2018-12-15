@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom'
 import Header from './Header';
 import Users from './Users';
 import '../css/projectpage.css';
-import Comments from './comments'
+import Comments from './comments';
+import checkLogin from "./checkLogin";
 
 
 class ProjectData extends React.Component {
@@ -252,6 +253,9 @@ class Projectpage extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if(this.state.fetched){
             const projId = this.state.project.projectId;
             const project = this.state.project;

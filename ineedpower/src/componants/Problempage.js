@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import '../css/problem.css';
 import Comments from './comments';
-
+import checkLogin from "./checkLogin";
 
 
 class Problem extends React.Component {
@@ -40,6 +40,9 @@ class Problem extends React.Component {
 
 class ProblemPage extends React.Component {
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         return (
             <div >
                 <Header version="project" />
