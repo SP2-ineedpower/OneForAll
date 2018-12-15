@@ -3,6 +3,7 @@ import Header from './Header';
 import Comments from './comments';
 import Popup from './Popup';
 import { NavLink } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import checkLogin from "./checkLogin";
 import '../css/projectpage.css';
 import Users from './Users';    // this displays users 
