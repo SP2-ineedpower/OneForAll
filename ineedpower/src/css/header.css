@@ -59,7 +59,7 @@ p{
 
 input:focus{
     outline: none;
-    color: #CECECE;
+    color: rgb(49, 49, 49);
 }
 
 .search::placeholder{

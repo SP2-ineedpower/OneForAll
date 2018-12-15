@@ -28,11 +28,10 @@ class Signup extends React.Component {
     }
 
     authenticate() {
-        //console.log("test");
         fetch(`http://localhost:5000/authenticate/`, {
             method: 'POST',
             body: JSON.stringify({
-                "password": this.state.password,   // the "" around the key are important
+                "password": this.state.password, 
                 "userPassword": this.state.user.password,
             }),
             headers: {
@@ -40,10 +39,7 @@ class Signup extends React.Component {
             }
         })
             .then(res => res.json())
-            .then(res => this.setState({ Redirect: res.result }, console.log(res)));
-        /*fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
-            .then(res => res.json())
-            .then(res => this.setState({ Redirect: res.result }, console.log(res)));*/
+            .then(res => this.setState({ Redirect: res.result }));
     }
 
     update(e) {
@@ -58,7 +54,7 @@ class Signup extends React.Component {
         this.findUser(this.state.email);
     }
 
-    setJWT() {
+    /*setJWT() {
         let token
         console.log("name: " + this.state.user.name)
         return fetch(`http://localhost:5000/authenticate/token`, {
@@ -75,19 +71,17 @@ class Signup extends React.Component {
             .then(res => res.json())
             .then(data => token = data)
             .then(() => localStorage.setItem("userToken", JSON.stringify(token)));
-    }
+    }*/
 
     render() {
         if (this.state.found && !this.state.Redirect) {
-            console.log("found");
             this.authenticate();
         }
 
 
         if (this.state.Redirect) {
-            console.log("login");
-            this.setJWT();
-            return <Redirect to="/"></Redirect>;
+            this.props.setUser(this.state.user);
+            return <Redirect to="/Home"></Redirect>;
         }
 
 
@@ -108,10 +102,16 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            version: "default"  //shows the 3 different login options (signUp,NewAccount button and google button) , google is not a priority
+            version: "default",
+            user:{}  //shows the 3 different login options (signUp,NewAccount button and google button) , google is not a priority
         }
         this.handleNewAccount = this.handleNewAccount.bind(this);
         this.changeVersion = this.changeVersion.bind(this);
+        this.setUser = this.setUser.bind(this);
+    }
+
+    setUser(user) {
+        this.props.setUser(user);
     }
 
     handleNewAccount() {
@@ -138,7 +138,7 @@ class Login extends React.Component {
                 <div className="loginMain">
                     <div className="loginContainer">
                         <img src={logo} className="loginLogo" alt=""></img>
-                        <Signup></Signup>
+                        <Signup setUser = {this.setUser} ></Signup>
                         <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
                         {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
                     </div>

@@ -45,7 +45,7 @@ class ProblemPage extends React.Component {
                 <Header version="project" />
                 <div className="problemPage">
                 <Problem hash= {this.props.location.hash.substr(1)}></Problem>
-                <Comments problem={true} className="problemComments" hash={this.props.location.hash.substr(1)}></Comments>
+                <Comments problem={true} className="problemComments" hash={this.props.location.hash.substr(1)} user={this.props.activeUser}></Comments>
                 </div>
                 
             </div>

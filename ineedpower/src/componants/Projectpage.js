@@ -4,7 +4,6 @@ import Comments from './comments';
 import Popup from './Popup';
 import { NavLink } from 'react-router-dom';
 import '../css/projectpage.css';
-import GetActiveUser from './GetActiveUser';
 import Users from './Users';    // this displays users 
 
 
@@ -33,7 +32,7 @@ class ProjectData extends React.Component {
 
 
     handleClick(){
-        const user = GetActiveUser();
+        const user = this.props.user;
         let userIds = [];
         for (let index = 0; index < this.state.participantrequests.length; index++) {
             let userId = this.state.participantrequests[index].userId;
@@ -81,7 +80,7 @@ class ProjectData extends React.Component {
 
                         <div className="profile">
                             <span><b>Likes: </b></span>
-                            <span className="fitIn"><ProjectLike id={this.props.project.projectId} user={this.props.user}></ProjectLike></span>
+                            <span className="fitIn"><ProjectLike id={this.props.project.projectId} user={this.props.user.userId}></ProjectLike></span>
                         </div>
 
                         <p className="profile">
@@ -331,16 +330,16 @@ class Projectpage extends React.Component {
     render() {
         if (this.state.fetched) {
             const id = this.state.project.projectId;
-            const user = GetActiveUser();
+            const user = this.props.activeUser;
             return (
                 <div>
                     <Header version="project" />
-                    <ProjectData project={this.state.project} user={user.userId} />
+                    <ProjectData project={this.state.project} user={user} />
                     <Users fetch={`http://localhost:5000/project/participants/${id}`} title="Participants" />
                     <ProjectLinks id={id} />
                     <Tags id={id} />
                     <ProjectProblems id={id} />
-                    <Comments id={id} user={user.userId} />
+                    <Comments id={id} user={user} />
                 </div>
             );
         }

@@ -263,7 +263,7 @@ class Projectpage extends React.Component {
                     <ProjectLinks id = {projId}/>
                     <ProblemsOwner id = {projId}/>
                     <Tags id = {projId} />
-                    <Comments id = {projId} />
+                    <Comments id = {projId} user={this.props.activeUser}/>
                 </div>
             );
         }
