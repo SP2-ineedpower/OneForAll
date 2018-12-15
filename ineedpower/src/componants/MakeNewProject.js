@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import ProjectPopup from './ProjectPopup';
 import checkLogin from "./checkLogin";
+import { Redirect } from "react-router-dom";
 import '../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
