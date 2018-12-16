@@ -1,7 +1,7 @@
 import React from 'react';
-import RatingUser from './Rating';
+import RatingUser from '../others/Rating';
 import { NavLink } from 'react-router-dom'
-import '../css/users.css';
+import '../../css/users.css';
 
 class Users extends React.Component {
     constructor(props) {
@@ -125,10 +125,10 @@ class Users extends React.Component {
                 </div>
             ));
             return (
-                <div>
-                    <div className="profileTitle">
+                <div className="projectRowWrapper">
+                    <p className="profileTitle">
                         <b>{this.props.title}</b>
-                    </div>
+                    </p>
                     <div className="profileContainer">
                         {userList}
                     </div>

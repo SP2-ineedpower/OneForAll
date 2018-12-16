@@ -25,9 +25,19 @@
     margin-top:3px;
 }
 
+.project-page-tags{
+    padding: 5px 20px 5px 20px;
+    border: 1px solid #CECECE;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    display:inline-block;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #595A5A;
+}
+
 .paragraafEditProj{
     position: relative;
-    margin:50px 100px;
     text-align: left;
     font-size: 1.5em;
 }
@@ -64,13 +74,14 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
 }
 
 .stylish{
-    background-color: white;
-    color:lightgrey;
+    text-align: center;
 }
-.stylish{
+
+.stylish button{
     background-color: white;
-    color:lightgrey;
+
 }
+
 
 .titleComments{
     /*margin: 0px 80px;*/
@@ -80,36 +91,61 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
 }
 
 .addCommentEditProj{
-    border: 1px solid gray;
+    border: none;
+    border-bottom: 2px solid #CECECE;
     padding:10px 20px;
-    border-radius: 4px;
     margin-left: 5px;
     margin-bottom: 20px;
-    width: 80%;
-    
+    width: 60%;
+    color: #CECECE;
 }
 .addCommentEditProj:hover{
-    box-shadow: 1px 1px 6px rgb(117, 117, 117) 
+    
 }
+
+.addCommentEditProj::placeholder{
+    color: #CECECE;
+}
+
+.addCommentEditProj:focus{
+    color: #595A5A;
+    border-bottom-color: #595A5A;
+}
+
 .approachComment{
     /*margin-left: 90px;*/
     padding-left: 0px;
 }
 .commentBox{
-    border: 1px solid gray;
-    border-radius: 4px;
+    border: 1px solid #CECECE;
     padding:5px 20px;
-    margin-bottom: 20px;
     background-color: white;
+    width: 90%;
+    border-top: none;
    /* margin-left:80px;
     margin-right:80px;  */  
 }
+.commentBox:first-of-type{
+    border-top: 1px solid #CECECE;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.commentBox:last-of-type{
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.commentBox h4{
+    color: #595A5A;
+}
+
 .styleLikeComment{
     color: lightgray;
 }
 
 .commentBox p {
-    padding: 10px 0px;
+    padding-bottom: 7px;
 }
 
 .fa-user:before {
@@ -131,14 +167,17 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     margin-left: 80px;
 }
 .problemBox{
-    border: 1px solid gray;
+    border: 1px solid #CECECE;
+    width: 90%;
     border-radius: 4px;
     padding:10px 10px;
     margin-bottom: 20px;
+    color: #CECECE;
 }
 
 .problemBox:hover{
-    box-shadow: 1px 1px 10px rgba(117, 117, 117, 0.418);
+    border-color: green;
+    color: #595A5A;
 }
 
 .problemBox p {

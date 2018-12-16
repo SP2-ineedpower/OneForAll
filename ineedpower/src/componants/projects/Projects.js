@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-import '../css/project.css';
+import '../../css/project.css';
 
 
 //generates a random class to generate a random background gradient
@@ -108,18 +108,22 @@ class ProjectOwner extends React.Component {
 
 class Projects extends React.Component {
     
-    
-    getNav(id){
-        return `/Projectpage/#${id}`
+    getNav(project){
+        console.log("userId: " + this.props.user.userId + "\nproject: " + project);
+        if (this.props.user.userId === project.creatorId) {
+            console.log("owner");
+            return  `/OwnerProjectPage/#${project.projectId}`;
+        }
+        return `/Projectpage/#${project.projectId}`;
     }
 
     displayprojects() {
         const listProjects = this.props.projs.map(project => (
-            <NavLink to={this.getNav(project.projectId)}  key={project.projectId}><div>
+            <NavLink to={this.getNav(project)}  key={project.projectId}><div>
                 <div className={randomGradient()}>
-                <p>{project.projectname}</p>
-                <ProjectOwner id={project.projectId}/>
-                <ProjectTags id={project.projectId}/>
+                    <p>{project.projectname}</p>
+                    <ProjectOwner id={project.projectId}/>
+                    <ProjectTags id={project.projectId}/>
                 </div>
             </div></NavLink>
         ))
@@ -128,7 +132,7 @@ class Projects extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="flexIt">
                 {this.displayprojects()}
             </div>
         );

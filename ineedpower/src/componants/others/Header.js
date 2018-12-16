@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-import '../css/header.css';
+import '../../css/header.css';
+import logo from '../../pictures/ineedpowerlogo-svg.svg'
 
 //SEARCH BAR
 class Search extends React.Component {
@@ -56,14 +57,17 @@ class BackButton extends React.Component {
 function Headerversion(version) {
     
 
-    const back = <div ><NavLink to="/" className="back">Back to projects</NavLink></div>
-    const profileImg = <NavLink to="/Profile" className="profileImg"><i className="fas fa-user fa-3x"></i></NavLink>
+    const back = <div className="back"><NavLink to="/Home">Back to projects</NavLink></div>
+    const profileImg = <NavLink to="/Profile" className="profileLink"><p>Your Profile</p></NavLink>
+    const headerImg = <img className="headerLogo" src={logo} width="50" height="50" alt=""/>
+    const leaderboard = <NavLink className="profileLink" to="/Leaderbord"><p>Leaderboard</p></NavLink>
 
     if (version === "project") {
         return(
             <div className="grid header">
                 <BackButton></BackButton>
                 <p className="title">Project Title</p>
+                {leaderboard}
                 {profileImg}
             </div>
         );
@@ -72,6 +76,7 @@ function Headerversion(version) {
             <div className="grid header">
                 {back}
                 <p className="title">New Project</p>
+                {leaderboard}
                 {profileImg}
             </div>
         );
@@ -80,6 +85,7 @@ function Headerversion(version) {
             <div className="grid header">
                 {back}
                 <p className="title">Profile</p>
+                {leaderboard}
                 {profileImg}
             </div>
         );
@@ -87,7 +93,8 @@ function Headerversion(version) {
         return(
             <div className="grid header">
                 <Search/>
-                <p className="title">Projects</p>
+                {headerImg}
+                {leaderboard}
                 {profileImg}
             </div>
         );
@@ -96,6 +103,7 @@ function Headerversion(version) {
             <div className="grid header">
                 {back}
                 <p className="title">Edit project</p>
+                {leaderboard}
                 {profileImg}
             </div>
         );
@@ -104,6 +112,7 @@ function Headerversion(version) {
             <div className="grid header">
             {back}
             <p className="title">Search</p>
+            {leaderboard}
             {profileImg}
         </div>
         );
@@ -112,6 +121,7 @@ function Headerversion(version) {
             <div className="grid header">
                 {back}
                 <p className="title">Leaderboard</p>
+                {leaderboard}
                 {profileImg}
             </div>
         );

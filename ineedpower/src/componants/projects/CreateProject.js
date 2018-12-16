@@ -1,8 +1,10 @@
 import React from 'react';
-import Header from './Header';
-import Users from './Users';
-import { NavLink } from 'react-router-dom'
-import '../css/createproject.css';
+import Header from '../others/Header';
+import Users from '../user/Users';
+import { NavLink } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
+import checkLogin from "../login/checkLogin";
+import '../../css/createproject.css';
 
 //Deze pagina wordt gebruikt om bestaande projecten te editen
 
@@ -754,6 +756,9 @@ class EditProject extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.fetched) {
             const projId = this.state.project.projectId;
             const projName = this.state.project.name;

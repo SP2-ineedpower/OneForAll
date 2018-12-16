@@ -1,8 +1,9 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../others/Header';
 import ProjectPopup from './ProjectPopup';
-import GetActiveUser from './GetActiveUser';
-import '../css/makenewproject.css';
+import checkLogin from "../login/checkLogin";
+import { Redirect } from "react-router-dom";
+import '../../css/makenewproject.css';
 
 class NewProjectData extends React.Component {
     constructor(props) {
@@ -76,7 +77,7 @@ class NewProject extends React.Component {
     }
 
     componentDidMount() {
-        const user = GetActiveUser();
+        const user = this.props.activeUser;
         fetch(`http://localhost:5000/users/${user.userId}`)
             .then(res => res.json())
             .then(res => this.setState({ user: res[0], fetched: true }));
@@ -89,6 +90,9 @@ class NewProject extends React.Component {
     }
 
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         if (this.state.saved) {
             return (
                 <div>
