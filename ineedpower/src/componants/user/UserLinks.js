@@ -115,7 +115,7 @@ class UserLinks extends React.Component {
                         {this.showLinks()}
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
                             <ReactTooltip effect="solid"/>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick} data-tip="add links your page">
+                            <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick} data-tip="add links to your profile">
                             </input>
                         </form>
                     </div>
