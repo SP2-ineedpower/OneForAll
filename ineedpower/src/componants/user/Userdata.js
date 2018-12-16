@@ -193,8 +193,6 @@ class Userdata extends React.Component {
                             <span>{usr.bio}</span>
                         </div>
                     </div>
-                    <div id="wrapper">
-                    </div>
                 </div>
             );
         }
