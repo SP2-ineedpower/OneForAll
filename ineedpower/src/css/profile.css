@@ -38,7 +38,7 @@
 }
 
 .profile b{
-    color: #CECECE;
+    color: rgb(95, 199, 224);
 }
 
 #wrapper{
@@ -63,7 +63,8 @@
 
 .profileTitle{
     font-size: 2em;
-    margin: 0px 7% 10px 7%;
+    margin: 0px 7% 10px 7% ;
+    padding: 20px 0px;
     color: #595A5A;
     font-weight: bold;
     margin-top: 20px;
@@ -110,16 +111,17 @@
 }
 
 .profileContainer form input{
+    margin-top: 20px;
     margin-left: 10px;
     border: none;
     border-bottom: 2px solid #CECECE;
     color: #595A5A;
     width: 300px;
-    font-family: "Circular";
+    font-family: "Circular-bold";
 }
 
 .profileContainer form input::placeholder{
-    color: #CECECE;
+    color: rgb(92, 92, 92);
     font-weight: bold;
 }
 
@@ -127,20 +129,16 @@
     color: rgb(55, 172, 55);
 }
 
-.profileTitle input:hover,.profileTitle input:focus{
-
-}
-
-
 
 .profilePageLink{
     margin: 20px 0 20px 10px;
 }
 
 .profilePageLink a{
-    color: #CECECE;
+    color: rgb(122, 122, 122);
     text-decoration: underline;
     font-size: 16px;
+    margin-right: 10px;
 }
 
 .profilePageLink a:hover{
@@ -154,11 +152,12 @@
 
 .profilePageLink button:hover{
     cursor: pointer;
+    text-decoration: underline;
 }
 
 
 .tags{
-    padding: 5px 5px 5px 20px;
+    padding:5px 20px;
     border: 1px solid #CECECE;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -184,7 +183,7 @@
 
 .profileLink, .profileLink a{
     margin: 15px 0px;
-    font-size: 1.1em;
+    font-size: 1.4em;
     color: darkblue;
 }
 
@@ -232,18 +231,17 @@
     margin-top: 20px;
     background-color: #fff;
     border-color: #CECECE;
-    font-family: "Circular";
-    color: #595A5A;
+    color: rgb(0, 0, 0);
 }
 
 .profiletextarea:focus{
     outline: none;
-    color: #CECECE;
+    color: rgb(92, 92, 92);
 }
 
 .profileInput .textinput{
     width: 250px;
-    font-family: "Circular";
+    font-family: "Circular-Bold";
     border-bottom: 2px solid #CECECE;
     border-radius: 0;
 }
