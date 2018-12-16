@@ -14,7 +14,7 @@ class ProjectLike extends React.Component {
     componentDidMount() {
         fetch(`http://localhost:5000/projectlikes/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ likes: res },() => function () {
+            .then(res => this.setState({ likes: res },function () {
                 this.state.likes.map(like => {
                     if (like.userId === this.props.user) {
                         this.setState({

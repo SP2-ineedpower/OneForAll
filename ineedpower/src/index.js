@@ -48,7 +48,7 @@ class Application extends React.Component {
           <Route path="/Profile" render={(props) => <Profile {...props} activeUser={this.state.user} />} />
           <Route path="/EditProject" render={(props) => <EditProject {...props} activeUser={this.state.user} />} />
           <Route path="/MakeNewProject" render={(props) => <NewProject {...props} activeUser={this.state.user} />} />
-          <Route path="/Search" component={SearchPage} />
+          <Route path="/Search" render={(props) => <SearchPage {...props} activeUser={this.state.user} />} />
           <Route path="/Leaderbord" component={Leaderbord} />
           <Route path="/Problem" render={(props) => <ProblemPage {...props} activeUser={this.state.user} />} />
           <Route component={Errorpage} />

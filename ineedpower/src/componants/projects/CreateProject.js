@@ -6,22 +6,20 @@ import { Redirect } from "react-router-dom";
 import checkLogin from "../login/checkLogin";
 import '../../css/createproject.css';
 
+
 //Deze pagina wordt gebruikt om bestaande projecten te editen
 
 class Tags extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
-            place: '+',
+            place: 'Add a tag to this project',
             value: '',
             tags: {},
             fetched: false
         }
-        this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this)
     }
 
@@ -29,29 +27,30 @@ class Tags extends React.Component {
         this.setState({ value: event.target.value });
     }
 
-    handleClick() {
-        this.setState({
-            class: 'input',
-            place: ''
-        })
-    }
 
     handleSubmit(event) {
         event.preventDefault();
-        let tag = {
-            tagId: 4,
-            competence: this.state.value
+        let tempNum = 1;  //temporary id of the comment
+        if (this.state.tags.length > 0) {
+            tempNum = this.state.tags[this.state.tags.length - 1].tagId + 1;
         }
+        let tag = {
+            tagId: tempNum,
+            projectId:this.props.id,
+            tag: this.state.value
+        }
+        fetch(`http://localhost:5000/projecttags/tag/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "projectId": this.props.id,
+                "tag": this.state.value
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         this.state.tags.push(tag);
         this.setState({
-            value: ''
-        });
-    }
-
-    handleBlur() {
-        this.setState({
-            class: '',
-            place: '+',
             value: ''
         });
     }
@@ -80,18 +79,18 @@ class Tags extends React.Component {
                 <div className="tags" key={tag.tagId}><span>{tag.tag}</span><button onClick={this.handleButtonClick.bind(this, tag.tagId)}>x</button></div>
             ))
             return (
-                <div>
-                    <div className="profileTitle">
-                        <b>Tags:</b>
-                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
-                            </input>
-                        </form>
-                    </div>
-                    <div className="profileContainer">
-                        {competenceList}
-                    </div>
+                <div className="projectRowWrapper">
+                <p className="profileTitle">
+                    <b>Tags</b>
+                </p>
+                <div className="profileContainer">
+                    {competenceList}
+                    <form onSubmit={this.handleSubmit}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place}>
+                    </input>
+                </form>
                 </div>
+            </div>
             );
         } else {
             return <p>data can not be fetched</p>
@@ -194,7 +193,9 @@ class EditDescription extends React.Component {
 
                     <form onSubmit={this.handleSubmit}>
                         <p>
-                            <b>Description: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                            <b>Description: </b>
+                            <br />
+                            <textarea value={this.state.value} onChange={this.handleChange}></textarea>
                         </p>
                     </form>
 
@@ -349,16 +350,18 @@ class Problems extends React.Component {
                 </div>
             ))
             return (
-                <div>
+                <div className="projectRowWrapper">
                     <div>
                         <h2 className="profileTitle">Problems</h2>
                     </div>
                     <div>
-                        <form onSubmit={this.handleSubmit} className="profileContainer">
+                        <form onSubmit={this.handleSubmit} >
+                        <div className="profileContainer">
                             <p><i className="fas fa-user approachComment"></i>
                                 <input className="addProblemEditProj" type="text" placeholder="Add Problem" value={this.state.value} onChange={this.handleChange}></input>
                             </p>
                             {ProblemList}
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -502,7 +505,7 @@ class Participantrequest extends React.Component {
                 </div>
             ));
             return (
-                <div>
+                <div className="projectRowWrapper">
                     <div className="profileTitle">
                         <b>{this.props.title}</b>
                     </div>
@@ -523,8 +526,8 @@ class ProjectLinks extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
-            place: '+',
+            class: 'profileContainer',
+            place: 'Add a link.',
             value: '',
             links: {},
             fetched: false
@@ -534,6 +537,7 @@ class ProjectLinks extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.hide = this.hide.bind(this);
     }
 
     handleChange(event) {
@@ -548,7 +552,7 @@ class ProjectLinks extends React.Component {
 
     handleClick() {
         this.setState({
-            class: 'input',
+            class: 'profileContainer input',
             place: ''
         })
     }
@@ -556,8 +560,10 @@ class ProjectLinks extends React.Component {
     handleSubmit(event) {
 
         event.preventDefault();
-
-        const tempNum = this.state.links[this.state.links.length - 1].projectLinkId + 1; //temporary id of the link
+        let tempNum = 1;  //temporary id of the link
+        if (this.state.links.length > 0) {
+            tempNum = this.state.links[this.state.links.length - 1].projectLinkId + 1;
+        }
         let link = {
             projectLinkId: tempNum,
             projectId: this.props.id,
@@ -583,16 +589,14 @@ class ProjectLinks extends React.Component {
 
     handleBlur() {
         this.setState({
-            class: '',
-            place: '+',
+            class: 'profileContainer',
+            place: 'Add a link.',
             value: ''
         });
     }
 
     handleButtonClick(id, e) {
 
-        console.log("projectId" + this.props.id);
-        console.log("projectLinkId" + id);
 
         fetch(`http://localhost:5000/projectlinks/delete/`, {
             method: 'POST',
@@ -620,7 +624,7 @@ class ProjectLinks extends React.Component {
     showLinks() {
         if (this.state.fetched) {
             const linksList = this.state.links.map(link => (
-                <div className="profileLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.projectLinkId)}>delete</button></div>
+                <div className="profilePageLink" key={link.projectLinkId}><a href={link.url}>{link.url}</a><button onClick={this.handleButtonClick.bind(this, link.projectLinkId)}>delete</button></div>
             ))
             return linksList;
         } else {
@@ -628,18 +632,26 @@ class ProjectLinks extends React.Component {
         }
     }
 
+    hide(){
+        if(this.state.class === 'hide profileContainer'){
+            this.setState({class:"profileContainer"});
+        } else{
+            this.setState({class: 'hide profileContainer'});
+        }
+    }
+
     render() {
         return (
-            <div>
-                <div className="profileTitle">
+            <div className="projectRowWrapper">
+                <p className="profileTitle" onClick={this.hide}>
                     <b>Links</b>
+                </p>
+                <div className={this.state.class}>
+                    {this.showLinks()}
                     <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                        <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick}>
                         </input>
                     </form>
-                </div>
-                <div className="profileContainer">
-                    {this.showLinks()}
                 </div>
             </div>
         );
@@ -728,14 +740,17 @@ class ProjectComments extends React.Component {
                 </div>
             ))
             return (
-
-                <form onSubmit={this.handleSubmit} className="profileContainer">
-                    <h2 className="titleComments">Comments</h2>
+                <div className="projectRowWrapper">
+                <form onSubmit={this.handleSubmit}>
+                    <h2 className="profileTitle">Comments</h2>
+                    <div className="profileContainer">
                     <p><i className="fas fa-user approachComment"></i>
                         <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
                     </p>
                     {commentsList}
+                    </div>
                 </form>
+                </div>
             )
         }
         return (
