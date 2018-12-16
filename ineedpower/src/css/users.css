@@ -1,38 +1,38 @@
-.participantContainer{
-    width: 200px;
-    padding: 20px 0px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    float: left;
-    margin-right: 30px;
-    text-align: center;
-    position: relative;
+.participantContainer {
+  width: 200px;
+  padding: 20px 0px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  float: left;
+  margin-right: 30px;
+  margin-top: 10px;
+  text-align: center;
+  position: relative;
 }
 
-.participantContainer:hover{
-    box-shadow: 1px 1px 10px rgba(105, 105, 105, 0.39);
+.participantContainer:hover {
+  box-shadow: 1px 1px 10px rgba(105, 105, 105, 0.39);
 }
 
-.participantIcon{
-    display: block;
-    padding: 10px 0px;
-    
+.participantIcon {
+  display: block;
+  padding: 10px 0px;
 }
 
-.del{
-    position: absolute;
-    right: -11px;
-    top: -11px;
+.del {
+  position: absolute;
+  right: -11px;
+  top: -11px;
 }
-.del:hover{
-    color: rgb(129, 2, 2);
+.del:hover {
+  color: rgb(129, 2, 2);
 }
 
-.accept{
-    position: absolute;
-    left: -11px;
-    top: -11px;
+.accept {
+  position: absolute;
+  left: -11px;
+  top: -11px;
 }
-.accept:hover{
-    color: rgb(9, 100, 6);
+.accept:hover {
+  color: rgb(9, 100, 6);
 }
