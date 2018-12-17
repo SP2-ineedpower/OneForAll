@@ -39,52 +39,15 @@ class Application extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => <Login {...props} setUser={this.setUser} />}
-          />
-          <Route
-            path="/Home"
-            render={props => <Home {...props} activeUser={this.state.user} />}
-          />
-          <Route
-            path="/Userpage"
-            render={props => (
-              <Userpage {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route
-            path="/Projectpage"
-            render={props => (
-              <Projectpage {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route
-            path="/OwnerProjectPage"
-            render={props => (
-              <OwnerProjectPage {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route
-            path="/Profile"
-            render={props => (
-              <Profile {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route
-            path="/EditProject"
-            render={props => (
-              <EditProject {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route
-            path="/MakeNewProject"
-            render={props => (
-              <NewProject {...props} activeUser={this.state.user} />
-            )}
-          />
-          <Route path="/Search" component={SearchPage} />
+          <Route exact path="/" render={(props) => <Login {...props} setUser={this.setUser} />} />
+          <Route path="/Home" render={(props) => <Home {...props} activeUser={this.state.user} />} />
+          <Route path="/Userpage" render={(props) => <Userpage {...props} activeUser={this.state.user} />} />
+          <Route path="/Projectpage" render={(props) => <Projectpage {...props} activeUser={this.state.user} />} />
+          <Route path="/OwnerProjectPage" render={(props) => <OwnerProjectPage {...props} activeUser={this.state.user} />} />
+          <Route path="/Profile" render={(props) => <Profile {...props} activeUser={this.state.user} />} />
+          <Route path="/EditProject" render={(props) => <EditProject {...props} activeUser={this.state.user} />} />
+          <Route path="/MakeNewProject" render={(props) => <NewProject {...props} activeUser={this.state.user} />} />
+          <Route path="/Search" render={(props) => <SearchPage {...props} activeUser={this.state.user} />} />
           <Route path="/Leaderbord" component={Leaderbord} />
           <Route
             path="/Problem"

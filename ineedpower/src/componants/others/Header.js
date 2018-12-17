@@ -70,7 +70,7 @@ function Headerversion(version) {
         return (
             <div className="grid header">
                 <BackButton></BackButton>
-                <p className="title">Project Title</p>
+                <p className="title">Project</p>
                 {prof_score}
             </div>
         );
@@ -101,7 +101,7 @@ function Headerversion(version) {
     } if (version === "newProject") {
         return (
             <div className="grid header">
-                {back}
+                <BackButton></BackButton>
                 <p className="title">Edit project</p>
                 {prof_score}
             </div>

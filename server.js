@@ -567,6 +567,20 @@ app.get("/projecttags/:id", (req, res) => {
   );
 });
 
+app.post("/projecttags/tag/", (req, res) => {
+  let query = connection.query(
+    "insert into projecttag values(null,?,?)",
+    [req.body.projectId,req.body.tag],
+    (err, result) => {
+      if (err) console.log("Error");
+    //  console.log(result);
+      res.send(result);
+    }
+  );
+});
+
+
+
 //COMMENTS
 
 //Select all comments of a project based on his id

@@ -4,16 +4,14 @@ class Competences extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            class: '',
             place: 'Add a competence to your profile.',
             value: '',
             competences: {},
             fetched: false
         }
-        this.handleClick = this.handleClick.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this)
     }
 
@@ -27,12 +25,6 @@ class Competences extends React.Component {
         this.setState({ value: event.target.value });
     }
 
-    handleClick() {
-        this.setState({
-            class: 'input',
-            place: 'Add a competence to your profile.'
-        })
-    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -51,13 +43,6 @@ class Competences extends React.Component {
         });
     }
 
-    handleBlur() {
-        this.setState({
-            class: '',
-            place: 'Add a competence to your profile.',
-            value: ''
-        });
-    }
 
     handleButtonClick(id, e) {
         let pos = -1;
@@ -93,8 +78,8 @@ class Competences extends React.Component {
                     </p>
                     <div className="profileContainer">
                         {competenceList}
-                        <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place} onClick={this.handleClick}>
+                        <form onSubmit={this.handleSubmit}>
+                            <input value={this.state.value} onChange={this.handleChange} type="text" className={this.state.class} placeholder={this.state.place}>
                         </input>
                     </form>
                     </div>

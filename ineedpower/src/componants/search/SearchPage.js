@@ -62,7 +62,7 @@ class SearchDisplay extends React.Component {
     if (this.props.select === "All") {
       return (
         <div className="searchContainer">
-          <ProjectDisplay title={"Projects containing: " + this.props.search} fetch={`http://localhost:5000/displayProjects/search/${this.props.search}`} update={true} />
+          <ProjectDisplay title={"Projects containing: " + this.props.search} fetch={`http://localhost:5000/displayProjects/search/${this.props.search}`} update={true} user={this.props.user}/>
           <Users title="Users found" fetch={`http://localhost:5000/users/search/${this.props.search}`} />
           <SearchProblem search={this.props.search}></SearchProblem>
         </div>
@@ -71,7 +71,7 @@ class SearchDisplay extends React.Component {
       console.log("searching: " + this.props.search);
       return (
         <div className="searchContainer">
-          <ProjectDisplay title={"Projects containing: " + this.props.search} fetch={`http://localhost:5000/displayProjects/search/${this.props.search}`} />
+          <ProjectDisplay title={"Projects containing: " + this.props.search} fetch={`http://localhost:5000/displayProjects/search/${this.props.search}`} user={this.props.user}/>
         </div>
       );
     } if (this.props.select === "Users") {
@@ -92,7 +92,7 @@ class SearchDisplay extends React.Component {
       return (
 
         <div className="searchContainer">
-          <ProjectDisplay title={"Projects containing: " + this.props.hash} fetch={`http://localhost:5000/displayProjects/search/${this.props.hash}`} />
+          <ProjectDisplay title={"Projects containing: " + this.props.hash} fetch={`http://localhost:5000/displayProjects/search/${this.props.hash}`} user={this.props.user}/>
           <Users title="Users found" fetch={`http://localhost:5000/users/search/${this.props.hash}`} />
           <SearchProblem search={this.props.hash}></SearchProblem>
         </div>
@@ -127,7 +127,7 @@ class SearchPage extends React.Component {
       <div className="searchpage">
         <Header version="search" />
         <SearchInput handleInput={this.handleInput} />
-        <SearchDisplay select={this.state.select} search={this.state.search} hash={this.props.location.hash.substr(1)} />
+        <SearchDisplay select={this.state.select} search={this.state.search} hash={this.props.location.hash.substr(1)} user={this.props.activeUser}/>
       </div>
     );
   }

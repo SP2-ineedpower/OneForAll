@@ -39,7 +39,7 @@ class UserLinks extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let tempNum = 1;  //temporary id of the comment
+        let tempNum = 1;  //temporary id of the link
         if (this.state.links.length > 0) {
             tempNum = this.state.links[this.state.links.length - 1].userLinkId + 1;
         }
