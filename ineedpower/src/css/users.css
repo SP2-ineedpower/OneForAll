@@ -36,3 +36,12 @@
 .accept:hover{
     color: rgb(9, 100, 6);
 }
+.deleteProfile{
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 5px;
+}
+.deleteProfile:hover{
+    border-color: rgb(150, 6, 6);
+    color: rgb(150, 6,6);
+}

@@ -120,19 +120,32 @@ class Bio extends React.Component {
     }
 }
 
-
-
 class Userdata extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             User: this.props.user
         }
+        this.handleClick=this.handleClick.bind(this);
+    }
+
+    handleClick(){
+        //console.log(this.props.user.userId);
+        fetch(`http://localhost:5000/user/deleteCascade`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": this.props.user.userId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
     }
 
     render() {
         const usr = this.state.User;
         if (this.props.owner) {
+            console.log(this.props.user);
             return (
                 <div className="grid-userdata">
                     <div className="padding">
@@ -140,6 +153,7 @@ class Userdata extends React.Component {
                             <b>Personal Data</b>
                         </p>
                         <div>
+                            <button className="deleteProfile" onClick={this.handleClick}>Delete this profile</button>
                             <p className="profile">
                                 <b>Name: </b>
                                 <span>{this.state.User.name}</span>

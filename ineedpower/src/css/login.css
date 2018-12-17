@@ -18,6 +18,15 @@
     box-shadow: 0px 0px 5px rgba(116, 116, 116, 0.582);
 }
 
+.loginContainer2{
+    padding-top: 20px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(116, 116, 116, 0.582);
+}
+
 .loginLogo {
     width: 160px;
     margin-left: auto;
@@ -26,6 +35,20 @@
 }
 
 .loginContainer input{
+    display: block;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    border:none;
+    background-color: rgba(207, 207, 207, 0.596);
+    box-shadow: 1px 1px 1px rgba(141, 141, 141, 0.63);
+}
+
+.inputMakeAcc{
     display: block;
     width: 70%;
     margin-left: auto;
@@ -71,4 +94,15 @@
 
 .newAccountButton:hover {
     background-color: #636363;
+}
+
+.checkGDPR{
+    margin-left: 95px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color:gray;
+    font-size: 0.8em;
+}
+.checkGDPR input[type="checkbox"]{
+    padding-right: 5px;
 }

@@ -5,6 +5,16 @@ import GoogleLogin from "./GoogleLogin";
 import logo from '../../pictures/ineedpowerlogo_v002.gif';
 import '../../css/login.css';
 
+/*
+
+<div className="loginMain">
+                    <div className="loginContainer">
+                        <img src={logo} className="loginLogo" alt=""></img>
+                        <NewAccount changeVersion={this.changeVersion}></NewAccount>
+                    </div>
+                </div>
+*/ 
+
 class Signup extends React.Component {
     constructor(props) {
         super(props)
@@ -147,12 +157,10 @@ class Login extends React.Component {
         }
         if (this.state.version === "newAccount") {
             return (
-                <div className="loginMain">
-                    <div className="loginContainer">
-                        <img src={logo} className="loginLogo" alt=""></img>
-                        <NewAccount changeVersion={this.changeVersion}></NewAccount>
-                    </div>
+                <div>
+                    <NewAccount changeVersion={this.changeVersion}></NewAccount>
                 </div>
+                   
             );
         }
         if (this.state.version === "google") {
