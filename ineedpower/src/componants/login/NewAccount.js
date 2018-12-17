@@ -133,13 +133,13 @@ class NewAccount extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
+                    <button className="loginButton" onClick={this.onClick}><i class="fas fa-arrow-circle-left "></i></button>
                     <AccountInput type={"text"} placeholder={"Firstname"} update={this.update} />
                     <AccountInput type={"text"} placeholder={"Lastname"} update={this.update} />
                     <AccountInput type={"email"} placeholder={"Email"} update={this.update} />
                     <AccountInput type={"email"} placeholder={"CheckEmail"} update={this.update} />
                     <AccountInput type={"password"} placeholder={"Password"} update={this.update} />
                     <AccountInput type={"password"} placeholder={"CheckPassword"} update={this.update} />
-                    <button className="loginButton" onClick={this.onClick}>Back to login</button>
                     <button className="newAccountButton">Create account</button>
                 </form>
             </div>

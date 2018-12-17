@@ -374,7 +374,6 @@ class Problems extends React.Component {
 
 }
 
-
 class Participantrequest extends React.Component {
     constructor(props) {
         super(props);
@@ -759,6 +758,16 @@ class ProjectComments extends React.Component {
     };
 }
 
+class SubmitProjectData extends React.Component{
+    render() {
+        return(
+            <div>
+                <button type="submit" className="submitProjData">Submit</button>
+            </div>
+        );
+    }
+}
+
 class EditProject extends React.Component {
     constructor(props) {
         super(props)
@@ -793,6 +802,7 @@ class EditProject extends React.Component {
                         <EditProjectName value={projName} id={this.state.project.projectId} />
                         <EditDescription value={projDesc} id={this.state.project.projectId} />
                         <EditGroupsize value={projSize} id={this.state.project.projectId} />
+                        <SubmitProjectData />
                         <ProjectLinks id={this.state.project.projectId} />
                         <Users fetch={`http://localhost:5000/project/participants/${projId}`} edit={true} id={projId} title={title} />
                         <Participantrequest fetch={`http://localhost:5000/participantrequest/${projId}`} edit={true} id={projId} request={true} size={projSize} title={titel} />
