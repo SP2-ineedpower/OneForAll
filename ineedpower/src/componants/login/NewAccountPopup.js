@@ -1,11 +1,15 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
-//import { Button, Segment, TransitionablePortal } from 'semantic-ui-react'
 
-
-//code from https://react.semantic-ui.com/addons/transitionable-portal/#types-portal
 
 export default class NewAccountPopup extends React.Component {
+constructor(props){
+  super(props);
+  this.handleClick = this.handleClick.bind(this);
+}
+
+  handleClick() {
+    this.props.update();
+  }
 
   render() {
     return (
@@ -18,9 +22,9 @@ export default class NewAccountPopup extends React.Component {
             </g>
           </svg>
           <h2>Profile saved</h2>
-          <p className="center">You can find your profile in the profile segment
-          and add/delete information in on that page.</p>
-          <NavLink to="/Login"><button className="pSave popButton">back to login</button></NavLink>
+          <p className="center">Thank you for creating an account!<br />
+          you can find, edit and delete your data on your profile page</p>
+          <button className="pSave popButton" onClick={this.handleClick}>back to login</button>
         </div>
       </div>
     );

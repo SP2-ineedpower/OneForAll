@@ -1,6 +1,7 @@
 import React from 'react';
 import pencil from '../../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 class Button extends React.Component {
     constructor(props) {
@@ -124,7 +125,8 @@ class Userdata extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            User: this.props.user
+            User: this.props.user,
+            deleted:false
         }
         this.handleClick=this.handleClick.bind(this);
     }
@@ -140,12 +142,18 @@ class Userdata extends React.Component {
                 "Content-Type": "application/json",
             }
         });
+        this.setState({
+            deleted:true
+        });
     }
 
     render() {
         const usr = this.state.User;
+        
         if (this.props.owner) {
-            console.log(this.props.user);
+            if (this.state.deleted) {
+                return <Redirect to="/" />;
+            }
             return (
                 <div className="grid-userdata">
                     <div className="padding">
@@ -153,7 +161,6 @@ class Userdata extends React.Component {
                             <b>Personal Data</b>
                         </p>
                         <div>
-                            <button className="deleteProfile" onClick={this.handleClick}>Delete this profile</button>
                             <p className="profile">
                                 <b>Name: </b>
                                 <span>{this.state.User.name}</span>
@@ -173,6 +180,8 @@ class Userdata extends React.Component {
                                 <b>Bio: </b>
                                 <Bio value={usr.bio} textarea="true" id={usr.userId}></Bio>
                             </div>
+                            <button className="deleteProfile" onClick={this.handleClick}>Delete my profile</button>
+
                         </div>
                     </div>
                     <div id="wrapper">

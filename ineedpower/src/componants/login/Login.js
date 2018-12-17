@@ -5,15 +5,6 @@ import GoogleLogin from "./GoogleLogin";
 import logo from '../../pictures/ineedpowerlogo_v002.gif';
 import '../../css/login.css';
 
-/*
-
-<div className="loginMain">
-                    <div className="loginContainer">
-                        <img src={logo} className="loginLogo" alt=""></img>
-                        <NewAccount changeVersion={this.changeVersion}></NewAccount>
-                    </div>
-                </div>
-*/ 
 
 class Signup extends React.Component {
     constructor(props) {
@@ -24,7 +15,8 @@ class Signup extends React.Component {
             user: {},
             found: false,
             Redirect: false,
-            wrongEmail: false
+            wrongEmail: false,
+            authenticate:true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -49,7 +41,7 @@ class Signup extends React.Component {
             }
         })
             .then(res => res.json())
-            .then(res => this.setState({ Redirect: res.result }));
+            .then(res => this.setState({ Redirect: res.result , authenticate: res.result}));
     }
 
     update(e) {
@@ -94,11 +86,21 @@ class Signup extends React.Component {
             return <Redirect to="/Home"></Redirect>;
         }
 
+        let controlPass = "" ;
+        if (!this.state.authenticate) {
+            controlPass = <p className="center">This password is invalid please try again!</p>;
+        }
 
+        let controlEmail = "" ;
+        if (this.state.wrongEmail) {
+            controlEmail = <p className="center">This email is invalid please try again!</p>;
+        }
         return (
             <div className="signup">
                 <form onSubmit={this.handleSubmit}>
+                    {controlEmail}
                     <input type="email" placeholder="email" ref="email" required onChange={this.update.bind(this)} />
+                    {controlPass}
                     <input type="password" placeholder="password" ref="password" required onChange={this.update.bind(this)} />
                     <button type="submit" className="loginButton">Log in</button>
                 </form>

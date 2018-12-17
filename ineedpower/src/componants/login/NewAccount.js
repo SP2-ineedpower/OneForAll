@@ -1,4 +1,5 @@
 import React from "react";
+import NewAccountPopup from "./NewAccountPopup"
 import '../../css/login.css';
 import logo from '../../pictures/ineedpowerlogo_v002.gif';
 
@@ -24,7 +25,7 @@ class AccountInput extends React.Component {
     }
 
     render() {
-        return <input type={this.props.type} className={this.props.style} placeholder={this.props.placeholder} required onChange={this.update} onBlur={this.handleSubmit}></input>
+        return <input type={this.props.type} className={this.props.css} placeholder={this.props.placeholder} required onChange={this.update} onBlur={this.handleSubmit}></input>
     }
 }
 
@@ -84,6 +85,7 @@ class NewAccount extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        
         if (this.state.Email === this.state.CheckEmail && this.state.Password === this.state.CheckPassword) {
             this.setState({
                 valid: true
@@ -92,12 +94,12 @@ class NewAccount extends React.Component {
             this.sendToDatabase();
         }
         else {
-            window.alert("Gelieve dezelfde email te gebruiken en dezelfde wachtwoord.");
+            window.alert("Please confirm with the same email and the same password.");
         }
     }
 
     sendToDatabase() {
-        
+
         const name = this.state.Firstname + " " + this.state.Lastname;
         const email = this.state.Email;
         let password = this.state.Password;
@@ -121,8 +123,6 @@ class NewAccount extends React.Component {
                 "Content-Type": "application/json",
             }
         });
-        this.props.changeVersion();
-
     }
 
     onClick() {
@@ -130,24 +130,27 @@ class NewAccount extends React.Component {
     }
 
     render() {
-        return (
-            <div className="loginMain">
-            <div className="loginContainer2">
-                <img src={logo} className="loginLogo" alt=""></img>
-                <form onSubmit={this.handleSubmit}>
-                    <button className="loginButton" onClick={this.onClick}><i className="fas fa-arrow-circle-left "></i></button>
-                    <AccountInput type={"text"} placeholder={"Firstname"} style={"inputMakeAcc"} update={this.update} />
-                    <AccountInput type={"text"} placeholder={"Lastname"} style={"inputMakeAcc"} update={this.update} />
-                    <AccountInput type={"email"} placeholder={"Email"} style={"inputMakeAcc"} update={this.update} />
-                    <AccountInput type={"email"} placeholder={"CheckEmail"} style={"inputMakeAcc"} update={this.update} />
-                    <AccountInput type={"password"} placeholder={"Password"} style={"inputMakeAcc"} update={this.update} />
-                    <AccountInput type={"password"} placeholder={"CheckPassword"} style={"inputMakeAcc"} update={this.update} />
-                    <span className="checkGDPR"><input type="checkbox" required/>You accept that we save your date</span>
-                    <button className="newAccountButton">Create account</button>
-                </form>
+        if (this.state.valid === false) {
+            return (
+                <div className="loginMain">
+                    <div className="loginContainer2">
+                        <img src={logo} className="loginLogo" alt=""></img>
+                        <form onSubmit={this.handleSubmit}>
+                            <button className="loginButton" onClick={this.onClick}><i className="fas fa-arrow-circle-left "></i></button>
+                            <AccountInput type={"text"} placeholder={"Firstname"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"text"} placeholder={"Lastname"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"email"} placeholder={"Email"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"email"} placeholder={"CheckEmail"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"password"} placeholder={"Password"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"password"} placeholder={"CheckPassword"} css="inputMakeAcc" update={this.update} />
+                            <button className="newAccountButton">Create account</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return <NewAccountPopup update={this.onClick}></NewAccountPopup>
+        }
     }
 }
 
