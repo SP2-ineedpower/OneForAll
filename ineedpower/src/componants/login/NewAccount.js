@@ -104,15 +104,15 @@ class NewAccount extends React.Component {
       this.state.Email !== this.state.CheckEmail &&
       this.state.Password === this.state.CheckPassword
     ) {
-      window.alert("Please use corresponding email addresses.");
+      window.alert("Please use matching email addresses.");
     } else if (
       this.state.Email === this.state.CheckEmail &&
       this.state.Password !== this.state.CheckPassword
     ) {
-      window.alert("Please use corresponding passwords.");
+      window.alert("Please use matching passwords.");
     } else {
       window.alert(
-        "Please use corresponding email address and passwords respectively."
+        "Please use matching email addresses and passwords respectively."
       );
     }
   }
