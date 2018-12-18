@@ -110,7 +110,6 @@ class Projects extends React.Component {
     
     getNav(project){
         if (this.props.user.userId === project.creatorId) {
-            console.log("owner");
             return  `/OwnerProjectPage/#${project.projectId}`;
         }
         return `/Projectpage/#${project.projectId}`;

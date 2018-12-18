@@ -102,6 +102,18 @@ app.post("/user/create", (req, res) => {
   });
 });
 
+//delete user info everywhere 
+app.post("/user/deleteCascade", (req, res) => {
+  bcrypt.hash(req.body.password, salt, function (err, hash) {
+    let query = connection.query("DELETE FROM user WHERE userId = ? ", [req.body.userId],
+      (err, result) => {
+        if (err) console.log("Error");
+      }
+    );
+  });
+});
+
+
 //Select all users from the database
 app.get("/users", (req, res) => {
   let sqlCommand = "SELECT * FROM user";

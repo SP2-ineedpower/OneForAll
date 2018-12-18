@@ -1,5 +1,7 @@
 import React from "react";
-import "../../css/login.css";
+import NewAccountPopup from "./NewAccountPopup"
+import '../../css/login.css';
+import logo from '../../pictures/ineedpowerlogo_v002.gif';
 
 class AccountInput extends React.Component {
   constructor(props) {
@@ -22,17 +24,9 @@ class AccountInput extends React.Component {
     });
   }
 
-  render() {
-    return (
-      <input
-        type={this.props.type}
-        placeholder={this.props.placeholder}
-        required
-        onChange={this.update}
-        onBlur={this.handleSubmit}
-      />
-    );
-  }
+    render() {
+        return <input type={this.props.type} className={this.props.css} placeholder={this.props.placeholder} required onChange={this.update} onBlur={this.handleSubmit}></input>
+    }
 }
 
 class NewAccount extends React.Component {
@@ -117,79 +111,60 @@ class NewAccount extends React.Component {
     }
   }
 
-  sendToDatabase() {
-    const name = this.state.Firstname + " " + this.state.Lastname;
-    const email = this.state.Email;
-    let password = this.state.Password;
-    const experience = 0;
-    const bio = "New User";
-    const subject = "Unknown";
-    const type = "user";
+    sendToDatabase() {
 
-    fetch(`http://localhost:5000/user/create`, {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-        experience: experience,
-        bio: bio,
-        subject: subject,
-        type: type
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    this.props.changeVersion();
-  }
+        const name = this.state.Firstname + " " + this.state.Lastname;
+        const email = this.state.Email;
+        let password = this.state.Password;
+        const experience = 0;
+        const bio = "New User";
+        const subject = "Unknown";
+        const type = "user";
+
+        fetch(`http://localhost:5000/user/create`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "name": name,
+                "email": email,
+                "password": password,
+                "experience": experience,
+                "bio": bio,
+                "subject": subject,
+                "type": type
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+    }
 
   onClick() {
     this.props.changeVersion();
   }
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <AccountInput
-            type={"text"}
-            placeholder={"Firstname"}
-            update={this.update}
-          />
-          <AccountInput
-            type={"text"}
-            placeholder={"Lastname"}
-            update={this.update}
-          />
-          <AccountInput
-            type={"email"}
-            placeholder={"Email"}
-            update={this.update}
-          />
-          <AccountInput
-            type={"email"}
-            placeholder={"CheckEmail"}
-            update={this.update}
-          />
-          <AccountInput
-            type={"password"}
-            placeholder={"Password"}
-            update={this.update}
-          />
-          <AccountInput
-            type={"password"}
-            placeholder={"CheckPassword"}
-            update={this.update}
-          />
-          <button className="loginButton" onClick={this.onClick}>
-            Back to login
-          </button>
-          <button className="newAccountButton">Create account</button>
-        </form>
-      </div>
-    );
-  }
+    render() {
+        if (this.state.valid === false) {
+            return (
+                <div className="loginMain">
+                    <div className="loginContainer2">
+                        <img src={logo} className="loginLogo" alt=""></img>
+                        <form onSubmit={this.handleSubmit}>
+                            <button className="loginButton" onClick={this.onClick}><i className="fas fa-arrow-circle-left "></i></button>
+                            <AccountInput type={"text"} placeholder={"Firstname"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"text"} placeholder={"Lastname"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"email"} placeholder={"Email"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"email"} placeholder={"CheckEmail"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"password"} placeholder={"Password"} css="inputMakeAcc" update={this.update} />
+                            <AccountInput type={"password"} placeholder={"CheckPassword"} css="inputMakeAcc" update={this.update} />
+                            <button className="newAccountButton">Create account</button>
+                        </form>
+                    </div>
+                </div>
+            );
+        } else {
+            return <NewAccountPopup update={this.onClick}></NewAccountPopup>
+        }
+    }
 }
 
 export default NewAccount;

@@ -28,8 +28,9 @@ class DisplayLeaderbordUser extends React.Component {
                 </tr>
             ))
             return (
-                <div>
-                    <h2 className="centerLeaderbord">Users</h2>
+                <div className="leaderboard">
+                <div className="box">
+                    <h2 className="centerLeaderbordTitle">Rated Users</h2>
                     <table>
                         <thead>
                             <tr>
@@ -42,6 +43,7 @@ class DisplayLeaderbordUser extends React.Component {
                             {userList}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             );
         }
@@ -78,8 +80,9 @@ class DisplayLeaderbordProject extends React.Component {
                 </tr>
             ))
             return (
-                <div>
-                    <h2 className="centerLeaderbord">Projects</h2>
+                <div className="leaderboard">
+                 <div className="box">
+                    <h2 className="centerLeaderbordTitle">Rated Projects</h2>
                     <table>
                         <thead>
                         <tr>
@@ -92,6 +95,7 @@ class DisplayLeaderbordProject extends React.Component {
                         {projectList}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             );
         }
