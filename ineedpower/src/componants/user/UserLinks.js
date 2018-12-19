@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip'
 
 class UserLinks extends React.Component {
     constructor(props) {
@@ -114,8 +113,7 @@ class UserLinks extends React.Component {
                     <div className={this.state.class}>
                         {this.showLinks()}
                         <form onSubmit={this.handleSubmit} onBlur={this.handleBlur}>
-                            <ReactTooltip effect="solid"/>
-                            <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick} data-tip="add links to your profile">
+                            <input value={this.state.value} onChange={this.handleChange} type="text" placeholder={this.state.place} onClick={this.handleClick}>
                             </input>
                         </form>
                     </div>
