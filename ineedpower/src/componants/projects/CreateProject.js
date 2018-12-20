@@ -16,7 +16,7 @@ class Tags extends React.Component {
             place: 'Add a tag to this project',
             value: '',
             tags: {},
-            fetched: false
+            fetched:false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -62,7 +62,7 @@ class Tags extends React.Component {
                 pos = index;
             }
         }
-        this.state.tags.splice(pos, 1);
+        this.state.tags.splice(pos,1);
         this.setState({
         });
     }
@@ -70,7 +70,7 @@ class Tags extends React.Component {
     componentDidMount() {
         fetch(`http://localhost:5000/projecttags/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ tags: res, fetched: true }));
+            .then(res => this.setState({ tags: res, fetched:true }));
     }
 
     render() {
@@ -95,26 +95,26 @@ class Tags extends React.Component {
         } else {
             return <p>data can not be fetched</p>
         }
-
+        
     }
 }
 
-class EditProjectName extends React.Component {
+class EditProjectName extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.value,
+            value:this.props.value,
             updated: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);  
     }
-    handleChange(event) {
+    handleChange(event){
         this.setState({
             value: event.target.value
         });
     }
-    handleSubmit(event) {
+    handleSubmit(event){
         event.preventDefault();
         const name = this.state.value;
         fetch(`http://localhost:5000/project/name`, {
@@ -127,14 +127,14 @@ class EditProjectName extends React.Component {
                 "Content-Type": "application/json",
             }
         });
-    }
+    }   
 
     componentWillReceiveProps(nextProps) {
         this.setState({ value: nextProps.value });
     }
 
     render() {
-
+    
         return (
             <div className="centerProjectdata">
 
@@ -150,23 +150,23 @@ class EditProjectName extends React.Component {
     }
 }
 
-class EditDescription extends React.Component {
+class EditDescription extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.value,
+            value:this.props.value,
             updated: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        
     }
-    handleChange(event) {
+    handleChange(event){
         this.setState({
             value: event.target.value
         });
     }
-    handleSubmit(event) {
+    handleSubmit(event){
         event.preventDefault();
         const description = this.state.value;
         fetch(`http://localhost:5000/project/description`, {
@@ -179,7 +179,7 @@ class EditDescription extends React.Component {
                 "Content-Type": "application/json",
             }
         });
-    }
+    }   
 
     componentWillReceiveProps(nextProps) {
         this.setState({ value: nextProps.value });
@@ -190,7 +190,7 @@ class EditDescription extends React.Component {
             <div className="centerProjectdata">
 
                 <div className="projectName">
-
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
                             <b>Description: </b>
@@ -198,14 +198,14 @@ class EditDescription extends React.Component {
                             <textarea value={this.state.value} onChange={this.handleChange}></textarea>
                         </p>
                     </form>
-
+                    
                 </div>
             </div>
         );
     }
 }
 
-class EditGroupsize extends React.Component {
+class EditGroupsize extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -216,13 +216,13 @@ class EditGroupsize extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
+    handleChange(event){
         this.setState({
             value: event.target.value
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit(event){
         event.preventDefault();
         const groupsize = this.state.value;
         fetch(`http://localhost:5000/project/groupsize`, {
@@ -235,19 +235,19 @@ class EditGroupsize extends React.Component {
                 "Content-Type": "application/json",
             }
         });
-    }
+    }   
 
     componentWillReceiveProps(nextProps) {
         this.setState({ value: nextProps.value });
     }
 
-
+    
     render() {
         return (
             <div className="centerProjectdata">
 
                 <div className="projectName">
-
+                    
                     <form onSubmit={this.handleSubmit}>
                         <p>
                             <b>Groupsize: </b> <input type="text" value={this.state.value} onChange={this.handleChange}></input>
@@ -259,12 +259,12 @@ class EditGroupsize extends React.Component {
     }
 }
 
-class Problems extends React.Component {
+class Problems extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            value: "",
-            problems: {},
+            value:"",
+            problems:{},
             fetched: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -272,13 +272,13 @@ class Problems extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleChange(event) {
+    handleChange(event){
         this.setState({
             value: event.target.value
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit(event){
         event.preventDefault();
         let tempNum = 1;  //temporary id of the comment
         if (this.state.problems.length > 0) {
@@ -303,9 +303,9 @@ class Problems extends React.Component {
         this.setState({
             value: ""
         });
-    }
+    }    
 
-    handleClick(deleteId, event) {
+    handleClick(deleteId,event){
         event.preventDefault();
         const tempNum = this.state.problems[this.state.problems.length - 1].problemId + 1; //temporary id of the link
         const problem = {
@@ -337,11 +337,11 @@ class Problems extends React.Component {
     componentDidMount() {
         fetch(`http://localhost:5000/project/projectproblem/${this.props.id}`)
             .then(res => res.json())
-            .then(res => this.setState({ problems: res, fetched: true }));
+            .then(res => this.setState({ problems: res, fetched:true }));
     }
 
     render() {
-        if (this.state.fetched) {
+        if(this.state.fetched) {
             const ProblemList = this.state.problems.map(problem => (
                 <div className="problemBox" key={problem.problemId}>
                     <div>
@@ -352,7 +352,7 @@ class Problems extends React.Component {
             return (
                 <div className="projectRowWrapper">
                     <div>
-                        <h2 className="profileTitle">Problems</h2>
+                    <h2 className="profileTitle">Problems</h2>
                     </div>
                     <div>
                         <form onSubmit={this.handleSubmit} >
@@ -367,7 +367,7 @@ class Problems extends React.Component {
                 </div>
 
             )
-        } return (
+        } return(
             <p>Project problem could not be fetched</p>
         );
     };
@@ -382,16 +382,15 @@ class Participantrequest extends React.Component {
             projectId: this.props.id,
             fetched: false
         }
-
-        this.onClick = this.handleDelete.bind(this);
-        this.onClick = this.handleAccept.bind(this);
+        this.onClick = this.handleDelete.bind(this);  
+        this.onClick = this.handleAccept.bind(this);      
     }
 
     componentDidMount() {
         //test
         fetch(this.props.fetch)
             .then(res => res.json())
-            .then(res => this.setState({ participantrequests: res, fetched: true }));
+            .then(res => this.setState({ participantrequests: res, fetched: true })); 
     }
 
     componentWillReceiveProps(nextProps) {
@@ -400,7 +399,7 @@ class Participantrequest extends React.Component {
             .then(res => this.setState({ participantrequests: res, fetched: true }));
     }
 
-    handleDelete(deleteId, event) {
+    handleDelete(deleteId,event) {
         event.preventDefault();
         const projectId = this.state.projectId;
         fetch(`http://localhost:5000/participantrequest/delete/`, {
@@ -414,7 +413,6 @@ class Participantrequest extends React.Component {
             }
         });
 
-
         let pos = -1;
         for (let index = 0; index < this.state.participantrequests.length; index++) {
             if (this.state.participantrequests[index].participantrequestId === deleteId) {
@@ -426,7 +424,42 @@ class Participantrequest extends React.Component {
         });
     }
 
-    deleteParticipantFromParticipantRequest(participantrequestId, projectId) {
+    handleAccept(acceptId,event){
+        event.preventDefault();
+        const projectId = this.state.projectId;
+        let posi = -1;
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            if (this.state.participantrequests[index].participantrequestId === acceptId) {
+                posi = index;
+            }
+        }
+        const toBecomeParticipant = this.state.participantrequests[posi]
+        fetch(`http://localhost:5000/participants/add/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": toBecomeParticipant.userId,
+                "projectId": projectId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        //functie die participantrequest gaat delete
+        this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId, projectId);
+
+        let pos = -1;
+        for (let index = 0; index < this.state.participantrequests.length; index++) {
+            if (this.state.participantrequests[index].participantrequestId === acceptId) {
+                pos = index;
+            }
+        }
+        this.state.participantrequests.splice(pos, 1);
+        this.setState({
+        });
+    }
+
+    deleteParticipantFromParticipantRequest(participantrequestId, projectId){
         fetch(`http://localhost:5000/participantrequest/delete/`, {
             method: 'POST',
             body: JSON.stringify({
@@ -438,42 +471,6 @@ class Participantrequest extends React.Component {
             }
         });
     }
-    handleAccept(acceptId, event) {
-        event.preventDefault();
-
-        const projectId = this.state.projectId;
-        let posi = -1;
-        for (let index = 0; index < this.state.participantrequests.length; index++) {
-            if (this.state.participantrequests[index].participantrequestId === acceptId) {
-                posi = index;
-            }
-        }
-        const toBecomeParticipant = this.state.participantrequests[posi];
-
-            fetch(`http://localhost:5000/participants/add/`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    "userId": toBecomeParticipant.userId,
-                    "projectId": projectId
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-
-            //functie die participantrequest gaat delete
-            this.deleteParticipantFromParticipantRequest(toBecomeParticipant.participantrequestId, projectId);
-
-            let pos = -1;
-            for (let index = 0; index < this.state.participantrequests.length; index++) {
-                if (this.state.participantrequests[index].participantrequestId === acceptId) {
-                    pos = index;
-                }
-            }
-            this.state.participantrequests.splice(pos, 1);
-            this.setState({
-            });
-        }
 
     delete(id) {
         let delIcon = "";
@@ -486,7 +483,7 @@ class Participantrequest extends React.Component {
     accept(id) {
         let accIcon = "";
         if (this.props.edit && this.props.request) {  //aangeven of dit component editable mag zijn : indien wel => props edit sturen die true is
-            accIcon = <i className="fas fa-check-circle fa-2x accept" onClick={this.handleAccept.bind(this, id)}></i>
+            accIcon = <i class="fas fa-check-circle fa-2x accept" onClick={this.handleAccept.bind(this, id)}></i>
         }
         return accIcon;
     }
@@ -515,7 +512,7 @@ class Participantrequest extends React.Component {
             );
         } else {
             return (
-                <p>Data could not be fetched</p>
+                <p></p>
             );
         }
     }
@@ -564,21 +561,21 @@ class ProjectLinks extends React.Component {
             tempNum = this.state.links[this.state.links.length - 1].projectLinkId + 1;
         }
         let link = {
-            projectLinkId: tempNum,
+            projectLinkId:tempNum,      
             projectId: this.props.id,
             url: this.state.value
         }
 
         fetch(`http://localhost:5000/projectlinks/add/`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "projectId": this.props.id,   // the "" around the key are important
-                "url": this.state.value
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
+        method: 'POST',
+        body: JSON.stringify({
+            "projectId": this.props.id,   // the "" around the key are important
+            "url": this.state.value
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
 
         this.state.links.push(link);
         this.setState({
@@ -598,17 +595,17 @@ class ProjectLinks extends React.Component {
 
 
         fetch(`http://localhost:5000/projectlinks/delete/`, {
-            method: 'POST',
-            body: JSON.stringify({
-                "projectLinkId": id,
-                "projectId": this.props.id   // the "" around the key are important
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
+        method: 'POST',
+        body: JSON.stringify({
+            "projectLinkId": id,
+            "projectId": this.props.id   // the "" around the key are important
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
 
-        let pos = -1;
+    let pos = -1;
         for (let index = 0; index < this.state.links.length; index++) {
             if (this.state.links[index].projectLinkId === id) {
                 pos = index;
@@ -661,7 +658,7 @@ class ProjectComments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: "",
+            value:"",
             comments: [],
             fetched: false
         };
@@ -670,13 +667,13 @@ class ProjectComments extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleChange(event) {
+    handleChange(event){
         this.setState({
             value: event.target.value
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit(event){
         event.preventDefault();
         const tempNum = this.state.comments[this.state.comments.length - 1].commentId + 1; //temporary id of the link
         const comment = {
@@ -689,7 +686,7 @@ class ProjectComments extends React.Component {
             body: JSON.stringify({
                 "comment": this.state.value,
                 "projId": this.props.id,
-                "userId": this.props.owner
+                "userId":  this.props.owner 
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -699,9 +696,9 @@ class ProjectComments extends React.Component {
         this.setState({
             value: ""
         });
-    }
+    }    
 
-    handleClick(deleteId, event) {
+    handleClick(deleteId,event){
         event.preventDefault();
         fetch(`http://localhost:5000/comments/delete/${deleteId}`, {
             method: 'POST',
@@ -731,7 +728,7 @@ class ProjectComments extends React.Component {
     }
 
     render() {
-        if (this.state.fetched) {
+        if(this.state.fetched) {
             const commentsList = this.state.comments.map(comment => (
                 <div className="commentBox" key={comment.commentId}>
                     <h4><i className="fas fa-user"></i> {}</h4>
@@ -744,7 +741,7 @@ class ProjectComments extends React.Component {
                     <h2 className="profileTitle">Comments</h2>
                     <div className="profileContainer">
                     <p><i className="fas fa-user approachComment"></i>
-                        <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
+                    <input className="addCommentEditProj" type="text" placeholder="Add comment" value={this.state.value} onChange={this.handleChange}></input>
                     </p>
                     {commentsList}
                     </div>
@@ -752,7 +749,7 @@ class ProjectComments extends React.Component {
                 </div>
             )
         }
-        return (
+        return(
             <p>Project comments could not be fetched</p>
         )
     };
@@ -772,8 +769,8 @@ class EditProject extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            project: {},
-            fetched: false
+            project:{},
+            fetched:false  
         }
     }
 
@@ -799,7 +796,7 @@ class EditProject extends React.Component {
                 <div>
                     <Header version="newProject" />
                     <div className="backgroundprofile">
-                        <EditProjectName value={projName} id={this.state.project.projectId} />
+                        <EditProjectName value={projName} id={this.state.project.projectId}/>
                         <EditDescription value={projDesc} id={this.state.project.projectId} />
                         <EditGroupsize value={projSize} id={this.state.project.projectId} />
                         <SubmitProjectData />

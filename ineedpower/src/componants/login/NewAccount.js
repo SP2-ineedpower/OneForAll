@@ -4,25 +4,25 @@ import '../../css/login.css';
 import logo from '../../pictures/ineedpowerlogo_v002.gif';
 
 class AccountInput extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: ''
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.update = this.update.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ""
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.update = this.update.bind(this);
+  }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.update(this.props.placeholder, this.state.value);
-    }
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.update(this.props.placeholder, this.state.value);
+  }
 
-    update(e) {
-        this.setState({
-            value: e.target.value
-        })
-    }
+  update(e) {
+    this.setState({
+      value: e.target.value
+    });
+  }
 
     render() {
         return <input type={this.props.type} className={this.props.css} placeholder={this.props.placeholder} required onChange={this.update} onBlur={this.handleSubmit}></input>
@@ -30,73 +30,86 @@ class AccountInput extends React.Component {
 }
 
 class NewAccount extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            Firstname: "",
-            Lastname: "",
-            Email: "",
-            CheckEmail: "",
-            Password: "",
-            CheckPassword: "",
-            valid: false
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onClick = this.onClick.bind(this);
-        this.update = this.update.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      CheckEmail: "",
+      Password: "",
+      CheckPassword: "",
+      valid: false
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.update = this.update.bind(this);
+  }
 
-    update(toUpdate, value) {
-        switch (toUpdate) {
-            case "Firstname":
-                this.setState({
-                    Firstname: value
-                })
-                break;
-            case "Lastname":
-                this.setState({
-                    Lastname: value
-                })
-                break;
-            case "Password":
-                this.setState({
-                    Password: value
-                })
-                break;
-            case "CheckPassword":
-                this.setState({
-                    CheckPassword: value
-                })
-                break;
-            case "Email":
-                this.setState({
-                    Email: value
-                })
-                break;
-            case "CheckEmail":
-                this.setState({
-                    CheckEmail: value
-                })
-                break;
-            default:
-                break;
-        }
+  update(toUpdate, value) {
+    switch (toUpdate) {
+      case "Firstname":
+        this.setState({
+          Firstname: value
+        });
+        break;
+      case "Lastname":
+        this.setState({
+          Lastname: value
+        });
+        break;
+      case "Password":
+        this.setState({
+          Password: value
+        });
+        break;
+      case "CheckPassword":
+        this.setState({
+          CheckPassword: value
+        });
+        break;
+      case "Email":
+        this.setState({
+          Email: value
+        });
+        break;
+      case "CheckEmail":
+        this.setState({
+          CheckEmail: value
+        });
+        break;
+      default:
+        break;
     }
+  }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        
-        if (this.state.Email === this.state.CheckEmail && this.state.Password === this.state.CheckPassword) {
-            this.setState({
-                valid: true
-            });
+  handleSubmit(e) {
+    e.preventDefault();
+    if (
+      this.state.Email === this.state.CheckEmail &&
+      this.state.Password === this.state.CheckPassword
+    ) {
+      this.setState({
+        valid: true
+      });
 
-            this.sendToDatabase();
-        }
-        else {
-            window.alert("Please confirm with the same email and the same password.");
-        }
+      this.sendToDatabase();
+    } else if (
+      this.state.Email !== this.state.CheckEmail &&
+      this.state.Password === this.state.CheckPassword
+    ) {
+      window.alert("Please use matching email addresses.");
+    } else if (
+      this.state.Email === this.state.CheckEmail &&
+      this.state.Password !== this.state.CheckPassword
+    ) {
+      window.alert("Please use matching passwords.");
+    } else {
+      window.alert(
+        "Please use matching email addresses and passwords respectively."
+      );
     }
+  }
 
     sendToDatabase() {
 
@@ -125,9 +138,9 @@ class NewAccount extends React.Component {
         });
     }
 
-    onClick() {
-        this.props.changeVersion();
-    }
+  onClick() {
+    this.props.changeVersion();
+  }
 
     render() {
         if (this.state.valid === false) {

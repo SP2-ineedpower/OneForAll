@@ -22,8 +22,8 @@ class Application extends React.Component {
     super(props);
     this.state = {
       user: {},
-      logged: false,
-    }
+      logged: false
+    };
     this.setUser = this.setUser.bind(this);
   }
 
@@ -31,9 +31,8 @@ class Application extends React.Component {
     this.setState({
       user: user,
       logged: true
-    })
+    });
   }
-
 
   // the active user is sent by prop to all the components that need it
   render() {
@@ -50,7 +49,12 @@ class Application extends React.Component {
           <Route path="/MakeNewProject" render={(props) => <NewProject {...props} activeUser={this.state.user} />} />
           <Route path="/Search" render={(props) => <SearchPage {...props} activeUser={this.state.user} />} />
           <Route path="/Leaderbord" component={Leaderbord} />
-          <Route path="/Problem" render={(props) => <ProblemPage {...props} activeUser={this.state.user} />} />
+          <Route
+            path="/Problem"
+            render={props => (
+              <ProblemPage {...props} activeUser={this.state.user} />
+            )}
+          />
           <Route component={Errorpage} />
         </Switch>
       </BrowserRouter>
