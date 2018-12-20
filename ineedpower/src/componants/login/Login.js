@@ -2,8 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import NewAccount from "./NewAccount";
 import GoogleLogin from "./GoogleLogin";
-import logo from '../pictures/ineedpowerlogo_v002.gif';
-import '../css/login.css';
+import logo from '../../pictures/ineedpowerlogo_v002.gif';
+import '../../css/login.css';
+
 
 class Signup extends React.Component {
     constructor(props) {
@@ -14,7 +15,8 @@ class Signup extends React.Component {
             user: {},
             found: false,
             Redirect: false,
-            wrongEmail:false
+            wrongEmail: false,
+            authenticate:true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -22,16 +24,24 @@ class Signup extends React.Component {
     findUser(email) {
         fetch(`http://localhost:5000/login/user/${email}`)
             .then(res => res.json())
-            .then(res => this.setState({ user: res[0] , found:true}))
-            .catch(error => this.setState({wrongEmail :true}));
-        
+            .then(res => this.setState({ user: res[0], found: true }))
+            .catch(error => this.setState({ wrongEmail: true }));
+
     }
 
     authenticate() {
-        //console.log("test");
-        fetch(`http://localhost:5000/authenticate/${this.state.password}/${this.state.user.password}`)
+        fetch(`http://localhost:5000/authenticate/`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "password": this.state.password, 
+                "userPassword": this.state.user.password,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
             .then(res => res.json())
-            .then(res => this.setState({ Redirect: res.result }, console.log(res)));
+            .then(res => this.setState({ Redirect: res.result , authenticate: res.result}));
     }
 
     update(e) {
@@ -46,43 +56,51 @@ class Signup extends React.Component {
         this.findUser(this.state.email);
     }
 
-    setJWT() {
+    /*setJWT() {
         let token
-        console.log("name: "+ this.state.user.name)
-        fetch(`http://localhost:5000/authenticate/token`, {
-        method: 'POST',
-        body: JSON.stringify({
-            "username": this.state.user.name,   // the "" around the key are important
-            "email": this.state.user.email,
-            "userId":this.state.user.userId,
-        }),
-        headers: {
-            "Content-Type": "application/json",
-        }
+        console.log("name: " + this.state.user.name)
+        return fetch(`http://localhost:5000/authenticate/token`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "username": this.state.user.name,   // the "" around the key are important
+                "email": this.state.user.email,
+                "userId": this.state.user.userId,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
         })
-        .then(res => res.json())
-        .then(data => token = data)
-        .then(() => localStorage.setItem("userToken",JSON.stringify(token)));
-    }
+            .then(res => res.json())
+            .then(data => token = data)
+            .then(() => localStorage.setItem("userToken", JSON.stringify(token)));
+    }*/
 
     render() {
         if (this.state.found && !this.state.Redirect) {
-            console.log("found");
             this.authenticate();
         }
-        
-    
+
+
         if (this.state.Redirect) {
-            console.log("login");
-            this.setJWT();
-            return <Redirect to="/"></Redirect>
+            this.props.setUser(this.state.user);
+            return <Redirect to="/Home"></Redirect>;
         }
 
+        let controlPass = "" ;
+        if (!this.state.authenticate) {
+            controlPass = <p className="center">This password is invalid please try again!</p>;
+        }
 
+        let controlEmail = "" ;
+        if (this.state.wrongEmail) {
+            controlEmail = <p className="center">This email is invalid please try again!</p>;
+        }
         return (
             <div className="signup">
                 <form onSubmit={this.handleSubmit}>
+                    {controlEmail}
                     <input type="email" placeholder="email" ref="email" required onChange={this.update.bind(this)} />
+                    {controlPass}
                     <input type="password" placeholder="password" ref="password" required onChange={this.update.bind(this)} />
                     <button type="submit" className="loginButton">Log in</button>
                 </form>
@@ -96,10 +114,16 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            version: "default"  //shows the 3 different login options (signUp,NewAccount button and google button) , google is not a priority
+            version: "default",
+            user:{}  //shows the 3 different login options (signUp,NewAccount button and google button) , google is not a priority
         }
         this.handleNewAccount = this.handleNewAccount.bind(this);
         this.changeVersion = this.changeVersion.bind(this);
+        this.setUser = this.setUser.bind(this);
+    }
+
+    setUser(user) {
+        this.props.setUser(user);
     }
 
     handleNewAccount() {
@@ -125,22 +149,20 @@ class Login extends React.Component {
             return (
                 <div className="loginMain">
                     <div className="loginContainer">
-                    <img src={logo} className="loginLogo" alt=""></img>
-                    <Signup></Signup>
-                    <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
-                    {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
+                        <img src={logo} className="loginLogo" alt=""></img>
+                        <Signup setUser = {this.setUser} ></Signup>
+                        <button onClick={this.handleNewAccount} className="newAccountButton">Create account</button>
+                        {/*<button onClick={(this.handleGoogle)}></button>   this is not a priority */}
                     </div>
                 </div>
             );
         }
         if (this.state.version === "newAccount") {
             return (
-                <div className="loginMain">
-                    <div className="loginContainer">
-                        <img src={logo} className="loginLogo" alt=""></img>
-                        <NewAccount changeVersion={this.changeVersion}></NewAccount>
-                    </div>
+                <div>
+                    <NewAccount changeVersion={this.changeVersion}></NewAccount>
                 </div>
+                   
             );
         }
         if (this.state.version === "google") {

@@ -21,9 +21,20 @@ p{
 }
 
 .back{
-    font-size: 1.5em;
+    display: flex;
+    align-items: center !important;
+}
+
+.backButton{
+    display: flex;
+    align-items: center !important;
+    font-size: 1.4em;
     font-weight: 700;
-    margin: 15px 0;
+}
+
+.back a{
+    display: flex;
+    font-size: 1.4em;
 }
 
 .title{
@@ -34,7 +45,8 @@ p{
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     padding: 2% 7%;
 }
     
@@ -48,7 +60,7 @@ p{
 }
 
 .fas{
-    color:  #CECECE;
+    color:  rgb(126, 126, 126);
 }
 
 .search{
@@ -59,12 +71,12 @@ p{
 
 input:focus{
     outline: none;
-    color: #CECECE;
+    color: rgb(49, 49, 49);
 }
 
 .search::placeholder{
     font-weight: bold;
-    color: #CECECE;
+    color: rgb(83, 83, 83);
 }
 
 .profileLink{
@@ -88,4 +100,13 @@ button{
 a:-webkit-any-link{
     color:black;
     text-decoration: none; 
+}
+
+.header .right{
+    display: flex;
+    margin-left: auto;
+}
+
+.right span{
+    margin: 0px 10px;    
 }

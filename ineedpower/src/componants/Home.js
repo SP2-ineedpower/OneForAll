@@ -1,17 +1,15 @@
 import React from "react";
-import Header from "./Header";
-import ProjectDisplay from "./projectsDisplay";
+import Header from "./others/Header";
+import ProjectDisplay from "./projects/projectsDisplay";
+import checkLogin from "./login/checkLogin";
 import { Redirect } from "react-router-dom";
-import {NavLink} from 'react-router-dom';
-import GetActiveUser from './GetActiveUser';
 
 
 class LikedProjects extends React.Component { 
     render() {
-        //this querry will change
-        const user = GetActiveUser();
+        
         return (
-            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${user.userId}`} />  //replace 1 by current user
+            <ProjectDisplay title="Liked projects" fetch={`http://localhost:5000/displayProjects/liked/${this.props.user.userId}`} user={this.props.user}/>
         );
     }
 }
@@ -22,6 +20,7 @@ class CppProjects extends React.Component {
       <ProjectDisplay
         title="C++"
         fetch="http://localhost:5000/displayProjects/tag/cpp"
+        user={this.props.user}
       />
     );
   }
@@ -33,6 +32,7 @@ class JavaProjects extends React.Component {
       <ProjectDisplay
         title="Java"
         fetch="http://localhost:5000/displayProjects/tag/java"
+        user={this.props.user}
       />
     );
   }
@@ -44,6 +44,7 @@ class WebProjects extends React.Component {
       <ProjectDisplay
         title="Websites"
         fetch="http://localhost:5000/displayProjects/tag/website"
+        user={this.props.user}
       />
     );
   }
@@ -55,6 +56,7 @@ class AngularProjects extends React.Component {
       <ProjectDisplay
         title="Angular"
         fetch="http://localhost:5000/displayProjects/tag/angular"
+        user={this.props.user}
       />
     );
   }
@@ -66,10 +68,60 @@ class ReactProjects extends React.Component {
       <ProjectDisplay
         title="React"
         fetch="http://localhost:5000/displayProjects/tag/react"
+        user={this.props.user}
       />
     );
   }
 }
+
+class JavaScriptProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="JavaScript"
+        fetch="http://localhost:5000/displayProjects/tag/javascript"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class CSharpProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="C#"
+        fetch="http://localhost:5000/displayProjects/tag/c#"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class NodeProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="Node"
+        fetch="http://localhost:5000/displayProjects/tag/node"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class CobolProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="COBOL"
+        fetch="http://localhost:5000/displayProjects/tag/cobol"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
 
 class Home extends React.Component {
   
@@ -79,12 +131,6 @@ class Home extends React.Component {
       redirect: false
     };
     this.logout = this.logout.bind(this);
-  }
-
-  componentWillMount() {
-    if (!localStorage.getItem("userToken")) {
-      this.setState({ redirect: true });
-    }
   }
 
   logout() {
@@ -97,22 +143,26 @@ class Home extends React.Component {
   }
   
   render() {
-    
-    if (this.state.redirect) {
-      return <Redirect to={"/Login"} />;
+
+    if (checkLogin(this.props.activeUser) || this.state.redirect) {
+      return <Redirect to="/" />;
     }
-    
+
     return (
       <div>
         <Header version="home" />
         <div className="projectContainer">
           
-          <LikedProjects />
-          <CppProjects />
-          <JavaProjects />
-          <WebProjects />
-          <AngularProjects />
-          <ReactProjects />
+          <LikedProjects user={this.props.activeUser} />
+          <CppProjects user={this.props.activeUser}/>
+          <JavaProjects user={this.props.activeUser}/>
+          <WebProjects user={this.props.activeUser}/>
+          <AngularProjects user={this.props.activeUser}/>
+          <ReactProjects user={this.props.activeUser}/>
+          <JavaScriptProjects user={this.props.activeUser}/>
+          <CSharpProjects user={this.props.activeUser}/>
+          <CobolProjects user={this.props.activeUser}/>
+          <NodeProjects user={this.props.activeUser}/>
         </div>
       </div>
     );

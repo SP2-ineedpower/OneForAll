@@ -1,6 +1,7 @@
 import React from 'react';
-import pencil from '../pictures/pencil.svg';
+import pencil from '../../pictures/pencil.svg';
 import { NavLink } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 class Button extends React.Component {
     constructor(props) {
@@ -120,19 +121,39 @@ class Bio extends React.Component {
     }
 }
 
-
-
 class Userdata extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            User: this.props.user
+            User: this.props.user,
+            deleted:false
         }
+        this.handleClick=this.handleClick.bind(this);
+    }
+
+    handleClick(){
+        //console.log(this.props.user.userId);
+        fetch(`http://localhost:5000/user/deleteCascade`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userId": this.props.user.userId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        this.setState({
+            deleted:true
+        });
     }
 
     render() {
         const usr = this.state.User;
+        
         if (this.props.owner) {
+            if (this.state.deleted) {
+                return <Redirect to="/" />;
+            }
             return (
                 <div className="grid-userdata">
                     <div className="padding">
@@ -159,6 +180,8 @@ class Userdata extends React.Component {
                                 <b>Bio: </b>
                                 <Bio value={usr.bio} textarea="true" id={usr.userId}></Bio>
                             </div>
+                            <button className="deleteProfile" onClick={this.handleClick}>Delete my profile</button>
+
                         </div>
                     </div>
                     <div id="wrapper">
@@ -192,8 +215,6 @@ class Userdata extends React.Component {
                             <b>Bio: </b>
                             <span>{usr.bio}</span>
                         </div>
-                    </div>
-                    <div id="wrapper">
                     </div>
                 </div>
             );

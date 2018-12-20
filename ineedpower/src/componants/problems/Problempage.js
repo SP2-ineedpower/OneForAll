@@ -1,8 +1,9 @@
 import React from 'react';
-import Header from './Header';
-import '../css/problem.css';
-import Comments from './comments';
-
+import Header from '../others/Header';
+import { Redirect } from "react-router-dom";
+import '../../css/problem.css';
+import Comments from '../comments/comments';
+import checkLogin from "../login/checkLogin";
 
 
 class Problem extends React.Component {
@@ -40,12 +41,15 @@ class Problem extends React.Component {
 
 class ProblemPage extends React.Component {
     render() {
+        if (checkLogin(this.props.activeUser)) {
+            return <Redirect to="/" />;
+        }
         return (
             <div >
                 <Header version="project" />
                 <div className="problemPage">
                 <Problem hash= {this.props.location.hash.substr(1)}></Problem>
-                <Comments problem={true} className="problemComments" hash={this.props.location.hash.substr(1)}></Comments>
+                <Comments problem={true} className="problemComments" hash={this.props.location.hash.substr(1)} user={this.props.activeUser}></Comments>
                 </div>
                 
             </div>

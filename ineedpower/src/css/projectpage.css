@@ -95,25 +95,22 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     border-bottom: 2px solid #CECECE;
     padding:10px 20px;
     margin-left: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     width: 60%;
     color: #CECECE;
 }
-.addCommentEditProj:hover{
-    
-}
+
 
 .addCommentEditProj::placeholder{
-    color: #CECECE;
+    color: rgb(136, 136, 136);
 }
 
 .addCommentEditProj:focus{
-    color: #595A5A;
-    border-bottom-color: #595A5A;
+    color: rgb(94, 94, 94);
+    border-bottom-color: rgb(0, 141, 35);
 }
 
 .approachComment{
-    /*margin-left: 90px;*/
     padding-left: 0px;
 }
 .commentBox{
@@ -122,8 +119,6 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     background-color: white;
     width: 90%;
     border-top: none;
-   /* margin-left:80px;
-    margin-right:80px;  */  
 }
 .commentBox:first-of-type{
     border-top: 1px solid #CECECE;
@@ -137,6 +132,7 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
 }
 
 .commentBox h4{
+    padding: 10px 0px;
     color: #595A5A;
 }
 
@@ -170,9 +166,9 @@ div .paragraafEditProjMax p, .paragraafEditProjMax span{
     border: 1px solid #CECECE;
     width: 90%;
     border-radius: 4px;
-    padding:10px 10px;
+    padding:10px 25px;
     margin-bottom: 20px;
-    color: #CECECE;
+    color: rgb(116, 116, 116);
 }
 
 .problemBox:hover{

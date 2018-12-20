@@ -2,33 +2,22 @@
     font-size: 1.5em;
     padding-top: 20px;
     margin-bottom: 20px;
-    margin-left: 17px;
 }
 .centerProjectdata .tags:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
-.centerSave{
-   text-align: center;
-   margin-bottom: 100px;
+
+.submitProjData{
+    background-color: rgb(117, 117, 117);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+    margin-left: 80px;
+    font-size: 2em;
 }
-.save{
-    font-size: 3em;
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    padding: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    border: 1px solid  rgb(220,220,220);
-    border-radius: 10px;
-}
-.save:hover{
+.submitProjData:hover{
     box-shadow: 1px 1px 6px rgb(117, 117, 117);
 }
-.spatie{
-    margin-top: 65px;
-}
-
 
 .importantCompetences{
     font-size: 1.5em;
@@ -48,20 +37,7 @@
     display: none;
 }
 
-.importantCompetences input{
-    width: 15px;
-    text-align: center;
-    position: absolute;
-    right:150px;
-    padding: 0px 15px;
-    font-size: 1em;
-    border-radius: 20px;
-    margin-top: -25px;
-    border: 1px solid lightgray;
-    outline: none;
-    -webkit-transition: width 1s;
-    transition: width 1s;
-}
+
 
 .importantCompetences input:hover::placeholder{
     color: rgb(55, 172, 55);
@@ -87,19 +63,13 @@
 }
 
 .projectName input{
-    border: 2px solid #CECECE;
-    padding: 10px 50px 10px 50px;
+    border:none;
+    border-bottom: 2px solid #CECECE;
+    padding: 10px 20px 0px 20px;
     margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
+    width: 200px;
 }
-.marginInputParticipant{
-    margin-top: 20px;
-    margin-left: 10px;
-    padding:5px 10px 5px 50px;
-    border: 1px solid #CECECE;
-    border-radius: 5px;
-}
+
 .participantBox{
     border: 1px solid #CECECE;
     border-radius: 5px;

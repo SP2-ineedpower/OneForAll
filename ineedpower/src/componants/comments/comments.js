@@ -1,5 +1,4 @@
 import React from 'react';
-import GetActiveUser from './GetActiveUser';
 
 class Comments extends React.Component {
     constructor(props) {
@@ -43,14 +42,14 @@ class Comments extends React.Component {
             comment = {
                 problemCommentId: tempNum,
                 comment: this.state.value,
-                name: GetActiveUser().username
+                name: this.props.user.name
             }
             fetch(`http://localhost:5000/problemComments/add/`, {  // fetch to add comments to a problem
                 method: 'POST',
                 body: JSON.stringify({
                     "comment": this.state.value,
                     "problemId": this.props.hash,
-                    "userId": GetActiveUser().userId
+                    "userId": this.props.user.userId
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -60,14 +59,14 @@ class Comments extends React.Component {
             comment = {
                 commentId: tempNum,
                 comment: this.state.value,
-                name: GetActiveUser().username
+                name: this.props.user.username
             }
             fetch(`http://localhost:5000/comments/add/`, {
                 method: 'POST',
                 body: JSON.stringify({
                     "comment": this.state.value,
                     "projId": this.props.id,
-                    "userId": GetActiveUser().userId
+                    "userId": this.props.user.userId
                 }),
                 headers: {
                     "Content-Type": "application/json",
