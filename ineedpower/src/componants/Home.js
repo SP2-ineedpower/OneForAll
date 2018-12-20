@@ -74,6 +74,55 @@ class ReactProjects extends React.Component {
   }
 }
 
+class JavaScriptProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="JavaScript"
+        fetch="http://localhost:5000/displayProjects/tag/javascript"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class CSharpProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="C#"
+        fetch="http://localhost:5000/displayProjects/tag/c#"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class NodeProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="Node"
+        fetch="http://localhost:5000/displayProjects/tag/node"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+class CobolProjects extends React.Component {
+  render() {
+    return (
+      <ProjectDisplay
+        title="COBOL"
+        fetch="http://localhost:5000/displayProjects/tag/cobol"
+        user={this.props.user}
+      />
+    );
+  }
+}
+
+
 class Home extends React.Component {
   
   constructor(props) {
@@ -110,6 +159,10 @@ class Home extends React.Component {
           <WebProjects user={this.props.activeUser}/>
           <AngularProjects user={this.props.activeUser}/>
           <ReactProjects user={this.props.activeUser}/>
+          <JavaScriptProjects user={this.props.activeUser}/>
+          <CSharpProjects user={this.props.activeUser}/>
+          <CobolProjects user={this.props.activeUser}/>
+          <NodeProjects user={this.props.activeUser}/>
         </div>
       </div>
     );
